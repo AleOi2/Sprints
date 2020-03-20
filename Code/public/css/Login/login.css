@@ -1,0 +1,91 @@
+body{
+    padding: 0;
+    margin: 0;
+    border: 2px solid red ;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+header{
+    background-color: black;
+}
+
+nav{
+    color: white;
+    position: relative;
+    display: flex;
+    height: 100px;
+}
+
+#image{
+    position: relative;
+    height: 100%;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#image > img{
+    transform: scale(0.5);
+}
+
+#image > img:hover{
+    cursor: pointer;
+}
+
+
+.head{
+    list-style-type:none;
+    display:flex;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: larger;
+}
+
+.head > li > a:hover{
+    cursor: pointer;
+    color: blueviolet;
+}
+
+
+.head > li{
+    margin: 30px;
+}
+
+
+#loginSigin{
+    display:flex;
+    position: absolute;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 300px;
+    list-style-type:none;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginSigin > div{
+    display: flex;
+    align-items: center ;
+    justify-content: center;
+    flex:1;    
+    height: 100%;
+    font-size: larger;
+}
+
+#loginSigin > div:hover{
+    cursor: pointer;
+}
+
+#loginSigin > div:nth-child(2){
+    background-color: white;
+    color: black;
+}
