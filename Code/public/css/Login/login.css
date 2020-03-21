@@ -55,6 +55,7 @@
     padding: 0;
     list-style-type:none;
     color: white;
+    width: 20%; box-sizing: border-box;
 }
 
 .loginSigin > div{
@@ -77,18 +78,17 @@
 }
 
 @media screen and (max-width:1070px){
-    .header
-    {
-        flex-direction: column;
-    }
 
     .iconNavigatorConainer{
         flex-direction: column;
-        width: 100%!important;
+    }
+
+    .navigator{
+        display: none;
     }
 
     .loginSigin{
-        width: 100%!important;
+        display: none;
     }
 
     .logo{

@@ -3,6 +3,7 @@ const app = express();
 const { router } = require('./routes')
 
 app.use(express.static(__dirname + '/public/css'));
+app.use( express.static((__dirname +  '/public/scripts/' )) );
 app.use( express.static( "public" ) );
 
 app.set('view engine', 'ejs');
