@@ -1,33 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="login.css">
-    <title>Login</title>
-</head>
+    <%-include('../Components/templateHead', {pageName:'Login', cssFile: "css/Login/login.css"}) %> 
 <body>
-    <header>
-        <nav>
-            <div id="image">
-                <img src="/images/Logo.png"> </img>
-            </div>
-            <ul class="head">
-                <li><a>Início</a></li>
-                <li><a>Sobre Nós</a></li>  
-                <li><a>Blog</a></li>
-            </ul>
-            <div id="loginSigin">
-                <div>Login</div>
-                <div>Cadastrar</div>
-            </div>
-        </nav>
-    </header>
-    <main>
+    <%-include('../Components/headerComponent') %> 
 
-    </main>
-    <footer>
-
-    </footer>
 </body>
 </html>

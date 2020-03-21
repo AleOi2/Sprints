@@ -1,91 +1,97 @@
-body{
-    padding: 0;
-    margin: 0;
-    border: 2px solid red ;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-}
-
-header{
+.header{
     background-color: black;
-}
-
-nav{
-    color: white;
-    position: relative;
     display: flex;
-    height: 100px;
+    position: relative;
 }
 
-#image{
-    position: relative;
-    height: 100%;
-    width: 200px;
+.iconNavigatorConainer{
+    width: 80%; 
+    display:flex; 
+    box-sizing: border-box;
+}
+
+.logo{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#image > img{
-    transform: scale(0.5);
+.logo > .image{
+    transform: scale(0.7);
+    min-width: 300px;
 }
 
-#image > img:hover{
+.logo > .image:hover{
     cursor: pointer;
 }
 
 
-.head{
+.navigator{
+    color: white;
+    position: relative;
     list-style-type:none;
     display:flex;
-    position: relative;
-    height: 100%;
-    box-sizing: border-box;
     margin: 0;
     align-items: center;
     justify-content: center;
-    font-size: larger;
+    font-size: 1.3rem;
 }
 
-.head > li > a:hover{
+.navigator > li > a:hover{
     cursor: pointer;
     color: blueviolet;
 }
 
 
-.head > li{
+.navigator > li{
     margin: 30px;
 }
 
 
-#loginSigin{
+.loginSigin{
+    position: relative;
     display:flex;
-    position: absolute;
-    right: 0;
     margin: 0;
     padding: 0;
-    height: 100%;
-    width: 300px;
     list-style-type:none;
-    justify-content: center;
-    align-items: center;
+    color: white;
 }
 
-#loginSigin > div{
+.loginSigin > div{
     display: flex;
     align-items: center ;
     justify-content: center;
     flex:1;    
     height: 100%;
-    font-size: larger;
+    font-size: 1.3rem;
 }
 
-#loginSigin > div:hover{
+
+.loginSigin > div:hover{
     cursor: pointer;
 }
 
-#loginSigin > div:nth-child(2){
+.loginSigin > div:nth-child(2){
     background-color: white;
     color: black;
+}
+
+@media screen and (max-width:1070px){
+    .header
+    {
+        flex-direction: column;
+    }
+
+    .iconNavigatorConainer{
+        flex-direction: column;
+        width: 100%!important;
+    }
+
+    .loginSigin{
+        width: 100%!important;
+    }
+
+    .logo{
+        width: 100%!important;
+    }
 }
