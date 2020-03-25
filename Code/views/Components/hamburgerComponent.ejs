@@ -33,21 +33,64 @@
 @media screen and (max-width:1070px) {
   .hanburgerContainer{
     display: inline;
+    position: relative;
   }
 }
 
 </style>
-<div style="display:flex;justify-content:center; align-items: center;">
-  <div class="hanburgerContainer" onclick="myFunction(this)">
+  <div class="hanburgerContainer">
+    <input id="hamburgerInput" type="checkbox" style="opacity: 0; width: 100%; height:100%; position: absolute;"/>
     <div class="bar1"></div>
     <div class="bar2"></div>
     <div class="bar3"></div>
   </div>
 
-</div>
 
 <script>
-function myFunction(x) {
-  x.classList.toggle("change");
-}
+$('.hanburgerContainer').click(function(){
+  if ($('#hamburgerInput:checked').val()){
+  $('.navLogin').fadeIn("slow", function(){})
+
+  $('.navLogin').css({
+        'width': '100%',
+        'display': 'flex',
+        'flex-direction': 'column',
+    });
+
+  $('.navLogin nav').css({
+      'color': 'red',
+      'width': '100%'
+  });
+
+  $('.navigator').css({
+    'width': '100%',
+    'flex-direction': 'column',
+    'padding': '0px'
+  });
+    
+  $('.navigator li').css({
+      'border': '1px solid black',
+      'color': 'black',
+      'background-color': 'white',
+      'width': '100%',
+      'text-align': 'center',
+      'height': '40px',
+      'margin': '0px',        
+  });
+
+  $('.loginSigin').css({
+      'width': '100%',
+  });
+
+  $('.loginSigin div').css({
+    'border': '1px solid black'
+  });
+
+  }else{
+    $('.navLogin').fadeOut("slow", function(){})
+  }
+
+  $('#hamburgerInput').attr('checked',!'checked')
+
+})
 </script>

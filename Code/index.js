@@ -5,8 +5,10 @@ const { router } = require('./routes')
 app.use(express.static(__dirname + '/public/css'));
 app.use( express.static((__dirname +  '/public/scripts/' )) );
 app.use( express.static( "public" ) );
+express.urlencoded({ extended: false })
 
 app.set('view engine', 'ejs');
+app
 app.use('/', router);
 
 

@@ -1,20 +1,25 @@
 <header class="fluid-container header">
-    <div class="iconNavigatorConainer">
+    <div class="iconNavigatorContainer">
         <div class="logo">
             <img class="image" src="/images/Logo.png"> </img>
         </div>
-        <nav>
-            <ul class="navigator">
+        <div class="hamburger">
+            <%-include('./hamburgerComponent', {options:{display:'none', id:'login'}}) %> 
+        </div>
+    </div>
+    <div class='navLogin'>
+        <nav >
+            <ul class="navigator" >
                 <li><a >Início</a></li>
                 <li><a>Sobre Nós</a></li>  
                 <li><a >Blog</a></li>
             </ul>
         </nav>
+        <div class="loginSigin">
+            <div><a>Login</a></div>
+            <div><a>Cadastrar</a></div>
+        </div>
+        
     </div>
-    <div class="loginSigin" z>
-        <div><a>Login</a></div>
-        <div><a>Cadastrar</a></div>
-    </div>
-    <%-include('./hamburgerComponent', {options:{display:'none', id:'login'}}) %> 
 </header>    
 

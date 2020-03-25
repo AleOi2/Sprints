@@ -4,10 +4,12 @@
     position: relative;
 }
 
-.iconNavigatorConainer{
-    width: 80%; 
+.iconNavigatorContainer{
+    width: 20%; 
     display:flex; 
     box-sizing: border-box;
+    min-width: 200px;
+    overflow: hidden;
 }
 
 .logo{
@@ -25,6 +27,21 @@
     cursor: pointer;
 }
 
+.hamburger{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navLogin{
+    display: flex;
+    position: relative;
+    width: 80%;
+}
+
+.navLogin nav{
+    width: 80%;
+}
 
 .navigator{
     color: white;
@@ -33,8 +50,8 @@
     display:flex;
     margin: 0;
     align-items: center;
-    justify-content: center;
     font-size: 1.3rem;
+    justify-content: start
 }
 
 .navigator > li > a:hover{
@@ -55,7 +72,8 @@
     padding: 0;
     list-style-type:none;
     color: white;
-    width: 20%; box-sizing: border-box;
+    width: 20%; 
+    box-sizing: border-box;
 }
 
 .loginSigin > div{
@@ -67,31 +85,111 @@
     font-size: 1.3rem;
 }
 
-
-.loginSigin > div:hover{
-    cursor: pointer;
-}
-
 .loginSigin > div:nth-child(2){
     background-color: white;
     color: black;
 }
 
-@media screen and (max-width:1070px){
+.loginSigin > div:hover{
+    cursor: pointer;
+    color: blueviolet;
+}
 
-    .iconNavigatorConainer{
-        flex-direction: column;
+
+@media screen and (min-width:1070px){
+    .navLogin{
+        display: flex!important;
+        flex-direction: row!important;
+        width: 80%!important;
+    }
+    
+    .navLogin nav{
+        width: 80%!important;
     }
 
     .navigator{
-        display: none;
+        flex-direction: row!important;
+        padding-left: 40px!important;
+        width: 80%!important;
     }
 
+    .navigator > li {
+        border: none!important;
+        color: white!important;
+        background-color: black!important;
+        height: auto!important;
+        margin: 30px!important;
+        width: auto!important;  
+    }
+    
     .loginSigin{
+        width: 20%!important;
+    }
+}
+
+
+@media screen and (max-width:1070px){
+    .header{
+        flex-direction: column;
+    }
+
+    .iconNavigatorContainer {
+        width: 100%!important;
+    }
+
+    .hamburger{
+        width: 20%;
+        display: flex;
+        align-items: center;
+    }
+
+    .navLogin{
         display: none;
     }
 
     .logo{
         width: 100%!important;
     }
+
+/*    .navLogin{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .navLogin > nav{
+        color: red;
+        width: 100%!important;
+    }
+
+    .navigator{
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .navigator {
+        padding: 0px;
+    }
+
+    .navigator > li{
+        border: 1px solid black;
+        color: black;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        height: 40px;
+        margin: 0px;
+        
+    }
+
+    .loginSigin{
+        width: 100%!important;
+        color: black;
+        flex-direction: column;
+        background-color: white;
+    }
+
+    .loginSigin > div{
+        border: 1px solid black;
+    }
+*/    
 }
