@@ -8,7 +8,6 @@ app.use( express.static( "public" ) );
 express.urlencoded({ extended: false })
 
 app.set('view engine', 'ejs');
-app
 app.use('/', router);
 
 
