@@ -1,21 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%-include('../Components/templateHead', {pageName:'Login', cssFile: '/css/Login/login.css'}) %> 
+    <%-include('../Components/templateHead', {
+        pageName:'Login', 
+        cssFile: [
+            '/css/Artigos/artigos.css',
+        ]
+    }) %> 
 <body>
-    <%-include('../Components/headerComponent') %> 
-    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; border: 2px solid green">
-        <div style="display: flex; justify-content: flex-start; border: 2px solid silver; width: 80%;margin: 1rem;">
-            <p>Artigos</p>
-        </div>
-        <div style="max-width: 80%">
-            <img class="col-xs-12 col-sm-12 col-md-12" 
-                src=<%= dummy.name%>  width="60%" style=" border: 2px solid red; order: 0"            
-            > </img>
-        </div>
-        <div class="row" style="border: 2px solid pink;max-width: 80%">
-        
-        </div>
+    <%-include('../Components/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Login", "Cadastrar"],
+            routes: [`/login`,`/cadastrar`]
+        }
 
-    </row>
+    }) %>  
+    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; ">
+        <div class="artigosTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
+            <h1 style="font-family: 'Noto Sans SC', sans-serif;">Artigos</h1>
+        </div>
+        <div style="width:80%; height:500px; margin-bottom: 1rem;max-width: 80%; 
+            display: flex; justify-content: space-around;background-image: url(<%=dummy.name%>); 
+            background-position: top; position: relative;" class="artigosPrimeiroArtigo">
+            <div style="position: absolute; top: 60%; left: 10%; z-index: 1;">
+                <div style="color: black;">
+                    <%=dummy.title  %> 
+                </div>
+                <div>
+                    <%=dummy.label  %>                 
+                </div>
+                <a href=<%=dummy.ref%> style="color: red;"> Ler mais > </a>
+            </div>
+        </div>
+        <div class="artigosCardContainer" style="width: 80%; display: flex;margin: 0 auto; flex-wrap: wrap; justify-content: space-between;">
+            <%cards.forEach((element, index) =>{%>
+                <% if(index < numDisplay){ %>
+                    <div class="artigosCard" style="flex-basis: 500px; margin-bottom: 1rem; width:45%; overflow:hidden; background-position: center;background-size: cover; height: 500px;
+                    box-shadow: 1px 1px 5px 3px rgba(0, 0, 0, 0.5); border-radius: 5px;">
+                        <div style="overflow: hidden; height: 60%;background-image: url(<%=element.name%>); 
+                            background-position: 25% 75%; background-size: 500px;">
+                        </div>
+                        <div style=" position:relative; height:30%">
+                            <h1 style="margin-left: 2rem;font-family: 'Noto Sans SC', sans-serif;"><%=element.title%></h1>
+                            <h3 style="margin-left: 2rem; font-size: 15pt; font-family: 'Noto Sans SC', sans-serif;"><%=element.label%></h3>
+                        </div>
+                        <a href=<%=element.ref %> style="color: red;height:10%;margin-left: 2rem "> Leia mais > </a>
+                    </div>
+                <% } %> 
+            <%})%>
+            
+        </div>
+        <div style=" position: relative; width: 80%; display: flex; justify-content: space-between;">
+            <form action="/localhost" method="GET">
+                <%if(cards[0].id > 1){%>
+                    <button style=" color: red;"> &lt Anterior </button>                    
+                <% } %> 
+            </form>
+            <form action="/localhost" method="GET">
+                <button style=" color: red;"> Próximo&gt </button>
+            </form>
+
+        </div>
+    </div>
 </body>
 </html>

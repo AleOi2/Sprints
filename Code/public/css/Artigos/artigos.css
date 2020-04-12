@@ -1,0 +1,52 @@
+a { 
+    transition: all .5s ease-in-out; 
+    color: blue ;
+    cursor: pointer;
+}
+
+a:hover { 
+    transform: scale(1.1); 
+}
+
+.artigosPrimeiroArtigo:after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.artigosPrimeiroArtigo:hover:after{
+    z-index: 0;
+    opacity: .3 ;
+}
+
+
+.Image{
+    transform: scale(1.2);
+}
+
+@media screen and (max-width:1275px){
+    .artigosTitle{
+        justify-content: center!important;
+    }
+
+    .artigosPrimeiroArtigo{
+        color: rebeccapurple;
+        width: 500px!important;
+        min-width: 500px!important;
+        margin-bottom: 2.5rem!important;
+    }
+    .artigosCardContainer{
+        width: 500px!important;
+        
+    }
+    .artigosCard{
+        margin-bottom: 2.5rem!important;
+
+    }
+
+}
