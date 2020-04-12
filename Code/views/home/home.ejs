@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('../Components/templateHead', {
+        pageName:'Login', 
+        cssFile: [
+            '/css/Home/estilo.css',
+        ]
+    }) %> 
+<body>
+    <%-include('../Components/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Login", "Cadastrar"],
+            routes: [`/login`,`/cadastrar`]
+        }
+    }) %>  
+    
+    <section>
+        <div class="banner-principal d-flex align-items-center">
+              <div id="conteudo" class="ml-5 col-5 </div>">
+                <h1 class="display-4 mb-2" >A felicidade de quem consegue planejar o futuro!</h1>
+                <p class="">Cach Book - A melhor ferramenta de gestão financeira pessoal.</p>
+                <button class="btn btn-outline-light">Iniciar</button>
+              </div>
+            </div>
+        </div>
+  
+        <div class="sessao-cards d-flex mt-5 mb-5">
+          <div class="col-4 d-flex justify-content-center">
+            
+            <div class="card text-center" style="width: 18rem;">
+              <img src="/images/home/Icones/icone1.svg" class="card-img-top" style="margin: 0 auto;" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Tenha um maior controle</h5>
+                <p class="card-text">Evite o uso de planilhas e centralize a sua vida financeira no Cash Book.</p>
+              </div>
+            </div>
+  
+          </div>
+  
+          <div class="col-4 d-flex justify-content-center">
+            
+            <div class="card text-center" style="width: 18rem;">
+              <img src="/images/home/Icones/icone2 - capitalismo.svg" style="margin: 0 auto;" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Pense no futuro</h5>
+                <p class="card-text">Saiba com o que está gastando, classifique as suas despesas e economize.</p>
+              </div>
+            </div>
+  
+          </div>
+  
+          <div class="col-4 d-flex justify-content-center">
+            
+            <div class="card text-center" style="width: 18rem;">
+              <img src="/images/home/Icones/icone3 - apresentacao.svg" style="margin: 0 auto;" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Visualize sua vida financeira</h5>
+                <p class="card-text">Com o Cash Book ficou muito fácil manter o controle financeiro.</p>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+  
+        <div class="sessao-metas d-flex">
+          <div id="bg-viagem" class="col-7 d-flex justify-content-end">
+            <h1 class="col-8 display-4 mt-5";>
+              Estabeleça metas financeiras, e acompanhe o progresso.
+            </h1>
+  
+          </div>
+          <div id="bg-paris" class="col-5 bg-warning">
+          </div>
+        </div>
+  
+        <div class="sessao-blog d-flex flex-column justify-content-center align-items-end">
+          <div class="conteudo-blog mx-5">
+            <h1 class="display-4">Conheça o nosso Blog</h1>
+            <p>De pessoas para pessoas,
+            toda semana uma publicação com recomendações e dicas para a gestão financeira pessoal.</p>
+            <a href="" class="btn btn-outline-light">Ir para o Blog</a>
+          </div>
+        </div>
+      </section>
+
+<%-include('../Components/footer') %>
+</body>

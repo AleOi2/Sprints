@@ -1,0 +1,179 @@
+/*---------Header-------*/
+#area-dark{
+    background: rgba(0, 0, 0, 0.95);
+    height: 100px;
+    margin: 0;   
+}
+
+header li a{
+    color: white;
+}
+li.nav-item:hover{
+    padding: 0 15px;
+    background-color: white;
+}
+
+li a:hover{
+    color: black;
+}
+
+#area-light{
+    background: white;
+    height: 100px;
+    color: black;
+}
+
+/*Seções home*/
+.banner-principal{
+    background-image: url('../../images/home/imagens/Banner1-home.jpg');
+    background-size: cover;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.banner-principal p{
+    font-size: 1.5em;
+}
+
+.banner-principal *{
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.banner-principal::after{
+    content: "";
+    background-color: rgba(0, 0, 0, 0.233);
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+}
+
+.sessao-cards img{
+    width: 200px;
+}
+
+.sessao-metas{
+    height: 450px;
+    width: 100%;
+}
+
+#bg-viagem{
+    width: 100%;
+    height: 100%;
+    background-image: url('../../images/home/imagens/viagem.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#bg-viagem::after{
+    content: "";
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#bg-paris{
+    width: 100%;
+    height: 100%;
+    background-image: url('../../images/home/imagens/Paris.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#bg-paris::after{
+    content: "";
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+}
+
+#bg-viagem *{
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.sessao-blog{
+    height: 100vh;
+    width: 100%;
+    background-image: url('../../images/home/imagens/blog.jpg');
+    background-size: cover;
+    border-top: 2px solid white;
+}
+
+.sessao-blog::after{
+    content: "";
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+}
+
+.conteudo-blog{
+    height: 300px;
+    width: 40%;
+    padding: 30px;
+    color: white;
+    font-size: 1.5em;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+
+/*------------Página de artigos---------*/
+
+#postagem{
+    display: flex;
+    flex-direction: column;
+    background: rgba(235, 202, 202, 0.411);
+    padding: 30px;
+    margin-top: 100px;
+}
+
+
+.artigoImagem{
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.artigoImagem img{
+    border: 1px solid rgb(71, 71, 71);
+}
+
+.artigoTexto{
+    text-align: justify;
+}
+
+
+/*----------Footer----------*/
+footer{
+    font-size: 0.8em;
+    width: 100%;
+    color: black;
+    background-color: #1F1D1D;
+    margin: 0;
+    padding: 0;
+}
+
+
+.copyright{
+    padding: 30px;
+}
+.copyright p{
+    text-align: center;
+    margin: 0;
+}
+
+
+
+
+
+
