@@ -15,7 +15,7 @@ const cards = [
         name:"/images/artigos/Fig2.png",
         title:"Título 1",
         label:"Aqui temos algumas coisas escritas para mostrar",
-        ref: "/artigos/id6",
+        ref: "/artigos/id1",
     },
     {
         id:2,        
@@ -23,7 +23,7 @@ const cards = [
         name:"/images/artigos/Fig3.png",
         title:"Título 2",
         label:"Aqui temos algumas coisas escritas para mostrar",
-        ref: "/artigos/id6",
+        ref: "/artigos/id2",
 
     },
     {
@@ -32,7 +32,7 @@ const cards = [
         name:"/images/artigos/Fig4.png",
         title:"Título 3",
         label:"Aqui temos algumas coisas escritas para mostrar",
-        ref: "/artigos/id6",
+        ref: "/artigos/id3",
 
     },
     {
@@ -41,7 +41,7 @@ const cards = [
         name:"/images/artigos/Fig5.png",
         title:"Título 4",
         label:"Aqui temos algumas coisas escritas para mostrar",
-        ref: "/artigos/id6",
+        ref: "/artigos/id4",
 
     },
     {
@@ -50,7 +50,7 @@ const cards = [
         name:"/images/artigos/Fig6.png",
         title:"Título 5",
         label:"Aqui temos algumas coisas escritas para mostrar",
-        ref: "/artigos/id6",
+        ref: "/artigos/id5",
 
     },
     {
