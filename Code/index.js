@@ -8,8 +8,9 @@ app.use( express.static( "public" ) );
 express.urlencoded({ extended: false })
 
 app.set('view engine', 'ejs');
-app.use('/', router);
 
+app.use('/', router);
+app.use('/lancamento', router);
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
