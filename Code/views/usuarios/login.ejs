@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head', {titulo:"Cash Book", cssFile:'/login/login.css'})%>
+
+<body>
+    <%- include('../includes/header')%>
+
+    <main>
+        <div class="container">
+
+            <div class="row">
+                <div id="form" class="col-12">
+
+                    <form id="formulario" action="/usuarios/login" method="POST">
+                        <div class="row">
+                            <div class="col-12 info">
+                                <h1>Login</h1>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="emailUsuario" id="emailUsuario" type="email"
+                                placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="senhaUsuario" id="senhaUsuario" type="password"
+                                placeholder="Senha">
+                        </div>
+                        <div class="form-group">
+                            <a href="#">Esqueceu a senha? Clique aqui!</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 info">
+                                <h5>-------- Ou --------</h5>
+                            </div>
+                        </div>
+                        <div class="form-group logins">
+                            <div class="col-5 logins">
+
+                                <button class="btn btn-outline-dark google"></button>
+
+                            </div>
+                            <div class="col-5 logins">
+
+                                <button class="btn btn-outline-dark facebook"></button>
+
+                            </div>
+                        </div>
+
+                        <div id="btn" class="form-group">
+                            <button class="btn btn-outline-dark">Entrar</button>
+                        </div>
+                        <div id="cadastrar">
+                            <a href="/usuarios/cadastro">Não possui cadastro? clique aqui para fazer o seu!</a>
+                        </div>
+                    </form>
+                    <% if(typeof(msg) != 'undefined' && msg != null){ %>
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            <%= msg %>
+                        </div>
+                    </div>
+                    <% } %>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

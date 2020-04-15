@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('includes/head', {titulo:tituloDaPagina})%>
+<body>
+    <%- include('includes/header') %>
+    <div class="container">
+        <section class="row p-5">
+
+        <% if(usuario != undefined && usuario.length > 0) {%>  
+
+            
+       <% usuario.forEach((user, index) =>{ %>
+            <div class="col-md-4">
+                <div class="card">
+                    <img style="height: 200px; object-fit:cover;" src="/images/usuarioImg/padrao.jpeg" class="card-img-top" alt="imagem do usuario">
+                   
+                    <div class="card-body">
+                        <h5 class="card-title"><%= user.nome %></h5>
+                        <p class="card-text"> <%= user.email %></p>
+                    </div>
+                    <form type="submit" action="/usuarios/deletar/<%= index %>
+                        ?_method=DELETE" method="post">
+                        <div class="card-footer">
+                           <button class="btn btn-danger"> Excluir </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+       <% }) %>
+        
+        <% } else { %>
+            <h1>Não tem usuarios cadastradas no sistema!</h1>
+        <% } %>
+        <div class="col-12 mt-5">
+            <a href ="/usuarios/cadastro" class="btn btn-primary">Cadastrar Usuario</a>
+        </div>
+          
+        </section>
+    </div>
+</body>
+</html>
