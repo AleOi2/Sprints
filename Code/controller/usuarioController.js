@@ -42,14 +42,11 @@ let usuarioController = {
 
     login: (req, res) =>{
         let {emailUsuario, senhaUsuario} = req.body;
-
         let usuarioSalvo = Usuario.buscarUsuario(emailUsuario);
-        
         if(usuarioSalvo == undefined){
             return res.send("Email ou Senha Inválida");
             // return res.render('login', {msg:"Email ou Senha Inválida"});
         }
-
         if(!bcrypt.compareSync(senhaUsuario, usuarioSalvo.senha)){
             console.log('comparando senha');
             return res.send("Email ou Senha Inválida");
@@ -57,7 +54,6 @@ let usuarioController = {
         }
 
         req.session.usuarioLogado = usuarioSalvo.nomeUsuario;
-
         res.send('login sucesso');
     },
 

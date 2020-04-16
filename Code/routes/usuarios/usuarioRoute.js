@@ -16,8 +16,8 @@ const upload = multer({ storage: storage })
 
 let route = express.Router()
 
-route.get('/cadastro', usuarioController.viewFormCadastro);
 route.get('/ver', usuarioController.listarUsuario);
+route.get('/cadastro', usuarioController.viewFormCadastro);
 route.post('/cadastro', usuarioController.criarUsuario);
 route.get('/login', usuarioController.viewFormLogin);
 route.post('/login', usuarioController.login);
