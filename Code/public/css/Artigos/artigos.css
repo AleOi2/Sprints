@@ -34,19 +34,64 @@ a:hover {
         justify-content: center!important;
     }
 
-    .artigosPrimeiroArtigo{
-        color: rebeccapurple;
-        width: 500px!important;
-        min-width: 500px!important;
-        margin-bottom: 2.5rem!important;
-    }
+
     .artigosCardContainer{
-        width: 500px!important;
+        width: 360px!important;
+        justify-content: center!important;
         
     }
     .artigosCard{
         margin-bottom: 2.5rem!important;
+    }
+    
+    .artigos.mainCard{
+        display: flex;
+        justify-content: center!important;
+    }
+    
+    .artigos.mainCard > div{
+        box-shadow: 1px 1px 5px 3px rgba(0, 0, 0, 0.5)!important; 
+        border-radius: 5px!important;
+        min-width: 200px!important;
+        width: 600px!important;
+    }
+    
+    .artigos.mainCard > div > div{
+        position: relative!important;
+        width: 100% !important;
+    }
 
+    .artigos.mainCard > div > div:nth-child(1){
+        height: 60%!important;
+        margin: 0!important;
+        position: relative!important;
+        top: 0!important;
+        left: 0!important;
+    }
+
+    .artigos.mainCard > div > div:nth-child(2){
+        position: relative!important;
+        height: 30%!important;
+        top: 0!important;
+        left: 0!important;
+        margin-left: 2rem!important;
+        font-family: 'Noto Sans SC', sans-serif!important;
+    }
+
+    .artigos.mainCard > div > div:nth-child(2) > a{
+        display: none;
+    }
+
+    .artigos.mainCard > div > a{
+        height:10%!important;
+        margin-left: 2rem!important;
+    }
+
+    .artigos.mainCard > div > a{
+        display: block!important;
+        height:35px!important;
+        width: 80px;
+        margin-left: 2rem!important;
     }
 
 }
