@@ -167,23 +167,7 @@ html, body{
     text-align: justify;
 }
 
-/*----------Footer----------*/
-footer{
-    font-size: 0.8em;
-    width: 100%;
-    color: black;
-    background-color: #1F1D1D;
-    margin: 0;
-    padding: 0;
-}
 
-.copyright{
-    padding: 30px;
-}
-.copyright p{
-    text-align: center;
-    margin: 0;
-}
 
 @media screen and (min-width:600px) and (max-width:900px){  
     .home.cardsContainer > div:nth-child(3){
