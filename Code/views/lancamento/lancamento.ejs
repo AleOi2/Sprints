@@ -3,7 +3,7 @@
     <%-include('../Components/templateHead', {
         pageName:'Lançamentos', 
         cssFile: [
-            '/css/Artigos/artigos.css',
+            '/css/lancamento/lancamento.css',
         ]
     }) %> 
 <body>
@@ -18,17 +18,17 @@
         }
 
     }) %>     
-    <div class="container p-3 my-3 border">
-        <h2>-Despesas</h2>
-        <section class="row p-5"> 
-      
+    <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;">
+        <h2 style="color: red;">Despesas</h2>
+        <section class="row p-5 despesasContainer">       
           <% categorias[0].forEach((imagemCategoria, index )=>{ %>
-          <div class="col-md-3 p-2">
-              <div class="card">
-                <button class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;"><img src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>"></button>
+          <div class="col-md-3 col-4 p-2" style="height: 250px">
+              <div class="card"  style="height: 100%;">
+                <button  style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;">
+                    <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>">
+                </button>
               </div>
           </div>  
-
         <!-- Modal -->
         <div class="modal fade" id="<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -40,7 +40,6 @@
                 </button>
                 </div>
                 <div class="modal-body">
- 
                     <form action="">
                         <!-- area de campos do form -->
                         <div class="form-group">	
@@ -68,14 +67,15 @@
         </section>
     </div>
 
-    <div class="container p-3 my-3 border">
-        <h2>-Receitas</h2>
-        <section class="row p-5"> 
-      
+    <div class="container p-3 my-3 border"  style="border:1px solid black; border-radius: 10px;">
+        <h2 style="color: red;">Receitas</h2>
+        <section class="row p-5 receitasContainer" >       
           <% categorias[1].forEach((imagemCategoria, index )=>{ %>
-          <div class="col-md-3 p-2">
-              <div class="card">
-                <button class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;"><img src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>"></button>
+          <div class="col-md-3 col-4 p-2" style=" height: 250px;">
+              <div class="card" style="height: 100%;">
+                <button style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;">
+                    <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>">
+                </button>
               </div>
           </div>  
 
