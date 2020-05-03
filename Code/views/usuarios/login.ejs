@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../includes/head', {titulo:"Cash Book", cssFile:'/login/login.css'})%>
-
+    <%-include('../Components/templateHead', {
+        pageName:'Login', 
+        cssFile: [
+            '/css/login/login.css',
+        ]
+    }) %> 
 <body>
-    <%- include('../includes/header')%>
+    <%-include('../Components/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Login", "Cadastrar"],
+            routes: [`/usuarios/login`,`/usuarios/cadastro`]
+        }
+    }) %>  
 
-    <main>
+    <main style="background-image: url('/images/LoginCadastro/background.jpeg');height: 100vh; background-repeat: no-repeat; background-size: cover;width: 100%; display: flex; justify-content: center;">
         <div class="container">
             <div class="row">
                 <div id="form" class="col-12">
@@ -33,19 +46,18 @@
                         </div>
                         <div class="form-group logins">
                             <div class="col-5 logins">
-
-                                <button class="btn btn-outline-dark google"></button>
-
+                                <button class="google">
+                                    <img src="/images/LoginCadastro/googleLogin.png" class="card-img-top" style="width:100%; height:100%;margin: 0 auto;position: absolute;top: 0;left:0;" alt="...">        
+                                </button>
                             </div>
                             <div class="col-5 logins">
-
-                                <button class="btn btn-outline-dark facebook"></button>
-
+                                <button class="facebook">
+                                    <img src="/images/LoginCadastro/facebookLogin.png" class="card-img-top" style="width:100%; height:100%;margin: 0 auto;position: absolute;top: 0;left:0;" alt="...">        
+                                </button>
                             </div>
                         </div>
-
                         <div id="btn" class="form-group">
-                            <button class="btn btn-outline-dark">Entrar</button>
+                            <button class="btn btn-outline-dark"> Entrar</button>
                         </div>
                         <div id="cadastrar">
                             <a href="/usuarios/cadastro">Não possui cadastro? clique aqui para fazer o seu!</a>

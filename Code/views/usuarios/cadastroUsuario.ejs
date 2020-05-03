@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../includes/head', {titulo:"Cash Book", cssFile:'/cadastro/cadastro.css'})%>
+<%-include('../Components/templateHead', {
+    pageName:'Cadastro', 
+    cssFile: [
+        '/css/cadastro/cadastro.css',
+    ]
+}) %> 
+
 
 <body>
-    <%- include('../includes/header')%>
+    <%-include('../Components/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Login", "Cadastrar"],
+            routes: [`/usuarios/login`,`/usuarios/cadastro`]
+        }
+    }) %>  
 
-    <main style="background-image: url('padraoImg/padrao.jpeg');">
+    <main style="background-image: url('/images/LoginCadastro/background.jpeg');height: 100vh; background-repeat: no-repeat; background-size: cover;width: 100%; align-items: center; display: flex; justify-content: center;">
         <div class="container">
             <div class="row">
-
                 <div id="form" class="col-12">
-
                     <form id="formulario" class="w-50" action="/usuarios/cadastro" method="POST">
                         <div class=row>
                             <div id="cadastro" class="col-12 info">
                                 <h1>Cadastro</h1>
                             </div>
                         </div>
-
                         <div class="form-group">
-
                             <input class="form-control" name="nomeUsuario" id="nomeUsuario" type="text"
                                 placeholder="Nome">
                         </div>
@@ -29,10 +40,8 @@
                                 placeholder="Email">
                         </div>
                         <div class="form-group">
-
                             <input type="password" class="form-control" name="senhaUsuario" id="senhaUsuario"
                                 placeholder="Senha">
-
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="confirmSenhaUsuario"
@@ -45,14 +54,14 @@
                         </div>
                         <div class="form-group cadastros">
                             <div class="col-5 cadastros">
-
-                                <button class="btn btn-outline-dark google"></button>
-
+                                <button class="google">
+                                    <img src="/images/LoginCadastro/googleLogin.png" class="card-img-top" style="width:100%; height:100%;margin: 0 auto;position: absolute;top: 0;left:0;" alt="...">
+                                </button>
                             </div>
                             <div class="col-5 cadastros">
-
-                                <button class="btn btn-outline-dark facebook"></button>
-
+                                <button class="facebook">
+                                    <img src="/images/LoginCadastro/facebookLogin.png" class="card-img-top" style="width:100%; height:100%;margin: 0 auto;position: absolute;top: 0;left:0;" alt="...">        
+                                </button>
                             </div>
                         </div>
 

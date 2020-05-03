@@ -54,16 +54,23 @@ body {
     flex-direction: row;
     justify-content: center;
 }
+
 .google{
-    width: 100px;
-    height: 33px;
-    background-image: url('/images/padraoImg/googleLogin.png');
-    background-repeat: no-repeat;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 200px;
+    height: 40px;
+    overflow: hidden;
 }
 
 .facebook{
-    width: 100px;
-    height: 33px;
-    background-image: url('/images/padraoImg/facebookLogin.png');
-    background-repeat: no-repeat;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 200px;
+    height: 40px;
+    overflow: hidden;
 }
