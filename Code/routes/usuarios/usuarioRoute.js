@@ -1,26 +1,57 @@
 const express = require('express')
 const usuarioController = require('../../controller/usuarioController');
-const path = require('path');
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.join('public', 'usuarioImg'))
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '-' + file.originalname)
-    }
-  })
-   
-const upload = multer({ storage: storage })
+const { check, body } = require('express-validator')
+const route = express.Router();
+const passport = require('passport');
+const { secret } = require('../../constants/constants');
+const jwt = require('jsonwebtoken');
+const authorization = require('../../middleware/authorization')
+require('../../passport');
 
+const customValidator = passport.authenticate('custom', { failureRedirect: 'home/home', session: false });
 
-let route = express.Router()
+route.get('/ver', customValidator, usuarioController.listarUsuario);
+route.post('/delete', usuarioController.deletarUsuario);
+route.post('/update', usuarioController.updateUsuario);
 
-route.get('/ver', usuarioController.listarUsuario);
+route.post('/cadastro', [
+  check('email').exists().withMessage('E-mail é necessário'),
+  check('name').exists().withMessage('Nome necessário'),
+  check('surname').exists().withMessage('Sobrenome necessário'),
+  check('password').exists().withMessage('Senha necessária'),
+  check('checkerPassword').exists().withMessage('Confirmação de senha é necessário'),
+
+  check('email').isEmail().withMessage('E-mail com formato inválido'),
+  check('password').isLength({ min: 6 }).withMessage('Senha de pelo menos 6 caracteres'),
+], usuarioController.criarUsuario);
+
 route.get('/cadastro', usuarioController.viewFormCadastro);
-route.post('/cadastro', usuarioController.criarUsuario);
 route.get('/login', usuarioController.viewFormLogin);
 route.post('/login', usuarioController.login);
 
+route.get('/auth/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email']
+  }))
+
+// GET /auth/google/callback
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  If authentication fails, the user will be redirected back to the
+//   login page.  Otherwise, the primary route function function will be called,
+//   which, in this example, will redirect the user to the home page.
+route.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/home/home' }),
+  (req, res) => {
+    console.log("Teste")
+    console.log(req.session.passport)
+    const token = jwt.sign(
+      { id: req.session.passport },
+      secret,
+      { expiresIn: 86400 }
+    )
+    req.session = { user: req.user, token };
+    res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
+    res.redirect('/lancamento');
+  });
 
 module.exports = route;

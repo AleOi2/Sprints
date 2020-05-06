@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('includes/head', {titulo:tituloDaPagina})%>
+    <%-include('../Components/templateHead', {
+        pageName:'Lançamentos', 
+        cssFile: [
+            '/css/lancamento/lancamento.css',
+        ]
+    }) %> 
 <body>
-    <%- include('includes/header') %>
+    <%-include('../Components/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Login", "Alexandre"],
+            routes: [`/usuarios/login`,'']
+        }
+
+    }) %>     
     <div class="container">
         <section class="row p-5">
 
@@ -12,10 +27,9 @@
        <% usuario.forEach((user, index) =>{ %>
             <div class="col-md-4">
                 <div class="card">
-                    <img style="height: 200px; object-fit:cover;" src="/images/usuarioImg/padrao.jpeg" class="card-img-top" alt="imagem do usuario">
-                   
+                    <img style="height: 200px; object-fit:cover;" src="/images/usuarioImg/padrao.jpeg" class="card-img-top" alt="imagem do usuario">                   
                     <div class="card-body">
-                        <h5 class="card-title"><%= user.nome %></h5>
+                        <h5 class="card-title"><%= user.name %></h5>
                         <p class="card-text"> <%= user.email %></p>
                     </div>
                     <form type="submit" action="/usuarios/deletar/<%= index %>

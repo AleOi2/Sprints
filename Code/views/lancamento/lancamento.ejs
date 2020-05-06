@@ -13,11 +13,14 @@
             routes:[`/inicio`,`/sobrenos`,`/artigos`]
         },
         loginSigin:{
-            label: ["Login", "Alexandre"],
-            routes: [`/usuarios/login`,'']
+            label: ["Alexandre", "Logout"],
+            routes: [``,'/usuarios/login']
         }
 
     }) %>     
+    <script>
+        localStorage.setItem("mytime", Date.now());
+    </script>
     <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;">
         <h2 style="color: red;">Despesas</h2>
         <section class="row p-5 despesasContainer">       

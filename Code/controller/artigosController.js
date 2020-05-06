@@ -6,8 +6,6 @@ const {
 const { url } = require('../constants/constants');
 
 const artigosController = (req, res) =>{
-    console.log(dummy)
-    console.log(req.params)
     res.render('Artigos/artigos', {
         dummy:dummy, 
         cards:cards,

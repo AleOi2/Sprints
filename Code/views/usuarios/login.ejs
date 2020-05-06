@@ -22,45 +22,41 @@
         <div class="container">
             <div class="row">
                 <div id="form" class="col-12">
-                    <form id="formulario" action="/usuarios/login" method="POST">
+                    <form id="formulario" action="/usuarios/login" method="POST" style="padding: 2rem;max-width:100%"   >
                         <div class="row">
                             <div class="col-12 info">
                                 <h1>Login</h1>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="emailUsuario" id="emailUsuario" type="email"
+                            <input class="form-control" name="email" id="emailUsuario" type="email"
                                 placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="senhaUsuario" id="senhaUsuario" type="password"
+                            <input class="form-control" name="password" id="senhaUsuario" type="password"
                                 placeholder="Senha">
                         </div>
                         <div class="form-group">
                             <a href="#">Esqueceu a senha? Clique aqui!</a>
                         </div>
-                        <div class="row">
-                            <div class="col-12 info">
-                                <h5>-------- Ou --------</h5>
-                            </div>
+                        <div class="row"  style="display:flex; justify-content:center; align-items: center;">
+                            <div class="col-12 info"></div>
+                            <h5 >-------- Ou --------</h5>
                         </div>
                         <div class="form-group logins">
                             <div class="col-5 logins">
-                                <button class="google">
-                                    <img src="/images/LoginCadastro/googleLogin.png" class="card-img-top" style="width:100%; height:100%;margin: 0 auto;position: absolute;top: 0;left:0;" alt="...">        
-                                </button>
+                                <a id="google" href="http://localhost:3000/usuarios/auth/google"  style="overflow: hidden; min-width:100px;">
+                                    <img src="/images/LoginCadastro/googleLogin.png" class="card-img-top" style="width:100%; height:100%;margin: 0 auto;position: absolute;top: 0;left:0;" alt="...">
+                                </a>
                             </div>
                             <div class="col-5 logins">
-                                <button class="facebook">
+                                <a id="facebook" href="/usuarios/auth/google/callback" style="overflow: hidden; min-width:100px;">
                                     <img src="/images/LoginCadastro/facebookLogin.png" class="card-img-top" style="width:100%; height:100%;margin: 0 auto;position: absolute;top: 0;left:0;" alt="...">        
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <div id="btn" class="form-group">
                             <button class="btn btn-outline-dark"> Entrar</button>
-                        </div>
-                        <div id="cadastrar">
-                            <a href="/usuarios/cadastro">Não possui cadastro? clique aqui para fazer o seu!</a>
                         </div>
                     </form>
                     <% if(typeof(msg) != 'undefined' && msg != null){ %>
@@ -75,7 +71,6 @@
             </div>
         </div>
     </main>
-
 </body>
 
 </html>

@@ -55,7 +55,7 @@ body {
     justify-content: center;
 }
 
-.google{
+#google{
     position: relative;
     border: 1px solid black;
     border-radius: 5px;
@@ -65,7 +65,7 @@ body {
     overflow: hidden;
 }
 
-.facebook{
+#facebook{
     position: relative;
     border: 1px solid black;
     border-radius: 5px;

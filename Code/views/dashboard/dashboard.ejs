@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('../Components/templateHead', {
+        pageName:'Login', 
+        cssFile: [
+            '/css/Artigos/artigos.css',
+        ]
+    }) %> 
+<body>
+    <%-include('../Components/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Logout", "Alexandre"],
+            routes: [``,``]
+        }
+
+    }) %>  
+    <body>
+        Primeiro DashBoard
+
+
+    </body>
+
+    <%-include('../Components/footer') %>
+</body>
+</html>
