@@ -1,6 +1,13 @@
 const { User } = require('./Sequelize/model/');
 let passport = require('passport');
-let { secret, clientID, clientSecret } = require('./constants/constants')
+let { 
+    secret, 
+    clientID, 
+    clientSecret,
+    facebookClientID, 
+    facebookclientSecret
+
+} = require('./constants/constants')
 const md5 = require('md5');
 const bcrypt = require('bcrypt')
 var JwtStrategy = require('passport-jwt').Strategy,
@@ -83,3 +90,43 @@ passport.deserializeUser((id, done) => {
         done(err, user.dataValues);
     })
 });
+
+
+var FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new FacebookStrategy({
+    clientID: facebookClientID,
+    clientSecret: facebookclientSecret,
+    callbackURL: "/usuarios/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(accessToken)
+    console.log(refreshToken)
+    console.log(profile)
+    const now = new Date();
+
+    console.log(profile.provider + profile.id + '@gmail.com')
+
+    User.findOne({
+        where: {
+            email: profile.provider + profile.id + '@gmail.com'
+        },
+    }).then(user => {
+        if (!user) {
+            let newUser = {
+                name: profile.displayName,
+                surname: profile.name.familyName || '',
+                email: profile.provider + profile.id + '@gmail.com',
+                password: bcrypt.hashSync(md5(profile.id), 10),
+                createdAt: now,
+            }
+
+            User.create(newUser).then((res) => {
+                return done(null, newUser);
+            })
+        } else {
+            return done(null, user.dataValues);
+        }
+    }).catch(err => done(err, false))
+   }
+));
