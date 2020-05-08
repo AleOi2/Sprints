@@ -72,7 +72,7 @@ passport.use(new GoogleStrategy({
                 }
 
                 User.create(newUser).then((res) => {
-                    return done(null, newUser);
+                    return done(null, {...newUser, id: res.dataValues.id});
                 })
             } else {
                 return done(null, user.dataValues);
@@ -82,6 +82,7 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser((user, done) => {
+    console.log(user.id)
     done(null, user.id);
 });
 
@@ -112,7 +113,7 @@ passport.use(new FacebookStrategy({
             email: profile.provider + profile.id + '@gmail.com'
         },
     }).then(user => {
-        if (!user) {
+        if (!user) {    
             let newUser = {
                 name: profile.displayName,
                 surname: profile.name.familyName || '',
@@ -122,7 +123,7 @@ passport.use(new FacebookStrategy({
             }
 
             User.create(newUser).then((res) => {
-                return done(null, newUser);
+                return done(null, {...newUser, id: res.dataValues.id});
             })
         } else {
             return done(null, user.dataValues);
