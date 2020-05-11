@@ -207,6 +207,12 @@ let usuarioController = {
         }
     },
 
+    logout:(req, res) =>{
+        res.clearCookie("token");
+        res.clearCookie("user");
+        return res.redirect('/home/home');
+    }
+
 }
 
 

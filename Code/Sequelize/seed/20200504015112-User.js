@@ -28,7 +28,6 @@ module.exports = {
         email: 'marlon@gmail.com',
         password: 'marlon123',
         createdAt: new Date(),
-
       },
       {
         name: 'Fabricio',
@@ -36,13 +35,8 @@ module.exports = {
         email: 'fabricio@gmail.com',
         password: 'fabricio123',
         createdAt: new Date(),
-
       }
-
     ], {});
-
-
-
   },
 
   down: (queryInterface, Sequelize) => {

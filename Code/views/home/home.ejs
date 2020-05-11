@@ -8,7 +8,7 @@
         ]
     }) %> 
 <body>
-    <%-include('../Components/headerComponent',{
+    <%-include('../Components/Header/headerComponent',{
         navigator:{
             label: ["Início", "Sobre Nós", "Artigos"],
             routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
@@ -17,7 +17,7 @@
             label: ["Login", "Cadastrar"],
             routes: [`/usuarios/login`,`/usuarios/cadastro`]
         }
-    }) %>  
+    }) %> 
     
     <section>
         <div style="position:relative">

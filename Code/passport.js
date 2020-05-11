@@ -6,7 +6,6 @@ let {
     clientSecret,
     facebookClientID, 
     facebookclientSecret
-
 } = require('./constants/constants')
 const md5 = require('md5');
 const bcrypt = require('bcrypt')
@@ -44,7 +43,6 @@ passport.use('custom', new CustomStrategy(
 
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-
 // Use the GoogleStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
 //   credentials (in this case, a token, tokenSecret, and Google profile), and
@@ -94,7 +92,6 @@ passport.deserializeUser((id, done) => {
 
 
 var FacebookStrategy = require('passport-facebook').Strategy;
-
 passport.use(new FacebookStrategy({
     clientID: facebookClientID,
     clientSecret: facebookclientSecret,

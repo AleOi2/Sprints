@@ -29,6 +29,8 @@ route.get('/cadastro', usuarioController.viewFormCadastro);
 route.get('/login', usuarioController.viewFormLogin);
 route.post('/login', usuarioController.login);
 
+route.get('/logout', usuarioController.logout);
+
 route.get('/auth/google',
   passport.authenticate('google', {
     scope: ['profile', 'email']
@@ -51,7 +53,8 @@ route.get('/auth/google/callback',
     )
     req.session = { user: req.user, token };
     res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
-    res.redirect('/lancamento');
+    res.cookie('user', req.user, { maxAge: 24 * 60 * 60 * 1000 });
+    res.redirect('/dashboard');
   });
 
 
@@ -71,6 +74,7 @@ route.get('/auth/google/callback',
     )
     req.session = { user: req.user, token };
     res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie('user', req.user, { maxAge: 24 * 60 * 60 * 1000 });
     res.redirect('/dashboard');
   });
 

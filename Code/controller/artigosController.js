@@ -10,7 +10,7 @@ const artigosController = (req, res) =>{
         dummy:dummy, 
         cards:cards,
         numDisplay:numDisplay,
-        url: url
+        url: url,
     })
 }   
 
