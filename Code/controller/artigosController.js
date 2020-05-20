@@ -11,6 +11,8 @@ const artigosController = (req, res) =>{
         cards:cards,
         numDisplay:numDisplay,
         url: url,
+        token: req.cookies.token, 
+        user: req.cookies.user 
     })
 }   
 

@@ -8,7 +8,10 @@
         ]
     }) %> 
 <body>
-    <%-include('../Components/Header/headerComponent',{
+
+  <!-- check if token --> 
+    <% if (typeof token === "undefined" && typeof user === "undefined") { %>
+      <%-include('../Components/Header/headerComponent',{
         navigator:{
             label: ["Início", "Sobre Nós", "Artigos"],
             routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
@@ -16,8 +19,38 @@
         loginSigin:{
             label: ["Login", "Cadastrar"],
             routes: [`/usuarios/login`,`/usuarios/cadastro`]
+          }
+    }) %>   
+      
+    <% } else{ %>
+      <%-include('../Components/Header/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
+        },
+        loginSigin:{
+            label: [ user.name, "Logout"],
+            routes: [``,`/usuarios/logout`]
         }
-    }) %> 
+      }) %>   
+    <%}%>
+
+    <script>
+      console.log("Testando");
+      var token = JSON.parse(localStorage.getItem('token')).token
+      console.log("Valor token")
+      console.log(token)
+      if(!token){
+        $('.header').css({
+          'display':'none'
+        })
+      }else{
+        $('.header').css({
+          'display':'flex'
+        })
+      }
+    </script>
+
     
     <section>
         <div style="position:relative">

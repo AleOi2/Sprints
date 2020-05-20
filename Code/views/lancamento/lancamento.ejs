@@ -7,22 +7,37 @@
         ]
     }) %> 
 <body>
-    <%-include('../Components/Header/headerComponent',{
-        navigator:{
-            label: ["Início", "Sobre Nós", "Artigos"],
-            routes:[`/inicio`,`/sobrenos`,`/artigos`]
-        },
-        loginSigin:{
-            label: ["Alexandre", "Logout"],
-            routes: [``,'/usuarios/logout']
-        }
-
-    }) %>
+    <!-- check if token --> 
+    <% if (typeof token === "undefined" && typeof user === "undefined") { %>
+        <%-include('../Components/Header/headerComponent',{
+          navigator:{
+              label: ["Início", "Sobre Nós", "Artigos"],
+              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
+          },
+          loginSigin:{
+              label: ["Login", "Cadastrar"],
+              routes: [`/usuarios/login`,`/usuarios/cadastro`]
+            }
+      }) %>   
+        
+      <% } else{ %>
+        <%-include('../Components/Header/headerComponent',{
+          navigator:{
+              label: ["Início", "Sobre Nós", "Artigos"],
+              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
+          },
+          loginSigin:{
+              label: [ user.name, "Logout"],
+              routes: [``,`/usuarios/logout`]
+          }
+        }) %>   
+      <%}%>
+  
     <script>
         localStorage.setItem("mytime", Date.now());
     </script>
-    <div style = "position:relative; width: 100%; border: 2px solid red; display: flex;">
-        <%- include('../Components/sideMenu/sideMenu', sideElement )%>
+    <div style = "position:relative; width: 100%; display: flex;">
+        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
         <div style="display: flex; flex-direction: column; position: relative; width: 100%;">
             <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
                 <h2 style="color: red;">Despesas</h2>

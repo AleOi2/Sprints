@@ -44,14 +44,11 @@ route.get('/auth/google',
 route.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/home/home' }),
   (req, res) => {
-    console.log("Teste")
-    console.log(req.session.passport)
     const token = jwt.sign(
       { id: req.session.passport },
       secret,
       { expiresIn: 86400 }
     )
-    req.session = { user: req.user, token };
     res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
     res.cookie('user', req.user, { maxAge: 24 * 60 * 60 * 1000 });
     res.redirect('/dashboard');
@@ -65,14 +62,11 @@ route.get('/auth/google/callback',
   route.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/home/home' }),
   (req, res) => {
-    console.log("Teste")
-    console.log(req.session.passport)
     const token = jwt.sign(
       { id: req.session.passport },
       secret,
       { expiresIn: 86400 }
     )
-    req.session = { user: req.user, token };
     res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
     res.cookie('user', req.user, { maxAge: 24 * 60 * 60 * 1000 });
     res.redirect('/dashboard');

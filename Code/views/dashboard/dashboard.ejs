@@ -1,48 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%-include('../Components/templateHead', {
+<%-include('../Components/templateHead', {
         pageName:'Login', 
         cssFile: [
             '/css/Artigos/artigos.css',
         ]
-    }) %> 
+    }) %>
+
 <body>
-    <%-include('../Components/Header/headerComponent',{
-        navigator:{
-            label: ["Início", "Sobre Nós", "Artigos"],
-            routes:[`/inicio`,`/sobrenos`,`/artigos`]
-        },
-        loginSigin:{
-            label: ["Alexandre", "Logout"],
-            routes: [``,`/usuarios/logout`]
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+
+        /*var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            console.log("Valores de entrada")
+            console.log(xhttp.response)
+            console.log(this.response)
         }
+        };
+        xhttp.open("GET", "http://localhost:3000/");
+        xhttp.send();*/
 
-    }) %>  
+        /*$.ajax({
+            type: "GET",
+            url: "http://localhost:3000/dashboard/data",
+            body: JSON.stringify([
+                {id: 1, name: "Shahed"}, 
+                {id: 2, name: "Hossain"}
+            ]),
+            success: function(msg){
+                alert( "Data Saved: " + msg );
+            }
+        });*/
 
-    
-    <!-- check for user on page load --> 
-    <% if (typeof token != "undefined" && typeof user != "undefined") { %>
-    <!-- make user available to script tag -->
-    <% var token = token %>
-  
-    <!-- use script tag to access ejs data and local storage -->
-    <script>
-      let token = <%- JSON.stringify(token) %>;
-      let user = <%- JSON.stringify(user) %>;
-      localStorage.setItem('token', JSON.stringify({'token': token}));
-      localStorage.setItem('user', JSON.stringify({'user': user}));
+        const url = "http://localhost:3000/dashboard/data";
+        fetch(url, {
+            method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                Teste: "Valor teste"
+            })
+        }).then((response) => {
+            console.log(response);
+            console.log("Valore trs");
+            response.json().then((resp) => {
+                console.log(resp);
+            })
+        })
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Work', 11],
+                ['Eat', 2],
+                ['Commute', 2],
+                ['Watch TV', 2],
+                ['Sleep', 7]
+            ]);
+
+            var options = {
+                title: 'My Daily Activities'
+            };
+
+            var chart1 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[0]);
+            var chart2 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[1]);
+
+            chart1.draw(data, options);
+            chart2.draw(data, options);
+        }
     </script>
-  <% } %>
 
+
+
+    <%-include('../Components/Header/headerComponent',{
+            navigator:{
+                label: ["Início", "Sobre Nós", "Artigos"],
+                routes:[`/inicio`,`/sobrenos`,`/artigos`]
+            },
+            loginSigin:{
+                label: ["Alexandre", "Logout"],
+                routes: [``,`/usuarios/logout`]
+            }
+    
+    }) %>
 
     <body>
         <div style="position: relative;height: 100vh;">
-            <%- include('../Components/sideMenu/sideMenu', sideElement )%>
+            <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+            <div style="display: flex;border: 2px solid red; justify-content:flex-end">
+                <div class="piechart" style="width: 900px; height: 500px;"></div>
+                <div class="piechart" style="width: 900px; height: 500px;"></div>
+            </div>
         </div>
-    
-
     </body>
 
     <%-include('../Components/footer') %>
 </body>
+
 </html>

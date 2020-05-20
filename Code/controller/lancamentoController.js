@@ -4,11 +4,20 @@ const { sideBarInput } = require("../model/sideBarInput");
 const lancamentoController = {
     
     add: (req, res) =>{
-        res.render('lancamento/lancamento',{ 'categorias' : categorias, sideElement: sideBarInput });
+        res.render('lancamento/lancamento',{ 
+            'categorias' : categorias, 
+            sideElement: sideBarInput ,
+            token: req.cookies.token, 
+            user: req.cookies.user 
+        });
     },
 
     list: (req, res) =>{
-        res.render('lancamento/listarLancamento', {sideElement:sideBarInput});
+        res.render('lancamento/listarLancamento', {
+            sideElement:sideBarInput,
+            token: req.cookies.token, 
+            user: req.cookies.user 
+        });
     }
 
 
