@@ -1,0 +1,36 @@
+.despesasContainer > div > div > button:after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+
+    
+}
+
+.despesasContainer > div > div > button:hover:after{
+    background-color: black!important;
+    opacity: .3;
+
+}
+
+
+
+
+.receitasContainer > div > div > button:after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+
+    
+}
+
+.receitasContainer > div > div > button:hover:after{
+    background-color: black!important;
+    opacity: .3;
+
+}

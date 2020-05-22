@@ -1,0 +1,9 @@
+{
+    "development": {
+        "username": "Sprint",
+        "password": "SantanderCoders1!2@3#",
+        "database": "Santander",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+}

@@ -1,0 +1,115 @@
+<style>
+
+.hanburgerContainer {
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 42px;
+  height: 38px;
+  display: <%=options.display%>;
+  border: 2px solid gray;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 28px;
+  height: 3px;
+  background-color: #333;
+  margin: 6px 6px;
+  transition: 0.4s;
+}
+
+@media screen and (max-width:1070px) {
+  .hanburgerContainer{
+    display: inline;
+    position: relative;
+  }
+}
+
+</style>
+  <div class="hanburgerContainer">
+    <input id="hamburgerInput" type="checkbox" style="opacity: 0; width: 100%; height:100%; position: absolute;"/>
+    <div class="bar bar1"></div>
+    <div class="bar bar2"></div>
+    <div class="bar bar3"></div>
+  </div>
+
+
+<script>
+$('.hanburgerContainer').mouseenter(function() {
+  $('#hamburgerInput').css({
+    'cursor': 'pointer'
+  })
+
+  $('.bar').css({'background-color': 'azure'}) 
+
+  $('.hanburgerContainer').css({
+    'border': '2px solid azure'
+  })
+
+}).mouseleave(function() {      
+  $('.hanburgerContainer').css({
+    'border': '2px solid gray'
+  })
+  $('.bar').css({'background-color': '#333'}) 
+
+});
+
+/*$('.hanburgerContainer').hover(function(){
+  $('#hamburgerInput').css({
+    'cursor': 'pointer'
+  })
+
+  $('.hanburgerContainer').css({
+    'border': '2px solid red'
+  })
+})*/
+
+
+$('.hanburgerContainer').click(function(){
+  if ($('#hamburgerInput:checked').val()){
+  //$('.navLogin').fadeIn("slow", function(){})
+  $('.navLogin').slideDown("slow", function(){})
+
+  $('.navLogin').css({
+        'width': '100%',
+        'display': 'flex',
+        'flex-direction': 'column',
+    });
+
+  $('.navLogin nav').css({
+      'color': 'red',
+      'width': '100%'
+  });
+
+  $('.navigator').css({
+    'width': '100%',
+    'flex-direction': 'column',
+    'padding': '0px'
+  });
+    
+  $('.navigator li').css({
+      'border': '1px solid black',
+      'color': 'black',
+      'background-color': 'white',
+      'width': '100%',
+      'text-align': 'center',
+      'height': '40px',
+      'margin': '0px',        
+  });
+
+  $('.loginSigin').css({
+      'width': '100%',
+  });
+
+  $('.loginSigin div').css({
+    'border': '1px solid black'
+  });
+
+  }else{
+    $('.navLogin').fadeOut("slow", function(){})
+  }
+
+  $('#hamburgerInput').attr('checked',!'checked')
+
+})
+</script>

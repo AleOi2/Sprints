@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('../Components/templateHead', {
+        pageName:'Login', 
+        cssFile: [
+            '/css/Artigos/artigos.css',
+        ]
+    }) %> 
+<body>
+    <%-include('../Components/Header/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Alexandre", "Logout"],
+            routes: [``,`/usuarios/logout`]
+        }
+
+    }) %>  
+
+    
+    <!-- check for user on page load --> 
+    <% if (typeof token != "undefined" && typeof user != "undefined") { %>
+    <!-- make user available to script tag -->
+    <% var token = token %>
+  
+    <!-- use script tag to access ejs data and local storage -->
+    <script>
+      let token = <%- JSON.stringify(token) %>;
+      let user = <%- JSON.stringify(user) %>;
+      localStorage.setItem('token', JSON.stringify({'token': token}));
+      localStorage.setItem('user', JSON.stringify({'user': user}));
+    </script>
+  <% } %>
+
+
+    <body>
+        <div style="position: relative;height: 100vh;">
+            <%- include('../Components/sideMenu/sideMenu', sideElement )%>
+        </div>
+    
+
+    </body>
+
+    <%-include('../Components/footer') %>
+</body>
+</html>

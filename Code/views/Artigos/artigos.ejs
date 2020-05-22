@@ -7,41 +7,46 @@
         ]
     }) %> 
 <body>
-    <%-include('../Components/headerComponent',{
+    <%-include('../Components/Header/headerComponent',{
         navigator:{
             label: ["Início", "Sobre Nós", "Artigos"],
             routes:[`/inicio`,`/sobrenos`,`/artigos`]
         },
         loginSigin:{
             label: ["Login", "Cadastrar"],
-            routes: [`/login`,`/cadastrar`]
+            routes: [`/usuarios/login`,`/usuarios/cadastro`]
         }
 
     }) %>  
-    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; ">
+    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 20px; box-sizing: border-box;">
         <div class="artigosTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
             <h1 style="font-family: 'Noto Sans SC', sans-serif;">Artigos</h1>
         </div>
-        <div style="width:80%; height:500px; margin-bottom: 1rem;max-width: 80%; 
-            display: flex; justify-content: space-around;background-image: url(<%=dummy.name%>); 
-            background-position: top; position: relative;" class="artigosPrimeiroArtigo">
-            <div style="position: absolute; top: 60%; left: 10%; z-index: 1;">
-                <div style="color: black;">
-                    <%=dummy.title  %> 
+        <div class="artigos mainCard" style="width: 100%; height: 500px; margin-bottom: 2rem;">
+            <div style="width:100%; height:100%;box-sizing:border-box;position: relative;">
+                <div style="width:100%; height:100%; margin-bottom: 1rem;
+                display: flex; justify-content: space-around;background-image: url(<%=dummy.name%>); 
+                background-position: top; position: relative;background-repeat:no-repeat; background-size:cover" class="artigosPrimeiroArtigo">
                 </div>
-                <div>
-                    <%=dummy.label  %>                 
+                <div style="position: absolute; top: 60%; left: 10%; z-index: 1;">
+                    <h1 style="color: black;">
+                        <%=dummy.title  %> 
+                    </h1>
+                    <h3>
+                        <%=dummy.label  %>                 
+                    </h3>
+                    <a href=<%=dummy.ref%> style="color:red"> Ler mais > </a>
                 </div>
-                <a href=<%=dummy.ref%> style="color: red;"> Ler mais > </a>
+                <a href=<%=dummy.ref%> style="display:none; color:red"> Ler mais > </a>
             </div>
         </div>
-        <div class="artigosCardContainer" style="width: 80%; display: flex;margin: 0 auto; flex-wrap: wrap; justify-content: space-between;">
+        <div class="artigosCardContainer" style="width: 100%!important; display: flex;margin: 0 auto; flex-wrap: wrap; justify-content: space-between;">
             <%cards.forEach((element, index) =>{%>
                 <% if(index < numDisplay){ %>
-                    <div class="artigosCard" style="flex-basis: 500px; margin-bottom: 1rem; width:45%; overflow:hidden; background-position: center;background-size: cover; height: 500px;
+                    <div class="artigosCard" style="flex-basis: 600px; margin-bottom: 1rem; width:45%; overflow:hidden; background-position: center;background-size: cover; height: 500px;
                     box-shadow: 1px 1px 5px 3px rgba(0, 0, 0, 0.5); border-radius: 5px;">
                         <div style="overflow: hidden; height: 60%;background-image: url(<%=element.name%>); 
-                            background-position: 25% 75%; background-size: 500px;">
+                            background-position: 25% 75%; background-size:cover; background-repeat:no-repeat;">
                         </div>
                         <div style=" position:relative; height:30%">
                             <h1 style="margin-left: 2rem;font-family: 'Noto Sans SC', sans-serif;"><%=element.title%></h1>
@@ -65,5 +70,6 @@
 
         </div>
     </div>
+    <%-include('../Components/footer') %>
 </body>
 </html>
