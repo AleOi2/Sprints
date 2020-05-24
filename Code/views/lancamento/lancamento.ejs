@@ -30,17 +30,17 @@
                   <% categorias[0].forEach((imagemCategoria, index )=>{ %>
                   <div class="col-md-3 col-4 p-2" style="height: 250px">
                       <div class="card"  style="height: 100%;">
-                        <button  style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;">
-                            <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>">
+                        <button  style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
+                            <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria[1] %>" alt="<%= imagemCategoria[1] %>">
                         </button>
                       </div>
                   </div>  
                 <!-- Modal -->
-                <div class="modal fade" id="<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"><%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %></h5>
+                        <h5 class="modal-title" id="staticBackdropLabel"><%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -79,18 +79,18 @@
                   <% categorias[1].forEach((imagemCategoria, index )=>{ %>
                   <div class="col-md-3 col-4 p-2" style=" height: 250px;">
                       <div class="card" style="height: 100%;">
-                        <button style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;">
-                            <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>">
+                        <button style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
+                            <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria[1] %>" alt="<%= imagemCategoria[1] %>">
                         </button>
                       </div>
                   </div>  
         
                 <!-- Modal -->
-                <div class="modal fade" id="<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"><%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %></h5>
+                        <h5 class="modal-title" id="staticBackdropLabel"><%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
