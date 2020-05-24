@@ -44,8 +44,8 @@ route.get('/auth/google',
 route.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/home/home' }),
   (req, res) => {
-    console.log("Teste")
-    console.log(req.session.passport)
+    //console.log("Teste") //debug
+    //console.log(req.session.passport) //debug
     const token = jwt.sign(
       { id: req.session.passport },
       secret,
@@ -65,8 +65,8 @@ route.get('/auth/google/callback',
   route.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/home/home' }),
   (req, res) => {
-    console.log("Teste") //debug
-    console.log(req.session.passport) //debug
+    // console.log("Teste") //debug
+    // console.log(req.session.passport) //debug
     const token = jwt.sign(
       { id: req.session.passport },
       secret,
