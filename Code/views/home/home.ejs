@@ -8,10 +8,14 @@
         ]
     }) %> 
 <body>
+<<<<<<< HEAD
 
   <!-- check if token --> 
     <% if (typeof token === "undefined" && typeof user === "undefined") { %>
       <%-include('../Components/Header/headerComponent',{
+=======
+    <%-include('../Components/Header/headerComponent',{
+>>>>>>> darioCode
         navigator:{
             label: ["Início", "Sobre Nós", "Artigos"],
             routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
@@ -19,6 +23,7 @@
         loginSigin:{
             label: ["Login", "Cadastrar"],
             routes: [`/usuarios/login`,`/usuarios/cadastro`]
+<<<<<<< HEAD
           }
     }) %>   
       
@@ -51,6 +56,10 @@
       }
     </script>
 
+=======
+        }
+    }) %> 
+>>>>>>> darioCode
     
     <section>
         <div style="position:relative">

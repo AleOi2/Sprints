@@ -7,33 +7,18 @@
         ]
     }) %> 
 <body>
-    <!-- check if token --> 
-    <% if (typeof token === "undefined" && typeof user === "undefined") { %>
-        <%-include('../Components/Header/headerComponent',{
-          navigator:{
-              label: ["Início", "Sobre Nós", "Artigos"],
-              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
-          },
-          loginSigin:{
-              label: ["Login", "Cadastrar"],
-              routes: [`/usuarios/login`,`/usuarios/cadastro`]
-            }
-      }) %>   
-        
-      <% } else{ %>
-        <%-include('../Components/Header/headerComponent',{
-          navigator:{
-              label: ["Início", "Sobre Nós", "Artigos"],
-              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
-          },
-          loginSigin:{
-              label: [ user.name, "Logout"],
-              routes: [``,`/usuarios/logout`]
-          }
-          }) %>   
-      <%}%>
-  
-      <div style="position: relative;height: 100vh;">
+    <%-include('../Components/Header/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Alexandre", "Logout"],
+            routes: [``,'/usuarios/login']
+        }
+
+    }) %> 
+    <div style="position: relative;height: 100vh;">
         <%- include('../Components/sideMenu/sideMenu', sideElement )%>
     </div>
     </body>

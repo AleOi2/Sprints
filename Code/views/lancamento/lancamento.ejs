@@ -7,74 +7,62 @@
         ]
     }) %> 
 <body>
-    <!-- check if token --> 
-    <% if (typeof token === "undefined" && typeof user === "undefined") { %>
-        <%-include('../Components/Header/headerComponent',{
-          navigator:{
-              label: ["Início", "Sobre Nós", "Artigos"],
-              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
-          },
-          loginSigin:{
-              label: ["Login", "Cadastrar"],
-              routes: [`/usuarios/login`,`/usuarios/cadastro`]
-            }
-      }) %>   
-        
-      <% } else{ %>
-        <%-include('../Components/Header/headerComponent',{
-          navigator:{
-              label: ["Início", "Sobre Nós", "Artigos"],
-              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
-          },
-          loginSigin:{
-              label: [ user.name, "Logout"],
-              routes: [``,`/usuarios/logout`]
-          }
-        }) %>   
-      <%}%>
-  
+    <%-include('../Components/Header/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Alexandre", "Logout"],
+            routes: [``,'/usuarios/logout']
+        }
+
+    }) %>
     <script>
         localStorage.setItem("mytime", Date.now());
     </script>
-    <div style = "position:relative; width: 100%; display: flex;">
-        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+    <div style = "position:relative; width: 100%; border: 2px solid grey; display: flex;">
+        <%- include('../Components/sideMenu/sideMenu', sideElement )%>
         <div style="display: flex; flex-direction: column; position: relative; width: 100%;">
             <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
-                <h2 style="color: red;">Despesas</h2>
+                <h2 style="color: grey;">Despesas</h2>
                 <section class="row p-5 despesasContainer">       
                   <% categorias[0].forEach((imagemCategoria, index )=>{ %>
-                  <div class="col-md-3 col-4 p-2" style="height: 250px">
-                      <div class="card"  style="height: 100%;">
-                        <button  style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;">
-                            <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>">
+                  <div class="col-md-3 col-4 p-2" style="height: 30%">
+                      <div class="card"  style="width: 100%; height: auto">
+                        <button  style="width=100% height: auto;background-color: #F5F6F8; border-color: grey; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
+                            <img  src="/images/lancamento/<%= imagemCategoria[1] %>" width="95%" height="auto" alt="<%= imagemCategoria[1] %>">
                         </button>
                       </div>
                   </div>  
                 <!-- Modal -->
-                <div class="modal fade" id="<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"><%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %></h5>
+                        <img  src="/images/lancamento/<%= imagemCategoria[1] %>" width="25%" height="auto" alt="<%= imagemCategoria[1] %>">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         </div>
                         <div class="modal-body">
-                            <form action="">
+                            <form action="/lancamento/insert" method="post">
                                 <!-- area de campos do form -->
+                                <div class="form-group">
+                                    <input type="hidden" name="categoryForm" value="<%= imagemCategoria[0] %>">
+                                </div>                               
                                 <div class="form-group">	
-                                    <input id="textNome" class="form-control" placeholder="Valor R$..." type="text">	  
+                                    <input id="Valor" class="form-control" placeholder="Valor R$..." type="text" name="value">	  
                                 </div>
                                 <div class="form-group">	
-                                    <input id="Data" class="form-control" placeholder="Data..." type="date">	  
+                                    <input id="Data" class="form-control" placeholder="Data..." type="date" name="date">	  
                                 </div>                        
                                 <div class="form-group">	
-                                    <input id="Descricao" class="form-control" placeholder="Descrição..." type="text">	  
+                                    <input id="Descricao" class="form-control" placeholder="Descrição..." type="text" name="description">	  
                                 </div>                        
                                 <div id="actions" class="row">
                                   <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                    <button type="submit" class="btn btn-primary" >Salvar!*</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                   </div>
                                 </div>
@@ -89,43 +77,46 @@
             </div>
         
             <div class="container p-3 my-3 border"  style="border:1px solid black; border-radius: 10px;">
-                <h2 style="color: red;">Receitas</h2>
+                <h2 style="color: grey;">Receitas</h2>
                 <section class="row p-5 receitasContainer" >       
                   <% categorias[1].forEach((imagemCategoria, index )=>{ %>
-                  <div class="col-md-3 col-4 p-2" style=" height: 250px;">
-                      <div class="card" style="height: 100%;">
-                        <button style="height: 100%;background-color: #F5F6F8; border-color: red; position: relative;;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" style="background-color: white;">
-                            <img style= "transform: translate(0,-20px)" src="/images/lancamento/<%= imagemCategoria %>" alt="<%= imagemCategoria %>">
-                        </button>
-                      </div>
-                  </div>  
+                    <div class="col-md-3 col-4 p-2" style="height: 30%">
+                        <div class="card"  style="width: 100%; height: auto">
+                          <button  style="width=100% height: auto;background-color: #F5F6F8; border-color: grey; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
+                              <img  src="/images/lancamento/<%= imagemCategoria[1] %>" width="95%" height="auto" alt="<%= imagemCategoria[1] %>">
+                          </button>
+                        </div>
+                    </div>  
         
                 <!-- Modal -->
-                <div class="modal fade" id="<%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"><%= imagemCategoria.substr(0, imagemCategoria.indexOf('.')) %></h5>
+                        <img  src="/images/lancamento/<%= imagemCategoria[1] %>" width="25%" height="auto" alt="<%= imagemCategoria[1] %>">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         </div>
                         <div class="modal-body">
          
-                            <form action="">
+                            <form action="/lancamento/insert" method="post">
                                 <!-- area de campos do form -->
-                                <div class="form-group">	
-                                    <input id="textNome" class="form-control" placeholder="Valor R$..." type="text">	  
+                                <div class="form-group">
+                                    <input type="hidden" name="categoryForm" value="<%= imagemCategoria[1] %>">
                                 </div>
                                 <div class="form-group">	
-                                    <input id="Data" class="form-control" placeholder="Data..." type="date">	  
+                                    <input id="Valor" class="form-control" placeholder="Valor R$..." name="value" type="text">	  
+                                </div>
+                                <div class="form-group">	
+                                    <input id="Data" class="form-control" placeholder="Data..." name="date" type="date">	  
                                 </div>                        
                                 <div class="form-group">	
-                                    <input id="Descricao" class="form-control" placeholder="Descrição..." type="text">	  
+                                    <input id="Descricao" class="form-control" placeholder="Descrição..." name="description" type="text">	  
                                 </div>
                                 <div id="actions" class="row">
                                   <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                    <button type="submit" class="btn btn-primary" >Salvar</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                   </div>
                                 </div>

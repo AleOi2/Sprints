@@ -35,7 +35,7 @@ module.exports = (Sequelize, DataType)=>{
             allowNull: false
           }
     },{
-        tableName: 'category'
+        tableName: 'release'
     })
 
     return Release

@@ -35,18 +35,19 @@ module.exports = {
            type: Sequelize.INTEGER,
            references: {
              model: {
-               tableName: 'Users',
-               key: 'id'
+               tableName: 'users'
              },
+             key: 'id'
            }
          },
+
          category_id: {
           type: Sequelize.INTEGER,
           references: {
             model: {
-              tableName: 'category',
-              key: 'id'
+              tableName: 'category'
             },
+            key: 'id'
           }
         }
 
