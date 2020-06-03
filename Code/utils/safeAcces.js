@@ -11,6 +11,6 @@ function safeAccess(object, keyArray, defaultValue) {
     }
     return aux;
   }
-  
+// Console.log
 module.exports = { safeAccess };
 
