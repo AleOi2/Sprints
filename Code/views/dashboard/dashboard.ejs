@@ -14,74 +14,40 @@
         google.charts.load('current', {
             'packages': ['corechart']
         });
-        google.charts.setOnLoadCallback(drawChart);
 
-
-        /*var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-            console.log("Valores de entrada")
-            console.log(xhttp.response)
-            console.log(this.response)
-        }
-        };
-        xhttp.open("GET", "http://localhost:3000/");
-        xhttp.send();*/
-
-        /*$.ajax({
-            type: "GET",
-            url: "http://localhost:3000/dashboard/data",
-            body: JSON.stringify([
-                {id: 1, name: "Shahed"}, 
-                {id: 2, name: "Hossain"}
-            ]),
-            success: function(msg){
-                alert( "Data Saved: " + msg );
-            }
-        });*/
-
-        const url = "http://localhost:3000/dashboard/data";
-        fetch(url, {
-            method: 'post',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                Teste: "Valor teste"
-            })
-        }).then((response) => {
-            console.log(response);
-            console.log("Valore trs");
-            response.json().then((resp) => {
-                console.log(resp);
-            })
-        })
-
-        function drawChart() {
-
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', 11],
-                ['Eat', 2],
-                ['Commute', 2],
-                ['Watch TV', 2],
-                ['Sleep', 7]
-            ]);
-
+        function drawChart(entryData, title) {
+            var data = google.visualization.arrayToDataTable(entryData);
             var options = {
-                title: 'My Daily Activities'
+                title: title                
             };
-
-            var chart1 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[0]);
-            var chart2 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[1]);
-
+            var chart1 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[(title === 'Revenue')?0:1]);
             chart1.draw(data, options);
-            chart2.draw(data, options);
         }
+
+        window.addEventListener("load", function(event) {
+            const url = `<%=url%>dashboard/data`;
+            fetch(url, {
+                method: 'post',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Teste: "Valor teste"
+                })
+            }).then((response) => {
+                response.json().then((resp) => {
+                    if(typeof(resp.revenue.data) !== 'undefined'){
+                        drawChart(resp.revenue.data, resp.revenue.title)
+                        drawChart(resp.costs.data, resp.costs.title)
+                    }
+                })
+            })
+        });
+
+
+
     </script>
-
-
 
     <%-include('../Components/Header/headerComponent',{
             navigator:{

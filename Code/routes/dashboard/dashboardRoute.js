@@ -4,6 +4,6 @@ const dashboardController = require('../../controller/dashboradController')
 const dashboardModel = require('../../model/dashboardModel')
 
 router.post('/data', dashboardModel.getData);
-router.get('/', dashboardController);
+router.get('/', dashboardController.pizzaGraph);
 
 module.exports = router;

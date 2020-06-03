@@ -27,7 +27,7 @@ module.exports = (Sequelize, DataType)=>{
             allowNull: false
           }
     },{
-        tableName: 'article',
+        tableName: 'Article',
     })
 
     return Article

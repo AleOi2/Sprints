@@ -23,7 +23,13 @@ route.post('/cadastro', [
 
   check('email').isEmail().withMessage('E-mail com formato inválido'),
   check('password').isLength({ min: 6 }).withMessage('Senha de pelo menos 6 caracteres'),
-], usuarioController.criarUsuario);
+], body('checkerPassword').custom((value, { req }) => {
+  if (value !== req.body.password) {
+    throw new Error('Confirmar Password e Password devem ser iguais ');
+  }  
+  // Indicates the success of this synchronous custom validator
+  return true;
+}), usuarioController.criarUsuario);
 
 route.get('/cadastro', usuarioController.viewFormCadastro);
 route.get('/login', usuarioController.viewFormLogin);
