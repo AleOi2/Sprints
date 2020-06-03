@@ -8,14 +8,10 @@
         ]
     }) %> 
 <body>
-<<<<<<< HEAD
 
   <!-- check if token --> 
     <% if (typeof token === "undefined" && typeof user === "undefined") { %>
       <%-include('../Components/Header/headerComponent',{
-=======
-    <%-include('../Components/Header/headerComponent',{
->>>>>>> darioCode
         navigator:{
             label: ["Início", "Sobre Nós", "Artigos"],
             routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
@@ -23,7 +19,6 @@
         loginSigin:{
             label: ["Login", "Cadastrar"],
             routes: [`/usuarios/login`,`/usuarios/cadastro`]
-<<<<<<< HEAD
           }
     }) %>   
       
@@ -56,10 +51,6 @@
       }
     </script>
 
-=======
-        }
-    }) %> 
->>>>>>> darioCode
     
     <section>
         <div style="position:relative">
@@ -93,7 +84,7 @@
             </div>  
           </div>  
         </div>
-
+        
         <div class="metas" style="display:flex; width: 100%">
           <div style="width: 50%; position: relative;">
             <img src="/images/home/imagens/viagem.jpg" class="card-img-top" style="margin: 0 auto; width: 100%; height: 100%;" alt="...">
