@@ -13,7 +13,6 @@ const lancamentoController = {
 
         let categorias3 = [];             
         categoriasDespesa.forEach((dados) => {categorias3.push([dados.id,dados.category])});
-        // console.log(categorias3) //debug
 
 
         let categoriasReceita = null;
@@ -23,14 +22,12 @@ const lancamentoController = {
 
         let categorias4 = [];             
         categoriasReceita.forEach((dados) => {categorias4.push([dados.id,dados.category])});
-        console.log(categorias4) //debug
+
         
         let categorias = [];
         categorias.push(categorias3,categorias4);  
-        // console.log("******************************")
-        // console.log(categorias[1])
-        // console.log("******************************")
-        // console.log(categorias[1][0][1])
+        console.log(categorias);
+
 
         res.render('lancamento/lancamento',{ 'categorias' : categorias, sideElement: sideBarInput,
                                                                         token: req.cookies.token, 
@@ -46,8 +43,8 @@ const lancamentoController = {
         let { categoryForm, date, description, value } = req.body;
         let category_id = categoryForm;
         let users_id = req.cookies.user.id;
-        console.log(" ===vars "+date+" "+description+" "+value)  //debug
-        console.log("id usuario lancto: "+users_id);             //debug
+        console.log(" ===vars categoria:"+categoryForm+" "+date+" "+description+" "+value)  //debug
+
         Release.create({
             date,
             description,

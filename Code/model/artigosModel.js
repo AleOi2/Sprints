@@ -1,4 +1,7 @@
 const numDisplay = 6;
+
+
+
 const dummy = {
         id:1,        
         type: "main",
