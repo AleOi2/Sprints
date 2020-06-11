@@ -55,6 +55,7 @@ route.get('/auth/google/callback',
       secret,
       { expiresIn: 86400 }
     )
+    req.session = { user: req.user, token };
     res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
     res.cookie('user', req.user, { maxAge: 24 * 60 * 60 * 1000 });
     res.redirect('/dashboard');
@@ -73,6 +74,7 @@ route.get('/auth/google/callback',
       secret,
       { expiresIn: 86400 }
     )
+    req.session = { user: req.user, token };
     res.cookie('token', token, { maxAge: 24 * 60 * 60 * 1000 });
     res.cookie('user', req.user, { maxAge: 24 * 60 * 60 * 1000 });
     res.redirect('/dashboard');

@@ -30,6 +30,11 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
+      
+      month_year: {
+        type: Sequelize.STRING(50),
+        allowNull: false
+      },
 
       users_id: {
         type: Sequelize.INTEGER,

@@ -1,61 +1,76 @@
-let revenue = {
-    data: [
-        ['Task', 'Hours per Day'],
-        ['Work', 11],
-        ['Eat', 2],
-        ['Commute', 2],
-        ['Watch TV', 2],
-        ['Sleep', 7]
-    ],
-    title: 'Revenue'
+const { Users, Release, Category } = require('../Sequelize/model')
+const { Op } = require('sequelize')
+const moment = require('moment')
+moment().format();
+
+const getData = (categoryType) => {
+    return Release.findAll({
+        where: {
+            users_id: 1,
+            date: {
+                [Op.gte]: moment().subtract(365, 'days').toDate().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+              },
+        },
+        group:['Release.month_year' ,'Release.category_id'],
+        order: [['month_year', 'DESC']],
+        include: [
+            {
+                model: Users,
+                required: true,
+                attributes:['name']
+            },
+            {
+                model: Category,
+                required: true,
+                attributes:['type', 'valuePredict', 'category'],
+                where:{
+                    type:categoryType
+                }
+
+            },
+        ],
+        attributes:[
+            'month_year',
+            'category_id',
+            [Release.sequelize.fn('sum', Release.sequelize.col('Release.value')), 'sum'],
+
+        ]   
+        // attributes:[
+        //     'category_id',
+        //     Release.sequelize.fn('sum', Release.sequelize.col('Release.value')),
+        // ],
+        // group:['Release.category_id'],
+    }).then((response) => {
+        return response.map((element, index) => {
+            return element.dataValues
+        }).filter((values) => values !== undefined)
+    })
 }
-
-let costs = {
-    data: [
-        ['Task', 'Hours per Day'],
-        ['Work', 11],
-        ['Eat', 2],
-        ['Commute', 2],
-        ['Watch TV', 2],
-        ['Sleep', 7]
-    ],
-    title: 'Costs'
-
-}
-
-const { Users, Release } = require('../Sequelize/model')
 
 const dashboardModel = {
 
-    getData: async (req, res) => {
+    getRevenueCostsData: async (req, res) => {
         try {
-            console.log("Tentativa errada")
-            console.log(Release)
-            let now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-            console.log(now)
+            // let now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
             // await Release.create({
             //     date: now,
             //     createdAt: now,
             //     updatedAt: now,
-            //     description: "Vamos fazer alguns testes",
-            //     'value':20,
+            //     description: "Essas perguntas 45 ",
+            //     'value':120,
             //     users_id: 1,
-            //     category_id: 1
+            //     category_id: 14
             // })
 
-            Release.findAll({
-                where: {
-                    users_id: 1
-                },
-                include: {
-                    model: Users,
-                    required: true
-                }
-            }).then((response) => {
-                console.log(response)
-            })
+            // Filtering
+            const allRevenueData = await getData('R');
+            console.log("Revenue")
+            console.log(allRevenueData)
+            const allCostsData = await getData('D');
+            console.log("Costs")
+            console.log(allCostsData)
 
-            res.send({ revenue: revenue, costs: costs })
+            res.send({ revenue: allRevenueData, costs: allCostsData })
 
         } catch (error) {
             res.status(500).send(error)

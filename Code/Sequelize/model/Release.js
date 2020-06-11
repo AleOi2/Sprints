@@ -33,7 +33,12 @@ module.exports = (Sequelize, DataType) => {
     category_id: {
       type: DataType.INTEGER,
       allowNull: false
+    },
+    month_year: {
+      type: DataType.STRING,
+      allowNull: false
     }
+
   }, {
     tableName: 'Release'
   });
