@@ -1,6 +1,8 @@
 //const categorias =[["educacao.png", "emprestimo.png", "lazer.png", "mercado.png", "moradia.png", "restaurante.png", "saude.png", "servicos.png", "transporte.png", "vestuario.png", "viagens.png", "other.png"],  ["salario.png", "emprestimo.png", "other.png"] ];
 const { sideBarInput } = require("../model/sideBarInput");
-const { Category, Release } = require("../Sequelize/model/");
+const { Category, Release, User } = require("../Sequelize/model/");
+const moment = require('moment')
+
 
 
 const lancamentoController = {
@@ -57,6 +59,50 @@ const lancamentoController = {
         });
         //console.log("realizado"); //debug
         return res.redirect("/lancamento",);
+    }, 
+
+    index: async (req, res) => {
+
+        //Função para obter o Id do usuário logado
+        let userId = await User.findOne({
+            where: {
+                email: req.cookies.user.email
+            }            
+        })
+        userId = userId.id;
+
+        //Função para obter todos os lançamentos do usuário
+        let userReleases = await Release.findAll({
+            where: {users_id: userId}
+        });
+        
+        //Função para obter o nome das categorias dos lançamentos
+        let categoriesEdit = [];
+        let categories = await Category.findAll();
+        categories.forEach(category =>{
+            categoriesEdit.push({id: category.id, name: category.category.replace('.png', '')})
+        })
+        
+
+        res.render('lancamento/listarLancamento', {
+            sideElement:sideBarInput,
+            userReleases,
+            categoriesEdit, 
+            moment,
+        });     
+
+    },
+
+    edit: async (req, res)=>{
+
+        let { id } = req.params;
+        
+
+        console.log(id);
+
+
+
+
     }
 }
 
