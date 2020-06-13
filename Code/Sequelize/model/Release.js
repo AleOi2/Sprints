@@ -40,7 +40,7 @@ module.exports = (Sequelize, DataType) => {
     }
 
   }, {
-    tableName: 'Release'
+    tableName: 'release'
   });
 
   Release.associate = (model) =>{

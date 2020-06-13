@@ -27,7 +27,7 @@ module.exports = (Sequelize, DataType)=>{
             allowNull: false
           }
     },{
-        tableName: 'Category'
+        tableName: 'category'
     });
 
     Category.associate = (model) =>{
