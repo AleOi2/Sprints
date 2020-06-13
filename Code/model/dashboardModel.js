@@ -1,12 +1,14 @@
 const { Users, Release, Category } = require('../Sequelize/model')
 const { Op } = require('sequelize')
-const moment = require('moment')
+const moment = require('moment');
+const { cookie } = require('express-validator');
+const { safeAccess } = require('../utils/safeAcces');
 moment().format();
 
-const getData = (categoryType) => {
+const getData = (categoryType, id) => {
     return Release.findAll({
         where: {
-            users_id: 1,
+            users_id:id,
             date: {
                 [Op.gte]: moment().subtract(365, 'days').toDate().toISOString().replace(/T/, ' ').replace(/\..+/, '')
               },
@@ -61,15 +63,9 @@ const dashboardModel = {
             //     users_id: 1,
             //     category_id: 14
             // })
-
             // Filtering
-            const allRevenueData = await getData('R');
-            console.log("Revenue")
-            console.log(allRevenueData)
-            const allCostsData = await getData('D');
-            console.log("Costs")
-            console.log(allCostsData)
-
+            const allRevenueData = await getData('R', safeAccess(req, ['cookies', 'user', 'id'], undefined));
+            const allCostsData = await getData('D', safeAccess(req, ['cookies', 'user', 'id'], undefined));
             res.send({ revenue: allRevenueData, costs: allCostsData })
 
         } catch (error) {

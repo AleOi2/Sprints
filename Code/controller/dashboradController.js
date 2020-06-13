@@ -4,8 +4,6 @@ const { Release } = require("../Sequelize/model/Release")
 
 
 const dashboardController = {
-
-
     pizzaGraph: (req, res) => {
 
         res.render('dashboard/dashboard', {

@@ -104,10 +104,7 @@ let usuarioController = {
                     name: userValues.name,
                     surname: userValues.surname,
                     email: userValues.email,
-                }
-    
-                console.log("Chegando perto")
-    
+                }    
                 res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
                 res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
                 return res.redirect('/dashboard');
@@ -196,13 +193,14 @@ let usuarioController = {
                         { expiresIn: 24 * 1000 * 60 * 60 }
                     )
                     let filterredValues = {
+                        id: userValues.id,
                         name: userValues.name,
                         email: userValues.email,
+                        surname: userValues.surname,
                     }
 
                     res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
                     res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
-                    console.log('Entrei aqui')
                     return res.redirect('/dashboard');
                 }
             })
