@@ -1,0 +1,26 @@
+
+@media screen and (min-width:1080px){
+    
+    #card1{
+        margin-right:100px;
+    }
+
+    #line1{
+        left: 450px;
+    }
+
+
+}
+
+@media screen and (max-width:1079px){
+    
+    #card1{
+        margin-bottom:30px;
+    }
+
+    #line1{
+        left: 200px;        
+    }
+
+}
+

@@ -28,7 +28,7 @@ let revenue = {
 <%-include('../Components/templateHead', {
         pageName:'Login', 
         cssFile: [
-            '/css/Artigos/artigos.css',
+            '/css/Dashboard/dashboard.css',
         ]
     }) %>
 
@@ -45,13 +45,19 @@ let revenue = {
             var data = google.visualization.arrayToDataTable(entryData);
             var options = {
                 title: title,
-                backgroundColor: 'black'              
+                backgroundColor: 'white',
+                chartArea:{left:50,top:'10%',width:'90%',height:'90%'},
+                fontSize: 22,
+                legend: {position: 'right', textStyle: {color: 'blue', fontSize: 18}},
+                titleTextStyle:{ fontSize: 30 }
+
             };
-            var chart1 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[(title === 'Revenue')?0:1]);
+            var chart1 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[(title ===
+                'Revenue') ? 0 : 1]);
             chart1.draw(data, options);
         }
 
-        window.addEventListener("load", function(event) {
+        window.addEventListener("load", function (event) {
             let url = `<%=url%>dashboard/data`;
             fetch(url, {
                 method: 'post',
@@ -64,30 +70,36 @@ let revenue = {
                 })
             }).then((response) => {
                 response.json().then((resp) => {
-                    let { costs ,revenue } = resp; 
+                    let {
+                        costs,
+                        revenue
+                    } = resp;
                     let pieCostsData = {
-                        data:[['Task', 'Hours per Day']],
+                        data: [
+                            ['Task', 'Hours per Day']
+                        ],
                         title: 'Costs'
                     }
                     let pieRevenueData = {
-                        data:[['Task', 'Hours per Day']],
+                        data: [
+                            ['Task', 'Hours per Day']
+                        ],
                         title: 'Revenue'
                     }
-                    if(typeof(resp.revenue) !== 'undefined'){
+                    if (typeof (resp.revenue) !== 'undefined') {
                         let chartRevenueInput = completeObj(revenue, pieRevenueData, '2020-06');
-                        let chartCostsInput = completeObj(costs, pieCostsData, '2020-06') 
-                        drawChart(chartRevenueInput.data, chartRevenueInput.title)
-                        drawChart(chartCostsInput.data, chartCostsInput.title)
+                        let chartCostsInput = completeObj(costs, pieCostsData, '2020-06');
+                        drawChart(chartRevenueInput.data, chartRevenueInput.title);
+                        drawChart(chartCostsInput.data, chartCostsInput.title);
+                        
+                        console.log($('#revenueDate'))
+                        console.log($('#costsDate'))
+                        $('#revenueDate').html(convertDateToLabel('2020-06'));
+                        $('#costsDate').html(convertDateToLabel('2020-06'));
                     }
                 })
             })
         });
-
-
-
-
-
-
     </script>
 
     <%-include('../Components/Header/headerComponent',{
@@ -103,15 +115,36 @@ let revenue = {
     }) %>
 
     <body>
-        <div style="position: relative;height: 100vh;">
+        <div style="position: relative;height: 100vh;background-color: #ebebec">
             <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <div style="display: flex;border: 2px solid red; justify-content:flex-end; background-color: antiquewhite;">
-                <div class="piechart" style="width: 900px; height: 500px; border: 2px solid blue"></div>
-                <div class="piechart" style="width: 900px; height: 500px;"></div>
+            <h1 style="margin-bottom: 20px;">
+                Distribuição de Gastos e Receitas
+            </h1>
+            <div style="display: flex; justify-content:center; background-color: #ebebec; display:flex; flex-basis: 500px; flex-wrap: wrap; min-height: 600px">
+                <div id="card1" style="border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white">
+                    <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
+                    <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
+                        <button style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button>                       
+                        <div id = 'revenueDate' style="display:flex; justify-content: center; align-items: center; font-size: 25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>                       
+                        <button style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>                       
+                    </div>
+                    <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black;box-sizing: unset;"></div>
+                </div>
+                <div id="card2" style="border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white">
+                    <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
+                    <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
+                        <button style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button>                       
+                        <div id = 'costsDate' style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px">  </div>                       
+                        <button style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>                                               
+                    </div>
+                    <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black; box-sizing: unset;"></div>
+                </div>
             </div>
+            <div id='line1' style="border: 1px solid black; position: relative; top: 80px; width: 70%; align-self: flex-end;"></div>
         </div>
     </body>
 
     <%-include('../Components/footer') %>
 </body>
+
 </html>
