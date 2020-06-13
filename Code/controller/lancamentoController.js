@@ -96,7 +96,7 @@ const lancamentoController = {
     edit: async (req, res)=>{
 
         let { id } = req.params;
-        
+        console.log("Editando")
 
         console.log(id);
 

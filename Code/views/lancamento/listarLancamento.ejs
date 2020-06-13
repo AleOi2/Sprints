@@ -19,7 +19,7 @@
 
     }) %> 
         <div style="position: relative;height: 100vh;">
-        <%- include('../Components/sideMenu/sideMenu', sideElement )%>
+        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
         <div style="display: flex; flex-direction: column; position: relative; width: 100%;">
             <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
                 <h2 style="color: grey;">Lançamentos  </h2>
@@ -64,9 +64,8 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                    <form action="/lancalmento/<%= release.id %>/editar" method="POST">
+                                    <form action="/lancamento/<%= release.id %>/editar" method="POST">
                                         <!-- area de campos do form -->
-
                                         <div class="form-group">
                                             <label for="valor">Valor</label>	
                                             <input id="Valor" class="form-control" value="<%= release.id%>" name="value" type="text">	  
