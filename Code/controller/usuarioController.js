@@ -77,7 +77,7 @@ let usuarioController = {
                     surname,
                     email,
                     password: bcrypt.hashSync(password, 10),
-                    createdAt: now,
+                    saldo
                 }).catch((err) =>{
                     res.render('usuarios/cadastroUsuario',{
                         err: {name: [{msg: 'Usuário já possui uma conta'}]}, 
@@ -104,6 +104,7 @@ let usuarioController = {
                     name: userValues.name,
                     surname: userValues.surname,
                     email: userValues.email,
+                    saldo:userValues.saldo
                 }    
                 res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
                 res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
@@ -197,6 +198,7 @@ let usuarioController = {
                         name: userValues.name,
                         email: userValues.email,
                         surname: userValues.surname,
+                        saldo:userValues.saldo
                     }
 
                     res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});

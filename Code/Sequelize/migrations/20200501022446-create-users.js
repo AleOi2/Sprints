@@ -19,6 +19,10 @@ module.exports = {
         type: DataTypes.STRING,
         defaultValue: ''
       },
+      saldo: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       email: {
         allowNull: false,
         type: DataTypes.STRING,

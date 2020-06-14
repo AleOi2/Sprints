@@ -10,13 +10,14 @@ const homeController = function(req, res){
             user: req.cookies.user
         });
     }else{
+        let saldo = (req.cookies.user.saldo !== null)?req.cookies.user.saldo:-1;
         res.render('dashboard/dashboard',
         {
             sideElement:sideBarInput, 
             token: req.cookies.token, 
             user: req.cookies.user,
-            url: url
-
+            url: url,
+            saldo:saldo
         });
 
         
