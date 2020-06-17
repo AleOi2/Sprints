@@ -18,8 +18,123 @@
         }
 
     }) %> 
-    <div style="position: relative;height: 100vh;">
+        <div style="position: relative;height: 100vh;">
         <%- include('../Components/sideMenu/sideMenu', sideElement )%>
-    </div>  
-    </body>
+        <div style="display: flex; flex-direction: column; position: relative; width: 100%;">
+            <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
+                <h2 style="color: grey;">Lançamentos  </h2>
+
+                <table class="table table-hover ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Data</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% userReleases.forEach((release,index) => { %>
+                        <tr>
+                            <td> 
+                                <%categoriesEdit.forEach(category =>{
+                                    if(category.id === release.category_id){%>
+                                        <%= category.name %>
+                                   <% }
+                                })%>     
+                            </td>
+                            <td> <%= release.description %> </td>
+                            <td> R$<%= release.value.toString().replace('.',',') %> </td>
+                            <td> <%= moment(release.date).add(1,'days').format('DD/MM/YYYY') %> </td>
+                            <td><button class="btn btn-warning" data-toggle="modal" data-target="#releaseEdit<%= release.id %>" action="">Editar</button> <button class="btn btn-danger" data-toggle="modal" data-target="#releaseDelete<%= release.id %>">Excluir</button></td>
+                        </tr>
+
+                        
+                        <!-- Modal Editar-->
+                        <div class="modal fade" id="releaseEdit<%= release.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Lançamento</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="/lancamento/<%= release.id %>/editar?_method=PUT" method="POST">
+                                        <!-- area de campos do form -->
+
+                                        <div class="form-group">
+                                        <input type="hidden" name="categoryForm" value="<%= release.category_id %>">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="valor">Valor</label>	
+                                            <input id="Valor" class="form-control" value="<%= release.value.toString().replace('.',',') %>" name="value" type="text">	  
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data">Data</label>	
+                                            <input id="data" class="form-control" value="<%= moment(release.date).add(1,'days').format('YYYY-MM-DD') %>" name="date" type="date">	  
+                                        </div>                        
+                                        <div class="form-group">
+                                            <label for="data">Descrição</label>	
+                                            <input id="descricao" class="form-control" value="<%= release.description %>" name="description" type="text">	  
+                                        </div>
+                                        <div id="actions" class="row">
+                                          <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary" >Salvar</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                          </div>
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        
+                        
+                            <!-- Modal Excluir-->
+                        <div class="modal fade" id="releaseDelete<%= release.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Excluir Lançamento</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="/lancamento/<%= release.id %>/deletar?_method=DELETE" method="POST">
+                                        <!-- area de campos do form -->
+
+                                        <p>Confirma a exclusão do lançamento?</p>
+                                        <p><b>Categoria: </b></p>
+                                        <p><b>Descrição: </b> <%= release.description %> </p>
+                                        <p><b>Data: </b> <%= moment(release.date).add(1,'days').format('DD/MM/YYYY') %> </p>
+                                        <p><b>Valor: </b> <%= release.value.toString().replace('.',',') %> </p>
+                                        <div id="actions" class="row">
+                                          <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary" >Sim</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                          </div>
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                        <% }); %> 
+                    </tbody>
+                </table>                       
+            </div>
+        </div>
+       
+        </div> 
+    
+    
+ </body>
+    
 </html>

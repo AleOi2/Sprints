@@ -11,6 +11,10 @@ let sideBarInput = [
         route:'/perfil',
         label: 'Perfil'
     },
+    {
+        route:'/lancamento/listar',
+        label: 'LISTAR LANÇAMENTOS'
+    },
 
 ]
 

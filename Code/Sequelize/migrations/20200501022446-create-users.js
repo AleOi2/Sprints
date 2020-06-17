@@ -20,7 +20,7 @@ module.exports = {
         defaultValue: ''
       },
       saldo: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(12, 2),
         allowNull: true,
       },
       email: {
