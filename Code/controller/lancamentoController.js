@@ -48,8 +48,7 @@ const lancamentoController = {
         let { categoryForm, date, description, value } = req.body;
         let category_id = categoryForm;
         let users_id = req.cookies.user.id;
-        console.log(" ===vars "+date+" "+description+" "+value)  //debug
-        console.log("id usuario lancto: "+users_id);             //debug
+        console.log(date)
         Release.create({
             date,
             description,
@@ -75,7 +74,7 @@ const lancamentoController = {
         let userReleases = await Release.findAll({
             where: {users_id: userId}
         });
-        
+
         //Função para obter o nome das categorias dos lançamentos
         let categoriesEdit = [];
         let categories = await Category.findAll();
@@ -83,26 +82,44 @@ const lancamentoController = {
             categoriesEdit.push({id: category.id, name: category.category.replace('.png', '')})
         })
         
-
         res.render('lancamento/listarLancamento', {
             sideElement:sideBarInput,
             userReleases,
             categoriesEdit, 
             moment,
         });     
-
     },
 
     edit: async (req, res)=>{
 
-        let { id } = req.params;
-        console.log("Editando")
+        let { id } = req.params; // id do lançamento que está sendo editado  
+        let releaseEdit = req.body; // dados para serem alterados no banco ( value, date e description)
 
-        console.log(id);
+        releaseEdit.value = releaseEdit.value.toString().replace(',','.');
+        releaseEdit.value = parseFloat(releaseEdit.value);  
 
+        // Função para alteraros dados no banco
+            await Release.update({
+            value: releaseEdit.value,
+            date: releaseEdit.date,
+            description: releaseEdit.description,
+        },{
+            where: {
+                id: id,
+            }
+        });
 
+        return res.redirect("/lancamento/listar");    
 
+    }, 
 
+    delete: async (req, res)=>{
+        let { id } = req.params; // id do lançamento a ser excluído
+
+        await Release.destroy({
+            where: { id: id }
+        });
+        return res.redirect("/lancamento/listar");       
     }
 }
 
