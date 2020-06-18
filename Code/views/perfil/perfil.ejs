@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('../Components/templateHead', {
+        pageName:'Perfil', 
+        cssFile: [
+            '/css/Perfil/perfil.css',
+        ]
+    }) %>
+
+<body>
+    <script src="/scripts/Perfil/perfil.js"></script>
+
+    <%-include('../Components/Header/headerComponent',{
+            navigator:{
+                label: ["Início", "Sobre Nós", "Artigos"],
+                routes:[`/inicio`,`/sobrenos`,`/artigos`]
+            },
+            loginSigin:{
+                label: ["Alexandre", "Logout"],
+                routes: [``,`/usuarios/logout`]
+            }
+    
+    }) %>
+
+    <div style="position: relative;min-height: 100vh;background-color: #ebebec">
+        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; border:2px solid red">
+            <form method="POST" action="/perfil" id="container" style="display:flex; flex-direction:column; background-color: white; border:2px solid black; height: 500px;width: 500px;padding:2rem; border-radius: 20px;">
+                <div style="display: flex; align-items: center;margin-bottom:1rem">
+                    <label style="flex:1" for="name">Nome:</label>
+                    <input style="flex:1" id="name" name="Nome" />
+                </div>
+                <div style="display: flex; align-items: center;margin-bottom:1rem">
+                    <label style="flex:1" for="surname">Sobrenome:</label>
+                    <input style="flex:1" id="surname" name="Sobrenome" />
+                </div>
+                <div style="display: flex; align-items: center;margin-bottom:1rem">
+                    <label style="flex:1" for="email">Email:</label>
+                    <input style="flex:1" id="email" name="email" />
+                </div>
+                <div style="display: flex; align-items: center;margin-bottom:1rem">
+                    <label style="flex:1" for="name">Saldo:</label>
+                    <input style="flex:1" id="balance" name="Saldo" />
+                </div>
+                <button type="submit">Salvar Alterações</button>
+
+
+            </form>
+        </div>
+    </div>
+    <%-include('../Components/footer') %>
+
+</body>
+
+</html>

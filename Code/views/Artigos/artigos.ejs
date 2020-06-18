@@ -7,18 +7,33 @@
         ]
     }) %> 
 <body>
-    <%-include('../Components/Header/headerComponent',{
-        navigator:{
-            label: ["Início", "Sobre Nós", "Artigos"],
-            routes:[`/inicio`,`/sobrenos`,`/artigos`]
-        },
-        loginSigin:{
-            label: ["Login", "Cadastrar"],
-            routes: [`/usuarios/login`,`/usuarios/cadastro`]
-        }
-
-    }) %>  
-    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 20px; box-sizing: border-box;">
+    <!-- check if token --> 
+    <% if (typeof token === "undefined" && typeof user === "undefined") { %>
+        <%-include('../Components/Header/headerComponent',{
+          navigator:{
+              label: ["Início", "Sobre Nós", "Artigos"],
+              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
+          },
+          loginSigin:{
+              label: ["Login", "Cadastrar"],
+              routes: [`/usuarios/login`,`/usuarios/cadastro`]
+            }
+      }) %>   
+        
+      <% } else{ %>
+        <%-include('../Components/Header/headerComponent',{
+          navigator:{
+              label: ["Início", "Sobre Nós", "Artigos"],
+              routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
+          },
+          loginSigin:{
+              label: [ user.name, "Logout"],
+              routes: [``,`/usuarios/logout`]
+          }
+      }) %>
+    <%}%>   
+  
+      <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 20px; box-sizing: border-box;">
         <div class="artigosTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
             <h1 style="font-family: 'Noto Sans SC', sans-serif;">Artigos</h1>
         </div>

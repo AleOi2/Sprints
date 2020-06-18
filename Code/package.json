@@ -15,7 +15,9 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-simple": "^0.5.6",
     "md5": "^2.2.1",
+    "moment": "^2.26.0",
     "mysql2": "^2.1.0",
+    "node-fetch": "^2.6.0",
     "passport": "^0.4.1",
     "passport-custom": "^1.1.1",
     "passport-facebook": "^3.0.0",
@@ -32,7 +34,7 @@
     "express-session": "^1.17.0",
     "method-override": "^3.0.0",
     "multer": "^1.4.2",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.2",
     "sequelize-cli": "^5.5.1"
   },
   "scripts": {

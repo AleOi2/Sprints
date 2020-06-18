@@ -1,22 +1,22 @@
 module.exports = (Sequelize, DataType)=>{
-    const Article = Sequelize.define('Article', {
+    const Category = Sequelize.define('Category', {
         id:{
             type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
           }, 
-          date: {
-            type: DataType.DATE,
+          category: {
+            type: DataType.STRING,
             allowNull: false
           },
-          imageArticle: {
-           type: DataType.STRING,
+          type: {
+            type: DataType.STRING,
             allowNull: false
-          },
-          textArticle: {
-            type: DataType.TEXT,
-            allowNull: false
+          }, 
+          valuePredict: {
+           type: DataType.DECIMAL(12,2),
+           allowNull: false
           },
           createdAt: {
             type: DataType.DATE,
@@ -27,8 +27,15 @@ module.exports = (Sequelize, DataType)=>{
             allowNull: false
           }
     },{
-        tableName: 'article',
-    })
+        tableName: 'category'
+    });
 
-    return Article
+    Category.associate = (model) =>{
+      Category.hasMany(model.Release, {
+        foreignKey: 'category_id',
+        sourceKey: 'id'
+      })  
+    }
+
+    return Category
 }

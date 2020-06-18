@@ -1,5 +1,5 @@
 const Usuario = require('../model/Usuario');
-const { User } = require('../Sequelize/model/');
+const { Users } = require('../Sequelize/model/');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const { secret } = require('../constants/constants')
@@ -37,7 +37,7 @@ const parsedErrors = (errors) =>  {
 let usuarioController = {
     listarUsuario: (req, res) => {
         let listaUsuario;
-        User.findAll().then((result) => {
+        Users.findAll().then((result) => {
             listaUsuario = result.map((element) => {
                 return element.dataValues
             })
@@ -62,6 +62,7 @@ let usuarioController = {
                 password,
             } = req.body;
             let errors = validationResult(req).errors; 
+            console.log(errors)
             if(errors.length > 0 ){
                 // res.status(400).send({err: "Validatiion result"})
                 errors = parsedErrors(errors);
@@ -69,46 +70,48 @@ let usuarioController = {
                     err: errors, 
                     fields:{name, surname, email, password}
                 })
-            }
-
-            let now = new Date();
-            await User.create({
-                name,
-                surname,
-                email,
-                password: bcrypt.hashSync(password, 10),
-                createdAt: now,
-            }).catch((err) =>{
-                res.render('usuarios/cadastroUsuario',{
-                    err: {name: [{msg: 'Usuário já possui uma conta'}]}, 
-                    fields:{name, surname, email, password}
+            }else{
+                let now = new Date();
+                await Users.create({
+                    name,
+                    surname,
+                    email,
+                    password: bcrypt.hashSync(password, 10),
+                    saldo
+                }).catch((err) =>{
+                    res.render('usuarios/cadastroUsuario',{
+                        err: {name: [{msg: 'Usuário já possui uma conta'}]}, 
+                        fields:{name, surname, email, password}
+                    })
+    
                 })
+    
+                const user = await Users.findAll({
+                    where: {
+                        email
+                    }
+                })
+                
+                let userValues = user[0].dataValues;
+                console.log(userValues)
+                const token = jwt.sign(
+                    { id: userValues.id },
+                    secret,
+                    { expiresIn: 86400 }
+                )
+                let filterredValues = {
+                    id: userValues.id,
+                    name: userValues.name,
+                    surname: userValues.surname,
+                    email: userValues.email,
+                    saldo:userValues.saldo
+                }    
+                res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
+                res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
+                return res.redirect('/dashboard');
 
-            })
-
-            const user = await User.findAll({
-                where: {
-                    email
-                }
-            })
-            
-            let userValues = user[0].dataValues;
-            console.log(userValues)
-            const token = jwt.sign(
-                { id: userValues.id },
-                secret,
-                { expiresIn: 86400 }
-            )
-            let filterredValues = {
-                id: userValues.id,
-                name: userValues.name,
-                surname: userValues.surname,
-                email: userValues.email,
             }
 
-            res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
-            res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
-            return res.redirect('/dashboard');
         } catch (err) {
             return res.render('usuarios/cadastroUsuario');
         }
@@ -119,7 +122,7 @@ let usuarioController = {
             let {
                 email,
             } = req.body;
-            User.destroy({
+            Users.destroy({
                 where: {
                     email: email
                 }
@@ -141,7 +144,7 @@ let usuarioController = {
                 password
             } = req.body;
 
-            User.update({
+            Users.update({
                 name,
                 email,
                 password: bcrypt.hashSync(password, 10)
@@ -165,7 +168,7 @@ let usuarioController = {
     login: async (req, res) => {
         try {
             const { email, password } = req.body;
-            const user = await User.findAll({
+            const user = await Users.findAll({
                 where: {
                     email
                 }
@@ -191,13 +194,15 @@ let usuarioController = {
                         { expiresIn: 24 * 1000 * 60 * 60 }
                     )
                     let filterredValues = {
+                        id: userValues.id,
                         name: userValues.name,
                         email: userValues.email,
+                        surname: userValues.surname,
+                        saldo:userValues.saldo
                     }
 
                     res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
                     res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
-                    console.log('Entrei aqui')
                     return res.redirect('/dashboard');
                 }
             })
@@ -208,8 +213,8 @@ let usuarioController = {
     },
 
     logout:(req, res) =>{
-        res.clearCookie("token");
-        res.clearCookie("user");
+        res.clearCookie('token');
+        res.clearCookie('user');
         return res.redirect('/home/home');
     }
 
