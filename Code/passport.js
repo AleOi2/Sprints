@@ -118,7 +118,7 @@ passport.use(new FacebookStrategy({
                 createdAt: now,
             }
 
-            User.create(newUser).then((res) => {
+            Users.create(newUser).then((res) => {
                 return done(null, {...newUser, id: res.dataValues.id});
             })
         } else {
