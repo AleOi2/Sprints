@@ -3,6 +3,7 @@ const {
     cards, 
     numDisplay 
 } = require("../model/artigosModel");
+const { sideBarInput } = require("../model/sideBarInput");
 const { url } = require('../constants/constants');
 
 const artigosController = (req, res) =>{
@@ -12,7 +13,8 @@ const artigosController = (req, res) =>{
         numDisplay:numDisplay,
         url: url,
         token: req.cookies.token, 
-        user: req.cookies.user 
+        user: req.cookies.user,
+        sideElement: sideBarInput
     })
 }   
 
