@@ -66,18 +66,20 @@ let usuarioController = {
             if(errors.length > 0 ){
                 // res.status(400).send({err: "Validatiion result"})
                 errors = parsedErrors(errors);
+                console.log("Entrei1")
                 res.render('usuarios/cadastroUsuario',{
                     err: errors, 
                     fields:{name, surname, email, password}
                 })
             }else{
+                console.log("Entrei2")
                 let now = new Date();
                 await Users.create({
                     name,
                     surname,
                     email,
                     password: bcrypt.hashSync(password, 10),
-                    saldo
+                    saldo: null
                 }).catch((err) =>{
                     res.render('usuarios/cadastroUsuario',{
                         err: {name: [{msg: 'Usuário já possui uma conta'}]}, 
@@ -85,12 +87,15 @@ let usuarioController = {
                     })
     
                 })
+                console.log("Entrando")
     
                 const user = await Users.findAll({
                     where: {
                         email
                     }
                 })
+                console.log("Meu usuarios")
+                console.log(user)
                 
                 let userValues = user[0].dataValues;
                 console.log(userValues)
@@ -175,18 +180,18 @@ let usuarioController = {
             });
 
             if (user.length === 0) {
-                return res.render('usuarios/login', { error: 'User or Password not found' });
+                return res.render('usuarios/login', { error: 'Usuário ou senha incorreta' });
             }
 
             let userValues = user[0].dataValues;
             await bcrypt.compare(password, userValues.password, (err, data) => {
                 //if error than throw error
                 if (err) {
-                    return res.render('usuarios/login', { error: 'User or Password not found' });
+                    return res.render('usuarios/login', { error: 'Usuário ou senha incorreta' });
                 }
                 //if both match than you can do anything
                 if (!data) {
-                    return res.render('usuarios/login', { error: 'User or Password not found' });
+                    return res.render('usuarios/login', { error: 'Usuário ou senha incorreta' });
                 } else {
                     const token = jwt.sign(
                         { id: userValues.id },
@@ -200,7 +205,6 @@ let usuarioController = {
                         surname: userValues.surname,
                         saldo:userValues.saldo
                     }
-
                     res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
                     res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
                     return res.redirect('/dashboard');

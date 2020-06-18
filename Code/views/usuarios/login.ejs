@@ -37,6 +37,11 @@
                                 placeholder="Senha">
                         </div>
                         <div class="form-group">
+                            <% if(typeof error !== 'undefined'){%>
+                                <div id="err" class="col-12 info" >
+                                    <h1 style="color: red; font-size: 1rem;"><%=error%></h1>
+                                </div>
+                            <%}%>
                             <a href="#">Esqueceu a senha? Clique aqui!</a>
                         </div>
                         <div class="row"  style="display:flex; justify-content:center; align-items: center;">

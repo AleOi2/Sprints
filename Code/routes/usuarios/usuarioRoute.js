@@ -32,8 +32,12 @@ route.post('/cadastro', [
 }), usuarioController.criarUsuario);
 
 route.get('/cadastro', usuarioController.viewFormCadastro);
+
 route.get('/login', usuarioController.viewFormLogin);
-route.post('/login', usuarioController.login);
+route.post('/login',   [
+  check('email').exists().withMessage('E-mail é necessário'),
+  check('password').exists().withMessage('Nome necessário')
+], usuarioController.login);
 
 route.get('/logout', usuarioController.logout);
 
