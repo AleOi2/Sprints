@@ -76,11 +76,8 @@ let revenue = {
                         if (typeof (resp.revenue) !== 'undefined') {
                             let today = new Date();
                             today = today.toISOString().match(/\d{4}-\d{2}/)[0];
-                            console.log("Olhando")
-                            console.log(costs)
                             let chartRevenueInput = completeObj(revenue, pieRevenueData, today);
                             let chartCostsInput = completeObj(costs, pieCostsData, today);
-                            console.log(chartCostsInput)
                             drawChart(chartRevenueInput.data, chartRevenueInput.title);
                             drawChart(chartCostsInput.data, chartCostsInput.title);
                             $('#revenueDate').html(convertDateToLabel(today));
@@ -130,27 +127,30 @@ let revenue = {
     <% if(saldo >= 0) {%> 
         <div style="position: relative;min-height: 100vh;background-color: #ebebec">
             <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <div id="div1" style="display: flex; justify-content:center; background-color: #ebebec; display:flex; flex-basis: 500px; flex-wrap: wrap; width: 80vw; margin-left: 200px;">
+            <div id="div1" style="display: flex; justify-content:center; background-color: #ebebec; display:flex; flex-basis: 500px; flex-wrap: wrap; width: 80vw; margin-left: 200px; flex-direction: column">
                 <h1 style="margin-bottom: 20px; display:flex;">
                     Distribuição de Gastos e Receitas
                 </h1>
-                <div id="card1" style="border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white">
-                    <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
-                        <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                            <button onclick="Reduce(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
-                            <div id='revenueDate' style="display:flex; justify-content: center; align-items: center; font-size: 25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
-                            <button onclick="Add(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
-                        </div>
-                    <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black;box-sizing: unset;"></div>
-                </div>
-                <div id="card2" style="border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white">
-                    <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
-                    <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                        <button onclick="Reduce(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
-                        <div id='costsDate' style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
-                        <button onclick="Add(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
+                <div style=" display:flex; flex-direction: row;justify-content:flex-end; flex-wrap:wrap; width:100%">
+                    <div id="card1" style="flex-basis: 500px;border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; width:40%">
+                        <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
+                            <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
+                                <button onclick="Reduce(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
+                                <div id='revenueDate' style="display:flex; justify-content: center; align-items: center; font-size: 25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
+                                <button onclick="Add(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
+                            </div>
+                        <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black;box-sizing: unset;"></div>
                     </div>
-                <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black; box-sizing: unset;"></div>
+                    <div id="card2" style="flex-basis: 300px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; width:40%">
+                        <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
+                        <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
+                            <button onclick="Reduce(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
+                            <div id='costsDate' style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
+                            <button onclick="Add(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
+                        </div>
+                    <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black; box-sizing: unset;"></div>
+                    </div>
+
                 </div>
             </div>
             <div id='line1' style="border: 1px solid black; position: relative; top: 80px; width: 70%; align-self: flex-end;"></div>
