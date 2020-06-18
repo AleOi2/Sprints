@@ -20,8 +20,6 @@ const chartCosIn = 'chartCostsInput'
 
 function drawChart(entryData, title) {
     var data = google.visualization.arrayToDataTable(entryData);
-    console.log("Verificando entrada")
-    console.log(data)
     var options = {
         title: title,
         backgroundColor: 'white',
@@ -85,6 +83,8 @@ function parserData(revenueCost) {
 function completeObj(revenueCost, pieRevenueCostData, date) {
     // Convert revenueCost to:
     // {2020-06:{obj}, 2020-07:{obj},}
+    console.log("Hoje");
+    console.log(date);
     let parsedData = parserData(revenueCost);
     let releases = []; let type;let index = 0;
     for( let element in parsedData[date]){
@@ -113,6 +113,7 @@ const returnDateStringArray = (stringDate) =>{
     if (stringDate.match(/\d{1,2}\/\d{1,2}\/\d{4}/img)) {
         date = stringDate.match(/\d{1,2}\/\d{1,2}\/\d{4}/img)[0].split('/').reverse();
     }
+
     return date;
 }
 
@@ -190,7 +191,6 @@ const Add = (today, type, Div, chart, title) =>{
     drawChart(chartInput.data, chartInput.title);
 
     // Convert to [Fevereiro/2020] and put on Div
-    nextMonth[1] = calendarData[nextMonth[1]];
     Div.html(convertDateToLabel(nextMonth[1] + '/' + nextMonth[0]));
 }
 
@@ -224,7 +224,6 @@ const Reduce = (today, type, Div, chart, title) =>{
     drawChart(chartInput.data, chartInput.title);
 
     // Convert to [Fevereiro/2020]
-    nextMonth[1] = calendarData[nextMonth[1]];
     Div.html(convertDateToLabel(nextMonth[1] + '/' + nextMonth[0]))
 }
 
