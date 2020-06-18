@@ -1,5 +1,5 @@
 
-@media screen and (min-width:1080px){
+@media screen and (min-width:1480px){
     
     #card1{
         margin-right:100px;
@@ -11,8 +11,20 @@
 
 
 }
-
+/* 
 @media screen and (max-width:1079px){
+    
+    #card1{
+        margin-bottom:30px;
+    }
+
+    #line1{
+        left: 200px;        
+    }
+
+} */
+
+@media screen and (max-width:1480px){
     
     #card1{
         margin-bottom:30px;
@@ -24,3 +36,16 @@
 
 }
 
+/* @media screen and (min-width:850px){
+    
+    #card1{
+        width:10%;
+        min-width: 300px;
+    }
+
+    #card2{
+        width:10%;
+        min-width: 300px;
+    }
+
+} */

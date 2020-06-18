@@ -21,9 +21,9 @@
     <script>
         localStorage.setItem("mytime", Date.now());
     </script>
-    <div  style = "position:relative; width: 100%; border: 2px solid grey; display: flex;">
+    <div  class= "Container"style = "position:relative; width: 100%; border: 2px solid grey; display: flex;">
         <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-        <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px;">
+        <div id="rightContainer" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px;">
             <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
                 <h2 style="color: grey;">Despesas</h2>
                 <section class="row p-5 despesasContainer">       

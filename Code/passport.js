@@ -101,9 +101,6 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     const now = new Date();
-
-    console.log(profile.provider + profile.id + '@gmail.com')
-
     Users.findOne({
         where: {
             email: profile.provider + profile.id + '@gmail.com'

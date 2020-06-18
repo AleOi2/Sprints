@@ -22,9 +22,9 @@
     
     }) %>
 
-    <div style="position: relative;min-height: 100vh;background-color: #ebebec">
+    <div class= "Container" style="position: relative;min-height: 100vh;background-color: #ebebec">
         <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; border:2px solid red">
+        <div id= "rightContainer" style="display: flex; justify-content: center; align-items: center; height: 100vh">
             <form method="POST" action="/perfil" id="container" style="display:flex; flex-direction:column; background-color: white; border:2px solid black; height: 500px;width: 500px;padding:2rem; border-radius: 20px;">
                 <div style="display: flex; align-items: center;margin-bottom:1rem">
                     <label style="flex:1" for="name">Nome:</label>
