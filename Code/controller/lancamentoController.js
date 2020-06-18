@@ -66,6 +66,7 @@ const lancamentoController = {
 
     index: async (req, res) => {
         console.log(req.cookies.user.email)
+        
 
         //Função para obter o Id do usuário logado
         let userId = await Users.findOne({
@@ -93,6 +94,7 @@ const lancamentoController = {
             userReleases,
             categoriesEdit, 
             moment,
+            user: req.cookies.user,
         });     
     },
 

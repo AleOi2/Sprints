@@ -13,7 +13,7 @@
             routes:[`/inicio`,`/sobrenos`,`/artigos`]
         },
         loginSigin:{
-            label: ["Alexandre", "Logout"],
+            label: [user.name, "Logout"],
             routes: [``,'/usuarios/logout']
         }
 
@@ -21,9 +21,9 @@
     <script>
         localStorage.setItem("mytime", Date.now());
     </script>
-    <div style = "position:relative; width: 100%; border: 2px solid grey; display: flex;">
+    <div  style = "position:relative; width: 100%; border: 2px solid grey; display: flex;">
         <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-        <div style="display: flex; flex-direction: column; position: relative; width: 100%;">
+        <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px;">
             <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
                 <h2 style="color: grey;">Despesas</h2>
                 <section class="row p-5 despesasContainer">       
@@ -52,13 +52,13 @@
                                     <input type="hidden" name="categoryForm" value="<%= imagemCategoria[0] %>">
                                 </div>                               
                                 <div class="form-group">	
-                                    <input id="Valor" class="form-control" placeholder="Valor R$..." type="text" name="value">	  
+                                    <input id="Valor" class="form-control" placeholder="Valor R$..." type="text" name="value" required>	  
                                 </div>
                                 <div class="form-group">	
-                                    <input id="Data" class="form-control" placeholder="Data..." type="date" name="date">	  
+                                    <input id="Data" class="form-control" placeholder="Data..." type="date" name="date" required>	  
                                 </div>                        
                                 <div class="form-group">	
-                                    <input id="Descricao" class="form-control" placeholder="Descrição..." type="text" name="description">	  
+                                    <input id="Descricao" class="form-control" placeholder="Descrição..." type="text" name="description" required>	  
                                 </div>                        
                                 <div id="actions" class="row">
                                   <div class="col-md-12">
