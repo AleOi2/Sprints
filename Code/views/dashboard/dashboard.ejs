@@ -158,11 +158,19 @@ let revenue = {
     <% }else{ %>
         <div style="position: relative;min-height: 100vh;background-color: #ebebec">
             <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <h1 style="color: red;">
-                Você precisa preencher seu saldo para começar
-            </h1>
-            <h3> Vá para a aba de perfil no menu lateral e preencha seus dados antes de começar.</h3>
-        </div>
+            <div style="position: relative;height: 100vh;">
+                <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+              <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
+                  <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">
+                      <h2 style="color: grey;"><%= user.name %>, seja bem vindo(a)! </h2>
+                      <section class="p-5" style="display: flex;">
+                          <div>
+                              <p> Para iniciar é necessário preencher o saldo inicial, basta acessar a opção "PERFIL" no menu lateral esquerdo, ou se preferir, <a href="/perfil">clique aqui</a>.</p>
+                          </div>
+                      </section>                       
+                  </div>
+              </div>      
+              </div> 
     <% } %>  
         <%-include('../Components/footer') %>
 

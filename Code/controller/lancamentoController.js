@@ -65,8 +65,6 @@ const lancamentoController = {
     }, 
 
     index: async (req, res) => {
-        console.log(req.cookies.user.email)
-        
 
         //Função para obter o Id do usuário logado
         let userId = await Users.findOne({
@@ -74,28 +72,38 @@ const lancamentoController = {
                 email: req.cookies.user.email
             }            
         })
-        console.log(req.cookies.user.email)
         userId = userId.id;
 
         //Função para obter todos os lançamentos do usuário
         let userReleases = await Release.findAll({
-            where: {users_id: userId}
+            where: {users_id: userId},
+            order: [
+                ['date','ASC']
+            ]
         });
-
-        //Função para obter o nome das categorias dos lançamentos
-        let categoriesEdit = [];
-        let categories = await Category.findAll();
-        categories.forEach(category =>{
-            categoriesEdit.push({id: category.id, name: category.category.replace('.png', '')})
-        })
         
-        res.render('lancamento/listarLancamento', {
-            sideElement:sideBarInput,
-            userReleases,
-            categoriesEdit, 
-            moment,
-            user: req.cookies.user,
-        });     
+        if(userReleases.length > 0){
+            //Função para obter o nome das categorias dos lançamentos
+            let categoriesEdit = [];
+            let categories = await Category.findAll();
+            categories.forEach(category =>{
+                categoriesEdit.push({id: category.id, name: category.category.replace('.png', ''), image: category.category})
+            })
+            res.render('lancamento/listarLancamento', {
+                sideElement:sideBarInput,
+                userReleases,
+                categoriesEdit, 
+                moment,
+                user: req.cookies.user,
+            });
+        }else{
+            res.render('lancamento/listarVazio',{
+                sideElement:sideBarInput,
+                user: req.cookies.user
+            });
+        }
+
+             
     },
 
     edit: async (req, res)=>{

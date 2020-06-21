@@ -20,11 +20,11 @@
     }) %> 
         <div style="position: relative;height: 100vh;">
           <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-        <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px;">
-            <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
-                <h2 style="color: grey;">Lançamentos  </h2>
-
-                <table class="table table-hover ">
+        <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
+            <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">
+                <h2 style="color: grey;">Lançamentos</h2>
+                <section class="p-5">
+                  <table class="table table-hover">
                     <thead>
                       <tr>
                         <th scope="col">Categoria</th>
@@ -50,8 +50,7 @@
                             <td> <%= moment(release.date).add(1,'days').format('DD/MM/YYYY') %> </td>
                             <td><button class="btn btn-warning" data-toggle="modal" data-target="#releaseEdit<%= release.id %>" action="">Editar</button> <button class="btn btn-danger" data-toggle="modal" data-target="#releaseDelete<%= release.id %>">Excluir</button></td>
                         </tr>
-
-                        
+                               
                         <!-- Modal Editar-->
                         <div class="modal fade" id="releaseEdit<%= release.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -88,13 +87,18 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                           </div>
                                         </div>
+                                        <div id="actions" class="row">
+                                          <div class="col-md-12">
+                                           <p><%=  %></p>
+                                          </div>
+                                        </div>
+
+
                                     </form>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                        
-                        
+                            </div>                        
                             <!-- Modal Excluir-->
                         <div class="modal fade" id="releaseDelete<%= release.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -110,7 +114,6 @@
                                         <!-- area de campos do form -->
 
                                         <p>Confirma a exclusão do lançamento?</p>
-                                        <p><b>Categoria: </b></p>
                                         <p><b>Descrição: </b> <%= release.description %> </p>
                                         <p><b>Data: </b> <%= moment(release.date).add(1,'days').format('DD/MM/YYYY') %> </p>
                                         <p><b>Valor: </b> <%= release.value.toString().replace('.',',') %> </p>
@@ -128,13 +131,14 @@
 
                         <% }); %> 
                     </tbody>
-                </table>                       
+                  </table>
+                </section>                       
             </div>
-        </div>
-       
+        </div>      
         </div> 
-    
-    
+        <%-include('../Components/footer') %> 
+        
+       
  </body>
     
 </html>

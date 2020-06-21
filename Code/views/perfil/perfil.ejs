@@ -22,31 +22,38 @@
     
     }) %>
 
-    <div style="position: relative;min-height: 100vh;background-color: #ebebec">
+    <div style="position: relative;height: 100vh;">
         <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; border:2px solid red">
-            <form method="POST" action="/perfil" id="container" style="display:flex; flex-direction:column; background-color: white; border:2px solid black; height: 500px;width: 500px;padding:2rem; border-radius: 20px;">
-                <div style="display: flex; align-items: center;margin-bottom:1rem">
-                    <label style="flex:1" for="name">Nome:</label>
-                    <input style="flex:1" id="name" name="Nome" />
-                </div>
-                <div style="display: flex; align-items: center;margin-bottom:1rem">
-                    <label style="flex:1" for="surname">Sobrenome:</label>
-                    <input style="flex:1" id="surname" name="Sobrenome" />
-                </div>
-                <div style="display: flex; align-items: center;margin-bottom:1rem">
-                    <label style="flex:1" for="email">Email:</label>
-                    <input style="flex:1" id="email" name="email" />
-                </div>
-                <div style="display: flex; align-items: center;margin-bottom:1rem">
-                    <label style="flex:1" for="name">Saldo:</label>
-                    <input style="flex:1" id="balance" name="Saldo" />
-                </div>
-                <button type="submit">Salvar Alterações</button>
+        <div id="" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
+            <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">
+                
+                <div class="mb-5"">
+                    <h2 style="color: grey;">Informações Iniciais</h2>
+                    <p>
+                        <%=user.name%>, seja muito bem vindo ao Cash Book! Preencha o saldo inicial e comece a escrever e acompanhar sua história financeira!
+                    </p>  
 
+                </div>
 
-            </form>
+                <form method="POST" action="/perfil" id="container">
+                    <div class="form-group">
+                      <label for="nome" class="ml-2">Nome</label>
+                      <input type="text" class="form-control" id="nome" name="name" value="<%= user.name %> " placeholder="Nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="sobreNome" class="ml-2">Sobrenome</label>
+                        <input type="text" class="form-control" id="sobrenome" name="surname" value="<%= user.surname %>" placeholder="Sobre nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="nome" class="ml-2">Saldo Inicial</label>
+                        <input type="text" class="form-control" id="saldo" name="saldo" <% if(user.saldo != null){%> value="<%= user.saldo %> " <%}%>  " placeholder="Preencha o saldo inicial">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Salvar dados</button>
+                  </form>        
+            </div>
         </div>
+
     </div>
     <%-include('../Components/footer') %>
 
