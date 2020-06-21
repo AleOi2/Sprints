@@ -28,14 +28,7 @@ module.exports = (Sequelize, DataType)=>{
           }
     },{
         tableName: 'category'
-    });
-
-    Category.associate = (model) =>{
-      Category.hasMany(model.Release, {
-        foreignKey: 'category_id',
-        sourceKey: 'id'
-      })  
-    }
+    })
 
     return Category
 }

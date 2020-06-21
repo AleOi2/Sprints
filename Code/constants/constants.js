@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/";
+const url = "localhost:3000/";
 
 //  JWT configuration
 const secret = '1b87cc4049a2dbf6c6eec2545341490a';

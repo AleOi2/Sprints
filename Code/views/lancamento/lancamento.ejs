@@ -22,7 +22,7 @@
         localStorage.setItem("mytime", Date.now());
     </script>
     <div style = "position:relative; width: 100%; border: 2px solid grey; display: flex;">
-        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+        <%- include('../Components/sideMenu/sideMenu', sideElement )%>
         <div style="display: flex; flex-direction: column; position: relative; width: 100%;">
             <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
                 <h2 style="color: grey;">Despesas</h2>
@@ -30,7 +30,7 @@
                   <% categorias[0].forEach((imagemCategoria, index )=>{ %>
                   <div class="col-md-3 col-4 p-2" style="height: 30%">
                       <div class="card"  style="width: 100%; height: auto">
-                        <button  style="width:100%; height: auto;background-color: #F5F6F8; border-color: grey; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
+                        <button  style="width=100% height: auto;background-color: #F5F6F8; border-color: grey; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
                             <img  src="/images/lancamento/<%= imagemCategoria[1] %>" width="95%" height="auto" alt="<%= imagemCategoria[1] %>">
                         </button>
                       </div>
@@ -62,7 +62,7 @@
                                 </div>                        
                                 <div id="actions" class="row">
                                   <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary" >Salvar</button>
+                                    <button type="submit" class="btn btn-primary" >Salvar!*</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                   </div>
                                 </div>
@@ -82,7 +82,7 @@
                   <% categorias[1].forEach((imagemCategoria, index )=>{ %>
                     <div class="col-md-3 col-4 p-2" style="height: 30%">
                         <div class="card"  style="width: 100%; height: auto">
-                          <button  style="width:100% ;height: auto;background-color: #F5F6F8; border-color: grey; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
+                          <button  style="width=100% height: auto;background-color: #F5F6F8; border-color: grey; position: relative;display: flex;justify-content: center;" class="btn btn-success" data-toggle="modal" data-target="#<%= imagemCategoria[1].substr(0, imagemCategoria[1].indexOf('.')) %>" style="background-color: white;">
                               <img  src="/images/lancamento/<%= imagemCategoria[1] %>" width="95%" height="auto" alt="<%= imagemCategoria[1] %>">
                           </button>
                         </div>
@@ -120,7 +120,7 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                   </div>
                                 </div>
-                            </form>
+                              </form>
                         </div>     
                     </div>
                     </div>

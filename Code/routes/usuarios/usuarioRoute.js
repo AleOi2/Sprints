@@ -23,13 +23,7 @@ route.post('/cadastro', [
 
   check('email').isEmail().withMessage('E-mail com formato inválido'),
   check('password').isLength({ min: 6 }).withMessage('Senha de pelo menos 6 caracteres'),
-], body('checkerPassword').custom((value, { req }) => {
-  if (value !== req.body.password) {
-    throw new Error('Confirmar Password e Password devem ser iguais ');
-  }  
-  // Indicates the success of this synchronous custom validator
-  return true;
-}), usuarioController.criarUsuario);
+], usuarioController.criarUsuario);
 
 route.get('/cadastro', usuarioController.viewFormCadastro);
 route.get('/login', usuarioController.viewFormLogin);
@@ -50,6 +44,8 @@ route.get('/auth/google',
 route.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/home/home' }),
   (req, res) => {
+    //console.log("Teste") //debug
+    //console.log(req.session.passport) //debug
     const token = jwt.sign(
       { id: req.session.passport },
       secret,
@@ -69,6 +65,8 @@ route.get('/auth/google/callback',
   route.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/home/home' }),
   (req, res) => {
+    // console.log("Teste") //debug
+    // console.log(req.session.passport) //debug
     const token = jwt.sign(
       { id: req.session.passport },
       secret,

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('../Components/templateHead', {
+        pageName:'Login', 
+        cssFile: [
+            '/css/Artigos/artigos.css',
+        ]
+    }) %> 
+<body>
+    <%-include('../Components/Header/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Login", "Cadastrar"],
+            routes: [`/usuarios/login`,`/usuarios/cadastro`]
+        }
+
+    }) %>  
+
+ 
+
+    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 20px; box-sizing: border-box;">
+        <div class="artigosTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
+
+        </div>
+        <img src=<%= article.imageArticle %> alt="imagem principal" width="70%" height="70%">
+        <h1 style="font-family: 'Noto Sans SC', sans-serif; font-weight:bold; font-size:5vw;"> <%= article.titleArticle %> </h1>
+        <p style="font-size:4vw;"> <%= article.textArticle %> </p>
+
+        </div>
+    </div>
+    <%-include('../Components/footer') %>
+</body>
+</html>

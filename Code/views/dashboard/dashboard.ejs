@@ -1,171 +1,48 @@
-<!-- 
-let costs = {
-    data: [
-        ['Task', 'Hours per Day'],
-        ['Work', 11],
-        ['Eat', 2],
-        ['Commute', 2],
-        ['Watch TV', 2],
-        ['Sleep', 7]
-    ],
-    title: 'Costs'
-
-}
-
-let revenue = {
-    data: [
-        ['Task', 'Hours per Day'],
-        ['Work', 11],
-        ['Eat', 2],
-        ['Commute', 2],
-        ['Watch TV', 2],
-        ['Sleep', 7]
-    ],
-    title: 'Revenue'
-} -->
 <!DOCTYPE html>
 <html lang="en">
-<%-include('../Components/templateHead', {
+    <%-include('../Components/templateHead', {
         pageName:'Login', 
         cssFile: [
-            '/css/Dashboard/dashboard.css',
+            '/css/Artigos/artigos.css',
         ]
-    }) %>
-
+    }) %> 
 <body>
-
-    <script src="/scripts/Dashboard/dashboard.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        window.addEventListener("load", function (event) {
-            let url = `<%=url%>dashboard/data`;
-            let saldo = `<%= saldo%>`;
-            if(saldo >= 0){
-                fetch(url, {
-                    method: 'post',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        Teste: "Valor teste"
-                    })
-                }).then((response) => {
-                    response.json().then((resp) => {
-                        console.log("Meus cookies")
-                        console.log(decodeURIComponent(document.cookie));
-                        let {
-                            costs,
-                            revenue
-                        } = resp;
-                        let pieCostsData = {
-                            data: [
-                                ['Task', 'Hours per Day']
-                            ],
-                            title: 'Costs'
-                        }
-                        let pieRevenueData = {
-                            data: [
-                                ['Task', 'Hours per Day']
-                            ],
-                            title: 'Revenue'
-                        }
-                        if (typeof (resp.revenue) !== 'undefined') {
-                            let today = new Date();
-                            today = today.toISOString().match(/\d{4}-\d{2}/)[0];
-                            console.log("Olhando")
-                            console.log(costs)
-                            let chartRevenueInput = completeObj(revenue, pieRevenueData, today);
-                            let chartCostsInput = completeObj(costs, pieCostsData, today);
-                            console.log(chartCostsInput)
-                            drawChart(chartRevenueInput.data, chartRevenueInput.title);
-                            drawChart(chartCostsInput.data, chartCostsInput.title);
-                            $('#revenueDate').html(convertDateToLabel(today));
-                            $('#costsDate').html(convertDateToLabel(today));
-                            
-                            // Saving on session
-                            sessionStorage.setItem(RevDate, today);
-                            sessionStorage.setItem(CostDate, today);
-                            sessionStorage.setItem(chartRevIn, JSON.stringify(revenue));
-                            sessionStorage.setItem(chartCosIn, JSON.stringify(costs));
-                        }
-                    })
-                })
-
-            }
-        });
-    </script>
-
     <%-include('../Components/Header/headerComponent',{
-            navigator:{
-                label: ["Início", "Sobre Nós", "Artigos"],
-                routes:[`/inicio`,`/sobrenos`,`/artigos`]
-            },
-            loginSigin:{
-                label: [ user.name , "Logout"],
-                routes: [``,`/usuarios/logout`]
-            }
-    
-    }) %>
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+        },
+        loginSigin:{
+            label: ["Alexandre", "Logout"],
+            routes: [``,`/usuarios/logout`]
+        }
 
+    }) %>  
+
+    
+    <!-- check for user on page load --> 
+    <% if (typeof token != "undefined" && typeof user != "undefined") { %>
+    <!-- make user available to script tag -->
+    <% var token = token %>
+  
+    <!-- use script tag to access ejs data and local storage -->
     <script>
-        
-        //console.log($("#prevDate"))
-        //$("#prevDate").addEventListener("click", function() {
-        //    console.log("Entrei")
-        //}, false);
-        //$("#nextDate").addEventListener("click", function() {
-        //    console.log("Entrei2")
-        //}, false);
-        //$("#nextDate").onclick = function(){
-        //    console.log("Testando")
-        //}
-        
+      let token = <%- JSON.stringify(token) %>;
+      let user = <%- JSON.stringify(user) %>;
+      localStorage.setItem('token', JSON.stringify({'token': token}));
+      localStorage.setItem('user', JSON.stringify({'user': user}));
     </script>
+  <% } %>
 
+
+    <body>
+        <div style="position: relative;height: 100vh;">
+            <%- include('../Components/sideMenu/sideMenu', sideElement )%>
+        </div>
     
-    <% if(saldo >= 0) {%> 
-        <div style="position: relative;min-height: 100vh;background-color: #ebebec">
-            <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <h1 style="margin-bottom: 20px;">
-                Distribuição de Gastos e Receitas
-            </h1>
-            <div style="display: flex; justify-content:center; background-color: #ebebec; display:flex; flex-basis: 500px; flex-wrap: wrap;">
-                <div id="card1" style="border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white">
-                    <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
-                        <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                            <button onclick="Reduce(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
-                            <div id='revenueDate' style="display:flex; justify-content: center; align-items: center; font-size: 25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
-                            <button onclick="Add(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
-                        </div>
-                    <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black;box-sizing: unset;"></div>
-                </div>
-                <div id="card2" style="border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white">
-                    <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
-                    <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                        <button onclick="Reduce(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
-                        <div id='costsDate' style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
-                        <button onclick="Add(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
-                    </div>
-                <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black; box-sizing: unset;"></div>
-                </div>
-            </div>
-            <div id='line1' style="border: 1px solid black; position: relative; top: 80px; width: 70%; align-self: flex-end;"></div>
-        </div>
-    <% }else{ %>
-        <div style="position: relative;min-height: 100vh;background-color: #ebebec">
-            <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <h1 style="color: red;">
-                Você precisa preencher seu saldo para começar
-            </h1>
-            <h3> Vá para a aba de perfil no menu lateral e preencha seus dados antes de começar.</h3>
-        </div>
-    <% } %>  
-        <%-include('../Components/footer') %>
 
+    </body>
+
+    <%-include('../Components/footer') %>
 </body>
-
 </html>

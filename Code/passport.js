@@ -1,6 +1,5 @@
-const { Users } = require('./Sequelize/model/');
+const { User } = require('./Sequelize/model/');
 let passport = require('passport');
-let { safeAccess } = require("./utils/safeAcces")
 let { 
     secret, 
     clientID, 
@@ -16,7 +15,7 @@ var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromHeader('authorization');
 opts.secretOrKey = process.env.SECRET || secret;
 passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
-    Users.findAll({
+    User.findAll({
         where: {
             id: jwt_payload.id
         }
@@ -56,7 +55,7 @@ passport.use(new GoogleStrategy({
     function (token, tokenSecret, profile, done) {
         const now = new Date();
 
-        Users.findOne({
+        User.findOne({
             where: {
                 email: profile.emails[0].value
             },
@@ -70,7 +69,7 @@ passport.use(new GoogleStrategy({
                     createdAt: now,
                 }
 
-                Users.create(newUser).then((res) => {
+                User.create(newUser).then((res) => {
                     return done(null, {...newUser, id: res.dataValues.id});
                 })
             } else {
@@ -81,14 +80,13 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser((user, done) => {
+    console.log(user.id)
     done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    Users.findByPk(id).then((user, err) => {
+    User.findByPk(id).then((user, err) => {
         done(err, user.dataValues);
-        // if(user) done(err, user.dataValues);
-        // done(err,{})
     })
 });
 
@@ -100,11 +98,14 @@ passport.use(new FacebookStrategy({
     callbackURL: "/usuarios/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(accessToken)
+    console.log(refreshToken)
+    console.log(profile)
     const now = new Date();
 
     console.log(profile.provider + profile.id + '@gmail.com')
 
-    Users.findOne({
+    User.findOne({
         where: {
             email: profile.provider + profile.id + '@gmail.com'
         },

@@ -8,11 +8,8 @@ const passport = require('passport');
 const cookieSession = require('cookie-session')
 const { cookieSecret } = require('./constants/constants')
 const cors = require('cors');
-const methodOverride = require('method-override')
 
 var cookieParser = require('cookie-parser');
-
-app.use(methodOverride('_method'))
 app.use(cookieParser())
 
 app.use(cors());

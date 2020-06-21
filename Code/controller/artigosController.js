@@ -1,60 +1,45 @@
-let { 
-    dummy, 
-    cards, 
-    numDisplay 
-} = require("../model/artigosModel");
+// let { 
+//     dummy, 
+//     cards, 
+//     numDisplay 
+// } = require("../model/artigosModel");
 const { Article } = require("../Sequelize/model/");
 
 const { url } = require('../constants/constants');
-const limit = 8;
-const offset = 0; 
+
 numDisplay = 7
 
-Article.findAll({
-    raw:true,
-    limit,
-    offset,
-    where: {}, 
-  })
-  .then(data => {
 
-      dummy = {
-          id:data[0].id,        
-          type: "main",
-          name:data[0].imageHighlight,
-          title:data[0].titleArticle,
-          label:data[0].textArticle.substring(1,data[0].textArticle.indexOf("."))+"...",
-          ref: "/artigos/"+data[0].id,
-      };  
+const artigosController = {
+    
+    list: async (req, res) =>{
 
-      cards = [];
-      for(let idx=1;idx<7;idx++){
-          cards.push(
-            {
-              id:data[idx].id,        
-              type: "card",
-              name:data[idx].imageHighlight,
-              title:data[idx].titleArticle,
-              label:data[0].textArticle.substring(1,data[0].textArticle.indexOf("."))+"...",
-              ref: "/artigos/"+data[idx].id,
-            });
-      };
-    });
+        let page  = req.params.id;
+        let { count:total, rows:data } = await Article.findAndCountAll({
+            raw:true,
+            limit: 7,
+            offset: (page - 1) * 7,
+        });  
+        let totalPages = Math.ceil(total/7);
+        //console.log("********** parametros", req.params.id, " - pagina ", page); //debug
 
-
-         
-
- 
-
-
-const artigosController = (req, res) =>{
-    // console.log("cards *******************************", cards); // debug
-    res.render('Artigos/artigos', {
-        dummy:dummy,  
-        cards:cards,
-        numDisplay:numDisplay,
-        url: url,
-    })
-}   
+        //console.log("saida consulta findandcount ******** totalpag",totalPages, "artigos", data); //debug
+        res.render('Artigos/artigos', {
+            data: data,
+            numDisplay:numDisplay,
+            totalPages,
+            url: url,
+        })
+    },
+    view: async (req, res) =>{
+        let articleView  = req.params.id;
+        console.log(articleView);
+        article = await Article.findOne({
+            where: {
+                id: articleView,
+            }});
+        res.render('Artigos/artigosView', { article });
+    }
+}
 
 module.exports = artigosController;

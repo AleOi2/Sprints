@@ -8,12 +8,8 @@ let sideBarInput = [
         label: 'ADICIONAR LANÇAMENTOS'
     },
     {
-        route:'/perfil',
-        label: 'Perfil'
-    },
-    {
-        route:'/lancamento/listar',
-        label: 'LISTAR LANÇAMENTOS'
+        route:'/',
+        label: 'Terceito Teste'
     },
 
 ]

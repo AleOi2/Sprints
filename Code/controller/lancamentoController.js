@@ -1,9 +1,6 @@
 //const categorias =[["educacao.png", "emprestimo.png", "lazer.png", "mercado.png", "moradia.png", "restaurante.png", "saude.png", "servicos.png", "transporte.png", "vestuario.png", "viagens.png", "other.png"],  ["salario.png", "emprestimo.png", "other.png"] ];
 const { sideBarInput } = require("../model/sideBarInput");
-const { pickYearMonth }  = require("../utils/dateFormater");
-const { Category, Release, Users } = require("../Sequelize/model/");
-const moment = require('moment')
-
+const { Category, Release } = require("../Sequelize/model/");
 
 
 const lancamentoController = {
@@ -16,7 +13,6 @@ const lancamentoController = {
 
         let categorias3 = [];             
         categoriasDespesa.forEach((dados) => {categorias3.push([dados.id,dados.category])});
-        // console.log(categorias3) //debug
 
 
         let categoriasReceita = null;
@@ -26,21 +22,17 @@ const lancamentoController = {
 
         let categorias4 = [];             
         categoriasReceita.forEach((dados) => {categorias4.push([dados.id,dados.category])});
-        //console.log(categorias4) //debug
+
         
         let categorias = [];
         categorias.push(categorias3,categorias4);  
-        // console.log("******************************")
-        // console.log(categorias[1])
-        // console.log("******************************")
-        // console.log(categorias[1][0][1])
+        console.log(categorias);
 
-        res.render('lancamento/lancamento',{ 
-            'categorias' : categorias, 
-            sideElement: sideBarInput,
-            token: req.cookies.token, 
-            user: req.cookies.user 
-        });  
+
+        res.render('lancamento/lancamento',{ 'categorias' : categorias, sideElement: sideBarInput,
+                                                                        token: req.cookies.token, 
+                                                                        user: req.cookies.user 
+    });  
    },
 
     list: (req, res) =>{
@@ -51,81 +43,17 @@ const lancamentoController = {
         let { categoryForm, date, description, value } = req.body;
         let category_id = categoryForm;
         let users_id = req.cookies.user.id;
-        let month_year = pickYearMonth(date);
+        //console.log(" ===vars categoria:"+categoryForm+" "+date+" "+description+" "+value)  //debug
+
         Release.create({
             date,
             description,
             value,      
             users_id,
-            category_id,
-            month_year           
+            category_id,    
         });
         //console.log("realizado"); //debug
         return res.redirect("/lancamento",);
-    }, 
-
-    index: async (req, res) => {
-        console.log(req.cookies.user.email)
-
-        //Função para obter o Id do usuário logado
-        let userId = await Users.findOne({
-            where: {
-                email: req.cookies.user.email
-            }            
-        })
-        console.log(req.cookies.user.email)
-        userId = userId.id;
-
-        //Função para obter todos os lançamentos do usuário
-        let userReleases = await Release.findAll({
-            where: {users_id: userId}
-        });
-
-        //Função para obter o nome das categorias dos lançamentos
-        let categoriesEdit = [];
-        let categories = await Category.findAll();
-        categories.forEach(category =>{
-            categoriesEdit.push({id: category.id, name: category.category.replace('.png', '')})
-        })
-        
-        res.render('lancamento/listarLancamento', {
-            sideElement:sideBarInput,
-            userReleases,
-            categoriesEdit, 
-            moment,
-        });     
-    },
-
-    edit: async (req, res)=>{
-
-        let { id } = req.params; // id do lançamento que está sendo editado  
-        let releaseEdit = req.body; // dados para serem alterados no banco ( value, date e description)
-
-        releaseEdit.value = releaseEdit.value.toString().replace(',','.');
-        releaseEdit.value = parseFloat(releaseEdit.value);  
-
-        // Função para alteraros dados no banco
-            await Release.update({
-            value: releaseEdit.value,
-            date: releaseEdit.date,
-            description: releaseEdit.description,
-        },{
-            where: {
-                id: id,
-            }
-        });
-
-        return res.redirect("/lancamento/listar");    
-
-    }, 
-
-    delete: async (req, res)=>{
-        let { id } = req.params; // id do lançamento a ser excluído
-
-        await Release.destroy({
-            where: { id: id }
-        });
-        return res.redirect("/lancamento/listar");       
     }
 }
 
