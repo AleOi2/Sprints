@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       Users.hasMany(model.Release, {
         foreignKey: 'users_id',
         sourceKey: 'id'
+      });
+      Users.hasMany(model.PredictCategory, {
+        foreignKey: 'users_id',
+        sourceKey: 'id'
       })
       
     }

@@ -1,4 +1,4 @@
-const { Users } = require('./Sequelize/model/');
+const { Users, PredictCategory, Category } = require('./Sequelize/model/');
 let passport = require('passport');
 let { safeAccess } = require("./utils/safeAcces")
 let { 
@@ -8,6 +8,7 @@ let {
     facebookClientID, 
     facebookclientSecret
 } = require('./constants/constants')
+const insertInitialCategoriesPrediction = require('./utils/initialPredicition')
 const md5 = require('md5');
 const bcrypt = require('bcrypt')
 var JwtStrategy = require('passport-jwt').Strategy,
@@ -42,7 +43,6 @@ passport.use('custom', new CustomStrategy(
     }
 ));
 
-
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 // Use the GoogleStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
@@ -70,7 +70,8 @@ passport.use(new GoogleStrategy({
                     createdAt: now,
                 }
 
-                Users.create(newUser).then((res) => {
+                Users.create(newUser).then(async (res) => {
+                    await insertInitialCategoriesPrediction(res.dataValues.id);
                     return done(null, {...newUser, id: res.dataValues.id});
                 })
             } else {
@@ -116,6 +117,7 @@ passport.use(new FacebookStrategy({
             }
 
             Users.create(newUser).then((res) => {
+                insertInitialCategoriesPrediction(res.dataValues.id);
                 return done(null, {...newUser, id: res.dataValues.id});
             })
         } else {

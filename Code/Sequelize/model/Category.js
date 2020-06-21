@@ -14,6 +14,10 @@ module.exports = (Sequelize, DataType)=>{
             type: DataType.STRING,
             allowNull: false
           }, 
+          label: {
+            type: DataType.STRING,
+            allowNull: false
+          }, 
           valuePredict: {
            type: DataType.DECIMAL(12,2),
            allowNull: false
@@ -34,7 +38,12 @@ module.exports = (Sequelize, DataType)=>{
       Category.hasMany(model.Release, {
         foreignKey: 'category_id',
         sourceKey: 'id'
+      }); 
+      Category.hasMany(model.PredictCategory, {
+        foreignKey: 'category_id',
+        sourceKey: 'id'
       })  
+      
     }
 
     return Category

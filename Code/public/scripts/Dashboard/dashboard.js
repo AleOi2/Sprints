@@ -1,22 +1,28 @@
 const RevDate = 'revenueDate';
 const CostDate = 'costsDate';
+const TableDate = 'tableDate';
 const calendarData = {
-    1:'Janeiro',
-    2:'Fevereiro',
-    3:'Março',
-    4:'Abril',
-    5:'Maio',
-    6:'Junho',
-    7:'Julho',
-    8:'Agosto',
-    9:'Setembro',
-    10:'Outubro',
-    11:'Novembro',
-    12:'Dezembro',
+    1: 'Janeiro',
+    2: 'Fevereiro',
+    3: 'Março',
+    4: 'Abril',
+    5: 'Maio',
+    6: 'Junho',
+    7: 'Julho',
+    8: 'Agosto',
+    9: 'Setembro',
+    10: 'Outubro',
+    11: 'Novembro',
+    12: 'Dezembro',
 }
 const chartRevIn = 'chartRevenueInput'
 const chartCosIn = 'chartCostsInput'
+const categType = 'categoryType'
+const predData = 'predictionDatas';
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pizza Component
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function drawChart(entryData, title) {
     var data = google.visualization.arrayToDataTable(entryData);
@@ -43,7 +49,7 @@ function drawChart(entryData, title) {
 
     };
     var chart1 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[(title ===
-        'Revenue') ? 0 : 1]);
+    'Revenue') ? 0 : 1]);
     chart1.draw(data, options);
 }
 
@@ -53,12 +59,12 @@ function groupByDate(arr) {
         yearMonth = Object.keys(element)[0];
         if (!(yearMonth in grouped)) {
             grouped[yearMonth] = {
-                [element[yearMonth].Category.category]: parseInt(element[yearMonth].sum),
+                [element[yearMonth].Category.label]: parseInt(element[yearMonth].sum),
             }
         } else {
             grouped[yearMonth] = {
                 ...grouped[yearMonth],
-                [element[yearMonth].Category.category]: parseInt(element[yearMonth].sum),
+                [element[yearMonth].Category.label]: parseInt(element[yearMonth].sum),
             }
         }
     }
@@ -83,11 +89,9 @@ function parserData(revenueCost) {
 function completeObj(revenueCost, pieRevenueCostData, date) {
     // Convert revenueCost to:
     // {2020-06:{obj}, 2020-07:{obj},}
-    console.log("Hoje");
-    console.log(date);
     let parsedData = parserData(revenueCost);
-    let releases = []; let type;let index = 0;
-    for( let element in parsedData[date]){
+    let releases = []; let type; let index = 0;
+    for (let element in parsedData[date]) {
         type = Object.keys(element)[0]
         releases.push(Object.keys(parsedData[date])[index].toUpperCase().replace('.PNG', ''));
         releases.push(parsedData[date][element]);
@@ -100,7 +104,7 @@ function completeObj(revenueCost, pieRevenueCostData, date) {
 
 // Receive a date string 2020-02-10 or 2020/02/10 or 10-02-2020 or 10/02/2020
 // Return date array [2020, 02, 10] for wherever case  
-const returnDateStringArray = (stringDate) =>{
+const returnDateStringArray = (stringDate) => {
     if (stringDate.match(/\d{4}-\d{1,2}-\d{1,2}/img)) {
         date = stringDate.match(/\d{4}-\d{1,2}-\d{1,2}/img)[0].split('-');
     }
@@ -132,7 +136,7 @@ const pickYearMonth = (stringDate) => {
 // Similar to returnDateStringArray but .. only consider month and year 
 // Receive a date string 2020-02 or 2020/02 or 02-2020 or 02/2020
 // Return date array [2020, 02] for wherever case  
-const returnOnlyYearMonth = (stringDate) =>{
+const returnOnlyYearMonth = (stringDate) => {
     if (stringDate.match(/\d{4}-\d{1,2}/img)) {
         date = stringDate.match(/\d{4}-\d{1,2}/img)[0].split('-');
     }
@@ -151,7 +155,7 @@ const returnOnlyYearMonth = (stringDate) =>{
 
 //Receive month-year (String) -> "2020-06"
 // Convert to Junho/2020
-const convertDateToLabel = (stringDate) =>{
+const convertDateToLabel = (stringDate) => {
     let date = returnOnlyYearMonth(stringDate);
     date = date.map((dateString, index) => {
         return parseInt(dateString)
@@ -162,9 +166,7 @@ const convertDateToLabel = (stringDate) =>{
     return returnedStr;
 }
 
-// today is this month and this year 2020-02
-// type is revenueDate or costsDate
-const Add = (today, type, Div, chart, title) =>{
+const AddDate = (today, Div, type) => {
     // thisMonthYear = [2020, 1]
     let thisMonthYear = returnOnlyYearMonth(today)
     thisMonthYear = thisMonthYear.map((dateString, index) => {
@@ -172,14 +174,24 @@ const Add = (today, type, Div, chart, title) =>{
     })
     let nextMonth = thisMonthYear;
     // nextMonth = [2020, 2] or if thisMonthYear = [2020, 12]  [2021, 1] 
-    if(thisMonthYear[1] < 12) nextMonth[1] = thisMonthYear[1] + 1;
-    else{
+    if (thisMonthYear[1] < 12) nextMonth[1] = thisMonthYear[1] + 1;
+    else {
         nextMonth[1] = 1;
         nextMonth[0] = thisMonthYear[0] + 1;
     }
     //Saving into session
-    if(nextMonth[1]< 10) sessionStorage.setItem(type, nextMonth[0] + '-' + '0' + nextMonth[1]);
-    else sessionStorage.setItem(type, nextMonth[0] + '-' + nextMonth[1]);    
+    if (nextMonth[1] < 10) sessionStorage.setItem(type, nextMonth[0] + '-' + '0' + nextMonth[1]);
+    else sessionStorage.setItem(type, nextMonth[0] + '-' + nextMonth[1]);
+    // Convert to [Fevereiro/2020] and put on Div
+    Div.html(convertDateToLabel(nextMonth[1] + '/' + nextMonth[0]));
+
+}
+
+// today is this month and this year 2020-02
+// type is revenueDate or costsDate
+const AddPizza = (today, type, Div, chart, title) => {
+    // change session storage date from date button
+    AddDate(today, Div, type)
     // Refresh Chart
     let pieData = {
         data: [
@@ -189,14 +201,9 @@ const Add = (today, type, Div, chart, title) =>{
     };
     let chartInput = completeObj(chart, pieData, sessionStorage.getItem(type));
     drawChart(chartInput.data, chartInput.title);
-
-    // Convert to [Fevereiro/2020] and put on Div
-    Div.html(convertDateToLabel(nextMonth[1] + '/' + nextMonth[0]));
 }
 
-// today is this month and this year 2020-02
-// type is revenueDate or costsDate
-const Reduce = (today, type, Div, chart, title) =>{
+const ReduceDate = (today, Div, type) =>{
     // thisMonthYear = [2020, 1]
     let thisMonthYear = returnOnlyYearMonth(today)
     thisMonthYear = thisMonthYear.map((dateString, index) => {
@@ -204,15 +211,24 @@ const Reduce = (today, type, Div, chart, title) =>{
     })
     let nextMonth = thisMonthYear;
     // nextMonth = [2019, 12] or if thisMonthYear = [2020, 12]  [2020, 11] 
-    if(thisMonthYear[1] > 1) nextMonth[1] = thisMonthYear[1] - 1;
-    else{
+    if (thisMonthYear[1] > 1) nextMonth[1] = thisMonthYear[1] - 1;
+    else {
         nextMonth[1] = 12;
         nextMonth[0] = thisMonthYear[0] - 1;
     }
     //Saving into session
-    if(nextMonth[1]< 10) sessionStorage.setItem(type, nextMonth[0] + '-' + '0' + nextMonth[1]);
-    else sessionStorage.setItem(type, nextMonth[0] + '-' + nextMonth[1]);    
+    if (nextMonth[1] < 10) sessionStorage.setItem(type, nextMonth[0] + '-' + '0' + nextMonth[1]);
+    else sessionStorage.setItem(type, nextMonth[0] + '-' + nextMonth[1]);
 
+    // Convert to [Fevereiro/2020]
+    Div.html(convertDateToLabel(nextMonth[1] + '/' + nextMonth[0]))
+}
+
+// today is this month and this year 2020-02
+// type is revenueDate or costsDate
+const ReducePizza = (today, type, Div, chart, title) => {
+    // change session storage date from date button
+    ReduceDate(today, Div, type);
     // Refresh Chart
     let pieData = {
         data: [
@@ -222,8 +238,149 @@ const Reduce = (today, type, Div, chart, title) =>{
     };
     let chartInput = completeObj(chart, pieData, sessionStorage.getItem(type));
     drawChart(chartInput.data, chartInput.title);
+}
 
-    // Convert to [Fevereiro/2020]
-    Div.html(convertDateToLabel(nextMonth[1] + '/' + nextMonth[0]))
+// Functions for Table component
+// Recicle groupByDate and parseData
+function groupByDate2(arr) {
+    let grouped = {}; let yearMonth;
+    for (let element of arr) {
+        yearMonth = Object.keys(element)[0];
+        if (!(yearMonth in grouped)) {
+            grouped[yearMonth] = {
+                [element[yearMonth].Category.category.toUpperCase().replace('.PNG', '')]: parseInt(element[yearMonth].sum),
+            }
+        } else {
+            grouped[yearMonth] = {
+                ...grouped[yearMonth],
+                [element[yearMonth].Category.category.toUpperCase().replace('.PNG', '')]: parseInt(element[yearMonth].sum),
+            }
+        }
+    }
+    return grouped;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Table Component
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Data parser for prediction input
+const predictionParser = (prediction) =>{
+    prediction = prediction.map((predict) =>{
+        return{
+            valuePredict: predict.valuePredict,
+            label: predict.Category.label,
+            category: predict.Category.category,
+            type: predict.Category.type,
+        }
+    })
+    let predictionParsed = {}
+    for (let element of prediction){
+        predictionParsed[element.category.toUpperCase().replace('.PNG', '')] = element
+    
+    }
+    return predictionParsed;
+}
+
+// Convert to:
+// {2020-06:{obj}, 2020-07:{obj},}
+function parserData2(revenueCost) {
+    // Convert to:
+    // {2020-06:{obj1 -> category1}, 2020-06:{obj2 -> category2}, 2020-07:{obj1},}
+    let parsedData = revenueCost.map((element, index) => {
+        return ({ [element.month_year]: element })
+    })
+    // Convert to:
+    // {2020-06:{obj}, 2020-07:{obj}, 2020-08:{obj}}
+    // obj:{ categoria: sumValue}
+    return groupByDate2(parsedData);
+}
+
+
+function completeObjTable(revenueCost, pieRevenueCostData, date) {
+    // Convert revenueCost to:
+    // {2020-06:{obj}, 2020-07:{obj},}
+    let parsedData = parserData2(revenueCost);
+    let type; let index = 0;
+    for (let element in parsedData[date]) {
+        type = Object.keys(element)[0]
+        pieRevenueCostData.data[Object.keys(parsedData[date])[index].toUpperCase().replace('.PNG', '')] =
+            parsedData[date][element];
+        index = index + 1
+    }
+    return pieRevenueCostData;
+}
+
+const AddTable = (today, type, Div, revenueData, costsData, categTypes, predictionData ) =>{
+    // change session storage date from date button
+    AddDate(today, Div, type);
+    let merge = { data: {}, };    
+    let mergeData = [...revenueData, ...costsData];
+    // convert [{month_year,category_id,sum, User:{}, Categor:{}},{month_year,category_id,sum, User:{}, Categor:{}},...]
+    // to {data:{Educação:200, Lazer: 9, ...}}
+    let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
+    categTypes = categTypes.map((element) =>{
+        return element.toUpperCase().replace('.PNG', '')
+    })
+    completeTable(merged, categTypes, predictionData);
+}
+
+
+const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predictionData) =>{
+    // change session storage date from date button (table component)
+    ReduceDate(today, Div, type);
+    let merge = { data: {}, };
+    let mergeData = [...revenueData, ...costsData];
+    //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
+    let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
+    //merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
+    //categTypes = ["Educação", "Empréstimo(R), Mercado, Moradia ,..."]
+    completeTable(merged, categTypes, predictionData);
+
+}
+
+const completeTable = (merged, categTypes, predictionData) =>{
+    let diff;
+    for(let element of categTypes ){
+        $("#" + element + "1").html(predictionData[element].label.toUpperCase())
+        $("#" + element + "2").html(predictionData[element].valuePredict)
+        $("#" + element + "3").html((merged.data[element])?merged.data[element]:0)
+        if(merged.data[element])diff = predictionData[element].valuePredict - merged.data[element]
+        else diff = 0
+        $("#" + element + "4").html(diff)
+        if(diff < 0){
+            $("#" + element + "5").css({color:'red'});
+            $("#" + element + "5").addClass("fas fa-thumbs-down  fa-2x");
+        }else{
+            $("#" + element + "5").css({color:'green'});
+            $("#" + element + "5").addClass("fas fa-thumbs-up fa-2x");
+        }
+        if(predictionData[element].valuePredict === 0){
+            let greenWidth = 0;
+            let redWidth = 100;
+            $("#" + element + "6").css({width:greenWidth.toString() + "%"});
+            $("#" + element + "6").css({width:redWidth.toString() + "%"});
+
+        }else{
+            let greenWidth = merged.data[element]/predictionData[element].valuePredict * 100;
+            let redWidth = 100 - merged.data[element]/predictionData[element].valuePredict * 100;
+            if(redWidth > 0){
+                $("#" + element + "6").css({width:greenWidth.toString() + "%"});
+                $("#" + element + "7").css({width:redWidth.toString() + "%"});
+
+            }else{
+                $("#" + element + "6").css({width:"0%"});
+                $("#" + element + "7").css({width:"100%"});
+
+            }
+
+        }
+
+
+    }
+}
+
+const completeCategTable = () =>{
+    
 }
 

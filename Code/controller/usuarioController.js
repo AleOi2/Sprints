@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const { secret } = require('../constants/constants')
 const { validationResult } = require('express-validator')
+const insertInitialCategoriesPrediction = require('../utils/initialPredicition')
+
 
 // New error format:
 const parsedErrors = (errors) =>  {
@@ -66,13 +68,11 @@ let usuarioController = {
             if(errors.length > 0 ){
                 // res.status(400).send({err: "Validatiion result"})
                 errors = parsedErrors(errors);
-                console.log("Entrei1")
                 res.render('usuarios/cadastroUsuario',{
                     err: errors, 
                     fields:{name, surname, email, password}
                 })
             }else{
-                console.log("Entrei2")
                 let now = new Date();
                 await Users.create({
                     name,
@@ -87,15 +87,12 @@ let usuarioController = {
                     })
     
                 })
-                console.log("Entrando")
     
                 const user = await Users.findAll({
                     where: {
                         email
                     }
                 })
-                console.log("Meu usuarios")
-                console.log(user)
                 
                 let userValues = user[0].dataValues;
                 console.log(userValues)
@@ -111,6 +108,7 @@ let usuarioController = {
                     email: userValues.email,
                     saldo:userValues.saldo
                 }    
+                insertInitialCategoriesPrediction(userValues.id);
                 res.cookie('token', token, {maxAge: 24 * 1000 * 60 * 60});
                 res.cookie('user', filterredValues, {maxAge: 24 * 1000 * 60 * 60});
                 return res.redirect('/dashboard');
