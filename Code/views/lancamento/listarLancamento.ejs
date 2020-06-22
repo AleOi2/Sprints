@@ -18,11 +18,13 @@
         }
 
     }) %> 
-        <div style="position: relative;height: 100vh;">
-          <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-        <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
-            <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">
+
+      <div  class= "Container" >
+        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+        <div id="rightContainer" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px;">
+            <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px">
                 <h2 style="color: grey;">Lançamentos</h2>
+            
                 <section class="p-5">
                   <table class="table table-hover">
                     <thead>
@@ -132,10 +134,13 @@
                         <% }); %> 
                     </tbody>
                   </table>
-                </section>                       
+                </section>  
+                
             </div>
-        </div>      
-        </div> 
+
+        </div>
+      </div>
+    
         <%-include('../Components/footer') %> 
         
        

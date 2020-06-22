@@ -1,99 +1,123 @@
 <style>
-    .hamburgerContainer_sideMenu {
-      display: inline-block;
-      cursor: pointer;
-      border-radius: 4px;
-      width: 42px;
-      height: 38px;
-      display: <%=options.display%>;
-      border: 2px solid gray;
-      top: 30px;
-      left: 50px;
-      position: relative;
-    }
-    
-    .bar1_sideMenu, .bar2_sideMenu, .bar3_sideMenu {
-      width: 28px;
-      height: 3px;
-      background-color: #707070;
-      margin: 6px 6px;
-      transition: 0.4s;
-    }
-    
-    .change .bar1_sideMenu {
-      /* -webkit-transform: rotate(-45deg) translate(-9px, 6px); */
-      transform: rotate(-45deg) translate(-9px, 6px);
-    }
-    
-    .change .bar2_sideMenu {opacity: 0;}
-    
-    .change .bar3_sideMenu {
-      /* -webkit-transform: rotate(45deg) translate(-8px, -8px); */
-      transform: rotate(45deg) translate(-7px, -4px);
-    }
-    
-    @media screen and (max-width:1070px) {
-      .hamburgerContainer_sideMenu{
-        display: inline;
-        position: absolute;
-      }
-    
-    }
-    
-    </style>
-      <div class="hamburgerContainer_sideMenu">
-        <input id="hamburgerInput_sideMenu" type="checkbox" style="opacity: 0; width: 100%; height:100%; position: absolute;"/>
-        <div class="bar_sideMenu bar1_sideMenu"></div>
-        <div class="bar_sideMenu bar2_sideMenu"></div>
-        <div class="bar_sideMenu bar3_sideMenu"></div>
-      </div>
-    
-    
-    <script>
+  .Container {
+    position: relative;
+    min-height: 100vh;
+    background-color: #ebebec;
+    display: flex;
+  }
 
-    $('.hamburgerContainer_sideMenu').mouseenter(function() {
-        $('#hamburgerInput_sideMenu').css({
-            'cursor': 'pointer'
-        })
+  #leftContainer {
+    position: absolute;
+  }
 
-        $('.bar_sideMenu').css({'background-color': 'black'}) 
-        $('.hamburgerContainer_sideMenu').css({
-            'border': '2px solid black'
-        })
-    }).mouseleave(function() {      
-        $('.hamburgerContainer_sideMenu').css({
-            'border': '2px solid gray'
-        })
-        $('.bar_sideMenu').css({'background-color': '#707070'}) 
-    })
-    $('.hamburgerContainer_sideMenu').click(function() {
-        if ($('#hamburgerInput_sideMenu:checked').val()){
-            $('#leftContainer').css({
-                'transform':'translate(-100%,0)',
-            })
-            $('.hamburgerContainer_sideMenu').css({
-                'transition': 'transform 1s linear',
-                'transform':'translate(100px,0)'
-            })
-            $('#div1').css({'width': '98vw', 'margin-left': '0'}) 
-            $('#divLancamento').css({'width': '100%', 'margin-left': '0'})
-            
+  #rightContainer {
+    width: calc(100% - 200px);
+    margin-left: 200px;
+  }
 
-        }else{
-            $('#leftContainer').css({
-                'transform':'translate(0px, 0px)',
-            })
-            $('.hamburgerContainer_sideMenu').css({
-                'transition': 'transform .5s linear',
-                'transform':'translate(0px, 0px)',
-            })
-            
-            $('#div1').css({'width': '70vw', 'margin-left': '250px'})
-            $('#divLancamento').css({'width': '80%', 'margin-left': '250px'})
-           
+  .hamburgerContainer_sideMenu {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 42px;
+    height: 38px;
+    display: <%=options.display%>;
+    border: 2px solid gray;
+    top: 30px;
+    left: 50px;
+    position: relative;
+  }
 
-        }
+  .bar1_sideMenu,
+  .bar2_sideMenu,
+  .bar3_sideMenu {
+    width: 28px;
+    height: 3px;
+    background-color: #707070;
+    margin: 6px 6px;
+    transition: 0.4s;
+  }
+
+  .change .bar1_sideMenu {
+    /* -webkit-transform: rotate(-45deg) translate(-9px, 6px); */
+    transform: rotate(-45deg) translate(-9px, 6px);
+  }
+
+  .change .bar2_sideMenu {
+    opacity: 0;
+  }
+
+  .change .bar3_sideMenu {
+    /* -webkit-transform: rotate(45deg) translate(-8px, -8px); */
+    transform: rotate(45deg) translate(-7px, -4px);
+  }
+
+</style>
+<div class="hamburgerContainer_sideMenu">
+  <input id="hamburgerInput_sideMenu" type="checkbox"
+    style="opacity: 0; width: 100%; height:100%; position: absolute;"/>
+  <div class="bar_sideMenu bar1_sideMenu"></div>
+  <div class="bar_sideMenu bar2_sideMenu"></div>
+  <div class="bar_sideMenu bar3_sideMenu"></div>
+</div>
+
+
+<script>
+  $('.hamburgerContainer_sideMenu').mouseenter(function () {
+    $('#hamburgerInput_sideMenu').css({
+      'cursor': 'pointer'
     })
 
-    </script>
-    
+    $('.bar_sideMenu').css({
+      'background-color': 'black'
+    })
+    $('.hamburgerContainer_sideMenu').css({
+      'border': '2px solid black'
+    })
+  }).mouseleave(function () {
+    $('.hamburgerContainer_sideMenu').css({
+      'border': '2px solid gray'
+    })
+    $('.bar_sideMenu').css({
+      'background-color': '#707070'
+    })
+  })
+
+  $('.hamburgerContainer_sideMenu').click(function () {
+    if ($('#hamburgerInput_sideMenu:checked').val()) {
+      $('.hamburgerContainer_sideMenu').css({
+        'transition': 'transform 1s linear',
+        'transform': 'translate(100px,0)',
+      })
+
+      $('#leftContainer').css({
+        'transform': 'translate(-100%,0)',
+      })
+
+      $('#rightContainer').css({
+        'transition': 'transform 1s linear',
+        'transform': 'translate(0px,0px)',
+        'margin-left': '100px',
+        'width': '100%'
+      })
+
+
+    } else {
+      $('.hamburgerContainer_sideMenu').css({
+        'transition': 'transform .5s linear',
+        'transform': 'translate(0px, 0px)',
+      })
+      $('#leftContainer').css({
+        'transform': 'translate(0px, 0px)',
+        'width': '200px'
+      })
+      $('#rightContainer').css({
+        'transition': 'transform .01 linear',
+        'transform': 'translate(0px, 0px)',
+        'width': 'calc(100% - 200px)',
+        'margin-left': '200px'
+      })
+
+    }
+  })
+</script>

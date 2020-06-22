@@ -99,7 +99,7 @@ let revenue = {
     <%-include('../Components/Header/headerComponent',{
             navigator:{
                 label: ["Início", "Sobre Nós", "Artigos"],
-                routes:[`/inicio`,`/sobrenos`,`/artigos`]
+                routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
             },
             loginSigin:{
                 label: [ user.name , "Logout"],
@@ -121,18 +121,19 @@ let revenue = {
         //    console.log("Testando")
         //}
         
+        //style="display: flex; justify-content:center; background-color: #ebebec; display:flex; flex-basis: 500px; flex-wrap: wrap; width: 80vw; margin-left: 200px; flex-direction: column"
     </script>
 
     
     <% if(saldo >= 0) {%> 
-        <div style="position: relative;min-height: 100vh;background-color: #ebebec">
+        <div class="Container">
             <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <div id="div1" style="display: flex; justify-content:center; background-color: #ebebec; display:flex; flex-basis: 500px; flex-wrap: wrap; width: 80vw; margin-left: 200px; flex-direction: column">
+            <div id="rightContainer" >
                 <h1 style="margin-bottom: 20px; display:flex;">
                     Distribuição de Gastos e Receitas
                 </h1>
-                <div style=" display:flex; flex-direction: row;justify-content:flex-end; flex-wrap:wrap; width:100%">
-                    <div id="card1" style="flex-basis: 500px;border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; width:40%">
+                <div style=" display:flex; flex-direction: row;justify-content:center; flex-wrap:wrap; width:100%">
+                    <div id="card1" style="flex-basis: 600px;border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; min-width: 650px; width:40%">
                         <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
                             <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
                                 <button onclick="Reduce(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
@@ -141,7 +142,7 @@ let revenue = {
                             </div>
                         <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black;box-sizing: unset;"></div>
                     </div>
-                    <div id="card2" style="flex-basis: 300px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; width:40%">
+                    <div id="card2" style="flex-basis: 600px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; ; min-width: 650px;width:40%">
                         <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
                         <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
                             <button onclick="Reduce(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
@@ -152,13 +153,13 @@ let revenue = {
                     </div>
 
                 </div>
+                <div id='line1' style="border: 1px solid black; position: relative; top: 80px; width: 70%; align-self: flex-end;"></div>
             </div>
-            <div id='line1' style="border: 1px solid black; position: relative; top: 80px; width: 70%; align-self: flex-end;"></div>
         </div>
     <% }else{ %>
         <div style="position: relative;min-height: 100vh;background-color: #ebebec">
             <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <div style="position: relative;height: 100vh;">
+            <div id="rightContainer"style="position: relative;height: 100vh;">
                 <%- include('../Components/SideMenu/sideMenu', sideElement )%>
               <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
                   <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">

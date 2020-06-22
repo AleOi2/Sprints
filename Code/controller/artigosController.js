@@ -12,7 +12,7 @@ const artigosController = (req, res) =>{
         numDisplay:numDisplay,
         url: url,
         token: req.cookies.token, 
-        user: req.cookies.user 
+        user: req.cookies.user,
     })
 }   
 

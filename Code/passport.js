@@ -101,9 +101,6 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     const now = new Date();
-
-    console.log(profile.provider + profile.id + '@gmail.com')
-
     Users.findOne({
         where: {
             email: profile.provider + profile.id + '@gmail.com'
@@ -118,7 +115,7 @@ passport.use(new FacebookStrategy({
                 createdAt: now,
             }
 
-            User.create(newUser).then((res) => {
+            Users.create(newUser).then((res) => {
                 return done(null, {...newUser, id: res.dataValues.id});
             })
         } else {
