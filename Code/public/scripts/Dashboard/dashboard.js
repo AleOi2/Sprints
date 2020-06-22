@@ -320,8 +320,6 @@ const AddTable = (today, type, Div, revenueData, costsData, categTypes, predicti
     let mergeData = [...revenueData, ...costsData];
     // convert [{month_year,category_id,sum, User:{}, Categor:{}},{month_year,category_id,sum, User:{}, Categor:{}},...]
     // to {data:{Educação:200, Lazer: 9, ...}}
-    console.log("categ")
-    console.log(categTypes)
     let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
     categTypes = categTypes.map((element) =>{
         return element.toUpperCase().replace('.PNG', '')
@@ -339,17 +337,12 @@ const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predi
     let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
     //merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
     //categTypes = ["Educação", "Empréstimo(R), Mercado, Moradia ,..."]
-    console.log("Merged")
-    console.log(merged)
     completeTable(merged, categTypes, predictionData);
 
 }
 
 const completeTable = (merged, categTypes, predictionData) =>{
     let diff;
-    console.log("Entrada")
-    console.log(predictionData)
-    console.log(categTypes)
     for(let element of categTypes ){
         $("#" + element + "1").html(predictionData[element].label.toUpperCase())
         $("#" + element + "2").html(predictionData[element].valuePredict)
