@@ -269,6 +269,8 @@ const predictionParser = (prediction) =>{
     prediction = prediction.map((predict) =>{
         return{
             valuePredict: predict.valuePredict,
+            category_id: predict.category_id,
+            users_id: predict.users_id,
             label: predict.Category.label,
             category: predict.Category.category,
             type: predict.Category.type,
@@ -318,6 +320,8 @@ const AddTable = (today, type, Div, revenueData, costsData, categTypes, predicti
     let mergeData = [...revenueData, ...costsData];
     // convert [{month_year,category_id,sum, User:{}, Categor:{}},{month_year,category_id,sum, User:{}, Categor:{}},...]
     // to {data:{Educação:200, Lazer: 9, ...}}
+    console.log("categ")
+    console.log(categTypes)
     let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
     categTypes = categTypes.map((element) =>{
         return element.toUpperCase().replace('.PNG', '')
@@ -335,6 +339,8 @@ const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predi
     let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
     //merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
     //categTypes = ["Educação", "Empréstimo(R), Mercado, Moradia ,..."]
+    console.log("Merged")
+    console.log(merged)
     completeTable(merged, categTypes, predictionData);
 
 }
@@ -346,14 +352,16 @@ const completeTable = (merged, categTypes, predictionData) =>{
         $("#" + element + "2").html(predictionData[element].valuePredict)
         $("#" + element + "3").html((merged.data[element])?merged.data[element]:0)
         if(merged.data[element])diff = predictionData[element].valuePredict - merged.data[element]
-        else diff = 0
+        else diff = predictionData[element].valuePredict
         $("#" + element + "4").html(diff)
-        if(diff < 0){
+        if(diff <= 0){
             $("#" + element + "5").css({color:'red'});
-            $("#" + element + "5").addClass("fas fa-thumbs-down  fa-2x");
+            // $("#" + element + "5").addClass("fas fa-thumbs-down  fa-2x");
+            $("#" + element + "5").attr('class', "fas fa-thumbs-down  fa-2x");
         }else{
             $("#" + element + "5").css({color:'green'});
-            $("#" + element + "5").addClass("fas fa-thumbs-up fa-2x");
+            // $("#" + element + "5").addClass("fas fa-thumbs-up fa-2x");
+            $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
         }
         if(predictionData[element].valuePredict === 0){
             let greenWidth = 0;
@@ -366,11 +374,18 @@ const completeTable = (merged, categTypes, predictionData) =>{
             let redWidth = 100 - merged.data[element]/predictionData[element].valuePredict * 100;
             if(redWidth > 0){
                 $("#" + element + "6").css({width:greenWidth.toString() + "%"});
-                $("#" + element + "7").css({width:redWidth.toString() + "%"});
+                $("#" + element + "7").css({
+                    width:redWidth.toString() + "%",
+                    borderTopLeftRadius:'0px',
+                    borderBottomLeftRadius:'0px'
+                });
 
             }else{
                 $("#" + element + "6").css({width:"0%"});
-                $("#" + element + "7").css({width:"100%"});
+                $("#" + element + "7").css({
+                    width:"100%",
+                    borderRadius:'10px'
+            });
 
             }
 
@@ -380,7 +395,12 @@ const completeTable = (merged, categTypes, predictionData) =>{
     }
 }
 
-const completeCategTable = () =>{
-    
+// Open modal
+const openModal = (index, categType) =>{
+    $("#Modal" + index).appendTo("body").modal('show');
+    $("#Modal" + index).modal('show');
+    let prediction = $("#" + categType[index] + "2").html()
+    $("#newValue" + index).val(prediction);  
+
 }
 

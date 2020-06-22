@@ -71,6 +71,48 @@ let revenue = {
             })
         }
 
+        const sendNewPrediction = (predictionData, index, input, id, divErrorValidator, modal) =>{
+            let imputData = input.val();
+            imputData = imputData.trim().replace(/\,/img, '.')
+            if(parseFloat(imputData)){
+                //changing in html page
+                $("#" + id).html(imputData);
+                // changing section 
+                let newPredictionData = predictionData;
+                let categId = id.replace(/[0-9]/img, '');
+                newPredictionData[categId].valuePredict = imputData;
+                sessionStorage.setItem(predData, JSON.stringify(newPredictionData));
+                // Deleting Invalid Message
+                divErrorValidator.css({
+                    display: 'none'
+                });
+                // Closing Modal
+                modal.modal('hide');
+                console.log("Verificando entraad")
+                console.log(newPredictionData)
+                console.log(newPredictionData[categId])
+                //sending data to back-end
+                url = `<%=url%>dashboard/editprediction`;
+                return fetch(url, {
+                    method: 'post',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify({
+                        prediction: newPredictionData[categId]
+                    })
+                })
+
+                
+            }else{
+                divErrorValidator.css({
+                    display: 'block'
+                })
+            }
+
+        }
+
 
         google.charts.load('current', {
             'packages': ['corechart']
@@ -78,9 +120,9 @@ let revenue = {
         window.addEventListener("load", async (event) => {
             let saldo = `<%= saldo%>`;
             if (saldo >= 0) {
-                let categType = await getCategory();
-                if (categType.status === 200 || categType.status === 201) {
-                    categTypes = await categType.json().then((resp) => {
+                let categs = await getCategory();
+                if (categs.status === 200 || categs.status === 201) {
+                    categs = await categs.json().then((resp) => {
                         sessionStorage.setItem(categType, JSON.stringify(resp));
                         return resp;
                     })
@@ -131,7 +173,7 @@ let revenue = {
                             };
                             let mergeData = [...revenue, ...costs];
                             //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
-                            let merged = completeObjTable(mergeData, merge, today, categTypes);
+                            let merged = completeObjTable(mergeData, merge, today, categs);
 
                             return merged;
                         }
@@ -146,7 +188,7 @@ let revenue = {
                         return prediction;
                     })
                 }
-                completeTable(merged, categTypes, predictionData);
+                completeTable(merged, categs, predictionData);
             }
         });
     </script>
@@ -214,7 +256,6 @@ let revenue = {
         style="border: 1px solid black; position: relative; width: 70%; align-self: flex-end;margin-top:20px;margin-bottom:20px">
     </div>
     <%- include('./dashTable')%>
-
     </div>
 
     </div>

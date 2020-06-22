@@ -2,6 +2,7 @@ const { Users, Release, Category, PredictCategory } = require('../Sequelize/mode
 const { Op } = require('sequelize')
 const moment = require('moment');
 const { safeAccess } = require('../utils/safeAcces');
+const { validationResult } = require('express-validator');
 moment().format();
 
 const getData = (categoryType, id) => {
@@ -67,6 +68,8 @@ const predictPerCategory = (id) => {
         ],
         attributes: [
             'valuePredict',
+            'category_id',
+            'users_id'
         ]
     })
 }
@@ -104,6 +107,28 @@ const dashboardModel = {
     },
     
     getPredictedCategory: async (req, res) => {
+        let predictedData = await predictPerCategory(safeAccess(req, ['cookies', 'user', 'id'], undefined));
+        res.send(predictedData);
+    },
+
+    editPredictedCategory: async (req, res) => {
+        try {
+            console.log(req.body)
+            // let errors = validationResult(req).errors; 
+            // if(errors.length > 0 ){
+            //     // res.status(400).send({err: "Validatiion result"})
+            //     errors = parsedErrors(errors);
+            //     res.send('usuarios/cadastroUsuario',{
+            //         err: errors, 
+            //         fields:{name, surname, email, password}
+            //     })
+
+            // }else{
+
+            // }
+        } catch (error) {
+            return res.send('usuarios/cadastroUsuario');
+        }
         let predictedData = await predictPerCategory(safeAccess(req, ['cookies', 'user', 'id'], undefined));
         res.send(predictedData);
     }

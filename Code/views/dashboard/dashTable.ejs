@@ -1,47 +1,97 @@
-
-<div style="position: relative; display:flex; justify-content: center; align-items:center; flex-direction: column; width:100%; margin-bottom: 10px">
-    <div id="card3" style="flex-basis: 600px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; ; min-width: 650px;width:67%; align-items: center;">
+<div
+    style="position: relative; display:flex; justify-content: center; align-items:center; flex-direction: column; width:100%; margin-bottom: 10px">
+    <div id="card3"
+        style="flex-basis: 600px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; ; min-width: 650px;width:67%; align-items: center;">
         <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-            <button onclick="ReduceTable(sessionStorage.getItem(TableDate),TableDate, $('#TableDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), JSON.parse(sessionStorage.getItem(chartCosIn)), JSON.parse(sessionStorage.getItem(categType)), JSON.parse(sessionStorage.getItem(predData)))" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
-            <div id='TableDate' style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
-            <button onclick="AddTable(sessionStorage.getItem(TableDate),TableDate, $('#TableDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), JSON.parse(sessionStorage.getItem(chartCosIn)), JSON.parse(sessionStorage.getItem(categType)),JSON.parse(sessionStorage.getItem(predData)))" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
+            <button
+                onclick="ReduceTable(sessionStorage.getItem(TableDate),TableDate, $('#TableDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), JSON.parse(sessionStorage.getItem(chartCosIn)), JSON.parse(sessionStorage.getItem(categType)), JSON.parse(sessionStorage.getItem(predData)))"
+                style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%">
+                < </button> <div id='TableDate'
+                    style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px">
         </div>
-        <div style=" width:90%;">
-            <table class="table table-hover" >
-                <thead style="background-color: rgb(242, 246, 249);">
-                    <tr>
-                        <th style="text-align: center;" > CATEGORIA</th>
-                        <th style="text-align: center;" > PREVISÃO ($)</th>
-                        <th style="text-align: center;" > REAL ($)</th>
-                        <th style="text-align: center;" > RESULTADO</th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%  category.map((element, index) =>{ %>
-                        <tr>
-                            <td style="vertical-align: middle; text-align: center; font-size: 1.2rem;" id=<%=element.categoryType.toUpperCase()%><%=1%>> <%=element.category.toUpperCase() %> </td>
-                            <td style="vertical-align: middle;text-align: center;font-size: 1.2rem"  id=<%=element.categoryType.toUpperCase()%><%=2%>>  <%= element.category.toUpperCase()%><%=index + 1 %></td>
-                            <td style="vertical-align: middle;text-align: center;font-size: 1.2rem" id=<%=element.categoryType.toUpperCase()%><%=3%>> <%=element.categoryType.toUpperCase()%><%=index%></td>
-                            <td style="vertical-align: middle;text-align: center;font-size: 1.2rem" id=<%=element.categoryType.toUpperCase()%><%=4%>> RESULTADO</td>
-                            <td> <i id=<%=element.categoryType.toUpperCase()%><%=5%>></i></td>
-                            <td style="vertical-align: middle; text-align: center;width: 25%;"> <div style="border: 1px solid black; height: 1.5rem; border-radius: 10px; display:flex">
-                                <div id=<%=element.categoryType.toUpperCase()%><%=6%> style="background-color: green;height:100%"></div>
-                                <div id=<%=element.categoryType.toUpperCase()%><%=7%> style="background-color: red; height:100%"></div>
-                            </div></td>
-                            <td> <Button><i class="fas fa-edit" style=" vertical-align: middle; text-align: center;font-size:1.5rem"></i></Button></td>
-                            <td><Button><i class="fa fa-trash-o " style="vertical-align: middle; text-align: center;font-size: 2rem;"></i></Button></td>
-                        </tr>
-                    <%})%>                            
-                </tbody>
-                    
-            </table> 
-
-        </div>
+        <button
+            onclick="AddTable(sessionStorage.getItem(TableDate),TableDate, $('#TableDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), JSON.parse(sessionStorage.getItem(chartCosIn)), JSON.parse(sessionStorage.getItem(categType)),JSON.parse(sessionStorage.getItem(predData)))"
+            style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> >
+        </button>
     </div>
-                        
+    <div style=" width:90%;">
+        <table class="table table-hover">
+            <thead style="background-color: rgb(242, 246, 249);">
+                <tr>
+                    <th style="text-align: center;"> CATEGORIA</th>
+                    <th style="text-align: center;"> PREVISÃO ($)</th>
+                    <th style="text-align: center;"> REAL ($)</th>
+                    <th style="text-align: center;"> RESULTADO</th>
+                    <th> </th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <%  category.map((element, index) =>{ %>
+                <tr>
+                    <td style="vertical-align: middle; text-align: center; font-size: 1.2rem;"
+                        id=<%=element.categoryType.toUpperCase()%><%=1%>> <%=element.category.toUpperCase() %> </td>
+                    <td style="vertical-align: middle;text-align: center;font-size: 1.2rem"
+                        id=<%=element.categoryType.toUpperCase()%><%=2%>>
+                        <%= element.category.toUpperCase()%><%=index + 1 %></td>
+                    <td style="vertical-align: middle;text-align: center;font-size: 1.2rem"
+                        id=<%=element.categoryType.toUpperCase()%><%=3%>>
+                        <%=element.categoryType.toUpperCase()%><%=index%></td>
+                    <td style="vertical-align: middle;text-align: center;font-size: 1.2rem"
+                        id=<%=element.categoryType.toUpperCase()%><%=4%>> RESULTADO</td>
+                    <td> <i id=<%=element.categoryType.toUpperCase()%><%=5%>></i></td>
+                    <td style="vertical-align: middle; text-align: center;width: 25%;">
+                        <div style="border: .5px solid black; height: 1rem; border-radius: 10px; display:flex">
+                            <div id=<%=element.categoryType.toUpperCase()%><%=6%>
+                                style="background-color: green;height:100%; border-top-left-radius: 10px;border-bottom-left-radius: 10px">
+                            </div>
+                            <div id=<%=element.categoryType.toUpperCase()%><%=7%>
+                                style="background-color: red; height:100%;border-top-right-radius: 10px;border-bottom-right-radius: 10px">
+                            </div>
+                        </div>
+                    </td>
+                    <td> <button onclick="openModal(`<%= index %>`, JSON.parse(sessionStorage.getItem(categType)))"><i class="fas fa-edit"
+                                style=" vertical-align: middle; text-align: center;font-size:1.5rem"></i></button></td>
+                </tr>
+
+                <!-- Modal -->
+                <div class="modal fade" id="Modal<%= index %>" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle"> Quer Editar seu dados de previsão? </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="display: flex;justify-content: center; flex-direction:column">
+                                <div style="position:relative;display:flex; justify-content:center; overflow: hidden; height:300px; align-items: center; margin-bottom:20px"><img style = "vertical-align: midddle; height:40%;transform: scale(2)" src="/images/lancamento/<%= element.categoryType %>.png"/></div>
+                                <div style="display: flex; position:relative; justify-content: space-evenly; align-items: center;">
+                                    <h3 id = "validateError<%= index %>" style="color: red; display:none"> Valor inválido</h1>
+                                </div>                            
+                                <div style="display: flex; position:relative; justify-content: space-evenly; align-items: center;">
+                                    <label  for="newValue<%= index %>" style="font-size: larger ;text-align : center;"> <%=element.category.toUpperCase() %> </label>
+                                    <input id='newValue<%= index %>' style="font-size: larger" value=""/>
+                                </div>                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-primary" onclick="sendNewPrediction(JSON.parse(sessionStorage.getItem(predData)), `<%= index %>`, $('#newValue<%= index %>'), `<%= element.categoryType.toUpperCase()%><%=2 %>`, $(`#validateError<%= index %>`), $(`#Modal<%= index %>`))">Salvar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <%})%>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
 </div>
