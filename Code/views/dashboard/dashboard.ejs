@@ -37,26 +37,100 @@ let revenue = {
     <script src="/scripts/Dashboard/dashboard.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        window.addEventListener("load", function (event) {
-            let url = `<%=url%>dashboard/data`;
-            let saldo = `<%= saldo%>`;
-            if(saldo >= 0){
-                fetch(url, {
+        const getCategory = () => {
+            let url = `<%=url%>dashboard/category`;
+            return fetch(url, {
+                method: 'post',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+
+        }
+
+        const completePieChart = () => {
+            url = `<%=url%>dashboard/data`;
+            return fetch(url, {
+                method: 'post',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+        }
+
+        const getPrediction = () => {
+            url = `<%=url%>dashboard/prediction`;
+            return fetch(url, {
+                method: 'post',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+        }
+
+        const sendNewPrediction = (predictionData, index, input, id, divErrorValidator, modal) =>{
+            let imputData = input.val();
+            imputData = imputData.trim().replace(/\,/img, '.')
+            if(parseFloat(imputData)){
+                //changing in html page
+                $("#" + id).html(imputData);
+                // changing section 
+                let newPredictionData = predictionData;
+                let categId = id.replace(/[0-9]/img, '');
+                newPredictionData[categId].valuePredict = imputData;
+                sessionStorage.setItem(predData, JSON.stringify(newPredictionData));
+                // Deleting Invalid Message
+                divErrorValidator.css({
+                    display: 'none'
+                });
+                // Closing Modal
+                modal.modal('hide');
+                console.log("Verificando entraad")
+                console.log(newPredictionData)
+                console.log(newPredictionData[categId])
+                //sending data to back-end
+                url = `<%=url%>dashboard/editprediction`;
+                return fetch(url, {
                     method: 'post',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        Teste: "Valor teste"
+                    body:JSON.stringify({
+                        prediction: newPredictionData[categId]
                     })
-                }).then((response) => {
-                    response.json().then((resp) => {
-                        console.log("Meus cookies")
-                        console.log(decodeURIComponent(document.cookie));
+                })
+
+                
+            }else{
+                divErrorValidator.css({
+                    display: 'block'
+                })
+            }
+
+        }
+
+
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        window.addEventListener("load", async (event) => {
+            let saldo = `<%= saldo%>`;
+            if (saldo >= 0) {
+                let categs = await getCategory();
+                if (categs.status === 200 || categs.status === 201) {
+                    categs = await categs.json().then((resp) => {
+                        sessionStorage.setItem(categType, JSON.stringify(resp));
+                        return resp;
+                    })
+                }
+
+                let merged = await completePieChart();
+                if (merged.status === 200 || merged.status === 201) {
+                    merged = await merged.json().then((resp) => {
                         let {
                             costs,
                             revenue
@@ -76,22 +150,45 @@ let revenue = {
                         if (typeof (resp.revenue) !== 'undefined') {
                             let today = new Date();
                             today = today.toISOString().match(/\d{4}-\d{2}/)[0];
-                            let chartRevenueInput = completeObj(revenue, pieRevenueData, today);
-                            let chartCostsInput = completeObj(costs, pieCostsData, today);
+                            let chartRevenueInput = completeObj(revenue, pieRevenueData,
+                                today);
+                            let chartCostsInput = completeObj(costs, pieCostsData,
+                                today);
                             drawChart(chartRevenueInput.data, chartRevenueInput.title);
                             drawChart(chartCostsInput.data, chartCostsInput.title);
                             $('#revenueDate').html(convertDateToLabel(today));
                             $('#costsDate').html(convertDateToLabel(today));
-                            
+                            $('#TableDate').html(convertDateToLabel(today));
+
                             // Saving on session
                             sessionStorage.setItem(RevDate, today);
                             sessionStorage.setItem(CostDate, today);
+                            sessionStorage.setItem(TableDate, today);
+
                             sessionStorage.setItem(chartRevIn, JSON.stringify(revenue));
                             sessionStorage.setItem(chartCosIn, JSON.stringify(costs));
-                        }
-                    })
-                })
 
+                            let merge = {
+                                data: {},
+                            };
+                            let mergeData = [...revenue, ...costs];
+                            //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
+                            let merged = completeObjTable(mergeData, merge, today, categs);
+
+                            return merged;
+                        }
+
+                    })
+                }
+                let predictionData = await getPrediction();
+                if (predictionData.status === 200 || predictionData.status === 201) {
+                    predictionData = await predictionData.json().then((resp) => {
+                        let prediction = predictionParser(resp);
+                        sessionStorage.setItem(predData, JSON.stringify(prediction));
+                        return prediction;
+                    })
+                }
+                completeTable(merged, categs, predictionData);
             }
         });
     </script>
@@ -108,59 +205,64 @@ let revenue = {
     
     }) %>
 
-    <script>
-        
-        //console.log($("#prevDate"))
-        //$("#prevDate").addEventListener("click", function() {
-        //    console.log("Entrei")
-        //}, false);
-        //$("#nextDate").addEventListener("click", function() {
-        //    console.log("Entrei2")
-        //}, false);
-        //$("#nextDate").onclick = function(){
-        //    console.log("Testando")
-        //}
-        
-        //style="display: flex; justify-content:center; background-color: #ebebec; display:flex; flex-basis: 500px; flex-wrap: wrap; width: 80vw; margin-left: 200px; flex-direction: column"
-    </script>
 
-    
-    <% if(saldo >= 0) {%> 
-        <div class="Container">
-            <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <div id="rightContainer" >
-                <h1 style="margin-bottom: 20px; display:flex;">
-                    Distribuição de Gastos e Receitas
-                </h1>
-                <div style=" display:flex; flex-direction: row;justify-content:center; flex-wrap:wrap; width:100%">
-                    <div id="card1" style="flex-basis: 600px;border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; min-width: 650px; width:40%">
-                        <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
-                            <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                                <button onclick="Reduce(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
-                                <div id='revenueDate' style="display:flex; justify-content: center; align-items: center; font-size: 25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
-                                <button onclick="Add(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
-                            </div>
-                        <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black;box-sizing: unset;"></div>
+    <% if(saldo >= 0) {%>
+    <div class="Container">
+        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+        <div id="rightContainer">
+            <h1 style="margin-bottom: 20px; display:flex;">
+                Distribuição de Gastos e Receitas
+            </h1>
+            <div style=" display:flex; flex-direction: row;justify-content:center; flex-wrap:wrap; width:100%">
+                <div id="card1"
+                    style="flex-basis: 600px;border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; min-width: 650px; width:40%">
+                    <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
+                    <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
+                        <button
+                            onclick="ReducePizza(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')"
+                            style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%">
+                            < </button> <div id='revenueDate'
+                                style="display:flex; justify-content: center; align-items: center; font-size: 25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px">
                     </div>
-                    <div id="card2" style="flex-basis: 600px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; ; min-width: 650px;width:40%">
-                        <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
-                        <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                            <button onclick="Reduce(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%"> < </button> 
-                            <div id='costsDate' style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px"> </div>
-                            <button onclick="Add(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> > </button>
-                        </div>
-                    <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black; box-sizing: unset;"></div>
-                    </div>
-
+                    <button
+                        onclick="AddPizza(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')"
+                        style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%">
+                        > </button>
                 </div>
-                <div id='line1' style="border: 1px solid black; position: relative; top: 80px; width: 70%; align-self: flex-end;"></div>
+                <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black;box-sizing: unset;">
+                </div>
+            </div>
+            <div id="card2"
+                style="flex-basis: 600px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; ; min-width: 650px;width:40%">
+                <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
+                <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
+                    <button
+                        onclick="ReducePizza(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')"
+                        style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%">
+                        < </button> <div id='costsDate'
+                            style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px">
+                </div>
+                <button
+                    onclick="AddPizza(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')"
+                    style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%">
+                    > </button>
+            </div>
+            <div class="piechart" style="width: 600px; height: 500px; border: 1px solid black; box-sizing: unset;">
             </div>
         </div>
+
+    </div>
+    <div id='line1'
+        style="border: 1px solid black; position: relative; width: 70%; align-self: flex-end;margin-top:20px;margin-bottom:20px">
+    </div>
+    <%- include('./dashTable')%>
+    </div>
+
+    </div>
     <% }else{ %>
         <div style="position: relative;min-height: 100vh;background-color: #ebebec">
             <%- include('../Components/SideMenu/sideMenu', sideElement )%>
             <div id="rightContainer"style="position: relative;height: 100vh;">
-                <%- include('../Components/SideMenu/sideMenu', sideElement )%>
               <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
                   <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">
                       <h2 style="color: grey;"><%= user.name %>, seja bem vindo(a)! </h2>

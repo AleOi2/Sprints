@@ -1,42 +1,42 @@
-const { Users, Release, Category } = require('../Sequelize/model')
+const { Users, Release, Category, PredictCategory } = require('../Sequelize/model')
 const { Op } = require('sequelize')
 const moment = require('moment');
-const { cookie } = require('express-validator');
 const { safeAccess } = require('../utils/safeAcces');
+const { validationResult } = require('express-validator');
 moment().format();
 
 const getData = (categoryType, id) => {
     return Release.findAll({
         where: {
-            users_id:id,
+            users_id: id,
             date: {
                 [Op.gte]: moment().subtract(365, 'days').toDate().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-              },
+            },
         },
-        group:['Release.month_year' ,'Release.category_id'],
+        group: ['Release.month_year', 'Release.category_id'],
         order: [['month_year', 'DESC']],
         include: [
             {
                 model: Users,
                 required: true,
-                attributes:['name']
+                attributes: ['name']
             },
             {
                 model: Category,
                 required: true,
-                attributes:['type', 'valuePredict', 'category'],
-                where:{
-                    type:categoryType
+                attributes: ['type', 'valuePredict', 'category', 'label'],
+                where: {
+                    type: categoryType
                 }
 
             },
         ],
-        attributes:[
+        attributes: [
             'month_year',
             'category_id',
             [Release.sequelize.fn('sum', Release.sequelize.col('Release.value')), 'sum'],
 
-        ]   
+        ]
         // attributes:[
         //     'category_id',
         //     Release.sequelize.fn('sum', Release.sequelize.col('Release.value')),
@@ -46,6 +46,31 @@ const getData = (categoryType, id) => {
         return response.map((element, index) => {
             return element.dataValues
         }).filter((values) => values !== undefined)
+    })
+}
+
+const predictPerCategory = (id) => {
+    return PredictCategory.findAll({
+        where: {
+            users_id: id
+        },
+        include: [
+            {
+                model: Users,
+                required: true,
+                attributes: ['name']
+            },
+            {
+                model: Category,
+                required: true,
+                attributes: ['type', 'category', 'label'],
+            },
+        ],
+        attributes: [
+            'valuePredict',
+            'category_id',
+            'users_id'
+        ]
     })
 }
 
@@ -72,10 +97,43 @@ const dashboardModel = {
             res.status(500).send(error)
         }
 
+    },
+    getAllCategory: async (req, res) => {
+        let category = await Category.findAll({})
+        category = category.map((categ) => {
+            return categ.dataValues.category.toUpperCase().replace('.PNG', '')
+        })
+        res.send(category);
+    },
+    
+    getPredictedCategory: async (req, res) => {
+        let predictedData = await predictPerCategory(safeAccess(req, ['cookies', 'user', 'id'], undefined));
+        res.send(predictedData);
+    },
+
+    editPredictedCategory: async (req, res) => {
+        try {
+            console.log(req.body)
+            // let errors = validationResult(req).errors; 
+            // if(errors.length > 0 ){
+            //     // res.status(400).send({err: "Validatiion result"})
+            //     errors = parsedErrors(errors);
+            //     res.send('usuarios/cadastroUsuario',{
+            //         err: errors, 
+            //         fields:{name, surname, email, password}
+            //     })
+
+            // }else{
+
+            // }
+        } catch (error) {
+            return res.send('usuarios/cadastroUsuario');
+        }
+        let predictedData = await predictPerCategory(safeAccess(req, ['cookies', 'user', 'id'], undefined));
+        res.send(predictedData);
     }
+
 }
-
-
 
 
 module.exports = dashboardModel

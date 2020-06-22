@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       name: DataTypes.STRING,
-      saldo: DataTypes.INTEGER,
+      saldo: DataTypes.DECIMAL(12, 2),
       surname: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
 
     Users.associate = (model) =>{
       Users.hasMany(model.Release, {
+        foreignKey: 'users_id',
+        sourceKey: 'id'
+      });
+      Users.hasMany(model.PredictCategory, {
         foreignKey: 'users_id',
         sourceKey: 'id'
       })

@@ -13,7 +13,6 @@ router.use('/usuarios', userRoute);
 router.use('/lancamento', authorization.authenticated, lancamentoRoute);
 router.use('/dashboard',  authorization.authenticated, dashboradRoute);
 router.use('/perfil',  authorization.authenticated, profileRoute);
-
 router.use('/', homeRoute);
 
 router.get('*', function(req, res) {
