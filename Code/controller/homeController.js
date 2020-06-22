@@ -1,7 +1,19 @@
 
 const { sideBarInput } = require("../model/sideBarInput");
 const { url } = require('../constants/constants')
-const { Category } = require('../Sequelize/model')
+const { Category, Users } = require('../Sequelize/model')
+
+
+const pickSaldo = (id) => {
+    return Users.findAll({
+        where: {
+            id: id
+        },
+        attributes: [
+            'saldo',
+        ]
+    })
+}
 
 const homeController = async (req, res) =>{
     if(!req.cookies.user){
@@ -25,8 +37,7 @@ const homeController = async (req, res) =>{
             })       
         })
 
-        res.render('dashboard/dashboard',
-        {
+        res.render('dashboard/dashboard',{
             sideElement:sideBarInput, 
             token: req.cookies.token, 
             user: req.cookies.user,
