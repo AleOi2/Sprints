@@ -1,8 +1,3 @@
-// let { 
-//     dummy, 
-//     cards, 
-//     numDisplay 
-// } = require("../model/artigosModel");
 const { Article } = require("../Sequelize/model/");
 
 const { url } = require('../constants/constants');
@@ -14,7 +9,7 @@ const artigosController = {
     
     list: async (req, res) =>{
 
-        let page  = req.params.id;
+        let page = req.params.id;
         let { count:total, rows:data } = await Article.findAndCountAll({
             raw:true,
             limit: 7,

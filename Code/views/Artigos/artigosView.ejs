@@ -6,11 +6,11 @@
             '/css/Artigos/artigos.css',
         ]
     }) %> 
-<body>
+<body style="font-size:62,5%;">
     <%-include('../Components/Header/headerComponent',{
         navigator:{
             label: ["Início", "Sobre Nós", "Artigos"],
-            routes:[`/inicio`,`/sobrenos`,`/artigos`]
+            routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
         },
         loginSigin:{
             label: ["Login", "Cadastrar"],
@@ -21,15 +21,16 @@
 
  
 
-    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 20px; box-sizing: border-box;">
-        <div class="artigosTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
+    <div style="display: flex;flex-direction: column; justify-content: left; align-items: center; margin: 20px; box-sizing: border-box;">
 
-        </div>
         <img src=<%= article.imageArticle %> alt="imagem principal" width="70%" height="70%">
-        <h1 style="font-family: 'Noto Sans SC', sans-serif; font-weight:bold; font-size:5vw;"> <%= article.titleArticle %> </h1>
-        <p style="font-size:4vw;"> <%= article.textArticle %> </p>
-
+        <h1 style="font-family: 'Noto Sans SC', sans-serif; font-weight:bold; font-size:1.8em; font-weight: bolder!important;"> <%= article.titleArticle %> </h1>
+        
+        <div style="justify-content: left;">
+            <p style="font-size:1.2em;"> <%- article.textArticle %> </p>
         </div>
+
+
     </div>
     <%-include('../Components/footer') %>
 </body>
