@@ -344,7 +344,7 @@ const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predi
 }
 
 const completeTable = (merged, categTypes, predictionData) => {
-    let diff; let real, predicition;
+    let diff; let real; let prediction;
     for (let element of categTypes) {
         $("#" + element + "1").html(predictionData[element].label.toUpperCase())
         $("#" + element + "2").html(predictionData[element].valuePredict)
@@ -354,9 +354,10 @@ const completeTable = (merged, categTypes, predictionData) => {
         $("#" + element + "4").html(diff)
 
         real = (merged.data[element]) ? merged.data[element] : 0;
-        prediction = parseFloat(predictionData[element].valuePredict);
+        prediction = (parseFloat(predictionData[element].valuePredict))?parseFloat(predictionData[element].valuePredict):0;
 
         if (real === 0 && prediction === 0) {
+            console.log(1)
             // print green
             $("#" + element + "6").css({ width: "100%", borderRadius: '10px' });
             $("#" + element + "7").css({ width: "0%", });
@@ -364,6 +365,7 @@ const completeTable = (merged, categTypes, predictionData) => {
             $("#" + element + "5").css({ color: 'green' });
             $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
         } else if (real > 0 && prediction == 0) {
+            console.log(2)
             // print red
             $("#" + element + "6").css({ width: "0%" });
             $("#" + element + "7").css({ width: "100%", borderRadius: '10px' });
@@ -372,6 +374,7 @@ const completeTable = (merged, categTypes, predictionData) => {
             $("#" + element + "5").attr('class', "fas fa-thumbs-down  fa-2x");
 
         } else if (real === 0 && prediction > 0) {
+            console.log(3)
             // print green
             $("#" + element + "6").css({ width: "100%", borderRadius: '10px' });
             $("#" + element + "7").css({ width: "0%", });
@@ -379,6 +382,7 @@ const completeTable = (merged, categTypes, predictionData) => {
             $("#" + element + "5").css({ color: 'green' });
             $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
         } else if (real > prediction) {
+            console.log(4)
             // print red
             $("#" + element + "6").css({ width: "0%" });
             $("#" + element + "7").css({ width: "100%", borderRadius: '10px' });
@@ -386,9 +390,11 @@ const completeTable = (merged, categTypes, predictionData) => {
             $("#" + element + "5").css({ color: 'red' });
             $("#" + element + "5").attr('class', "fas fa-thumbs-down  fa-2x");
 
-        } else if (real > 0 && real <= predicition) {
+        } else if (real > 0 && real <= prediction) {
+            console.log(5)
             let greenWidth = real / prediction * 100;
             let redWidth = 100 - real / prediction * 100;
+            console.log("Devemos estar aqui")
             $("#" + element + "6").css({ width: greenWidth.toString() + "%" });
             $("#" + element + "7").css({
                 width: redWidth.toString() + "%",

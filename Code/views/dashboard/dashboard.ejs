@@ -188,11 +188,13 @@ let revenue = {
                             //let mergeData = [...revenue, ...costs];
                             let mergeData = costs;
                             //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
+                            console.log("All")
+                            console.log(mergeData)
+                            console.log(merge)
+                            console.log(today)
+                            console.log(categs)
                             let merged = completeObjTable(mergeData, merge, today, categs);
 
-                            console.log("Testes")
-                            console.log(merged)
-            
                             return merged;
                         }
 

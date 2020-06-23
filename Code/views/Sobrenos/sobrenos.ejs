@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('../Components/templateHead', {
+        pageName:'Login', 
+        cssFile: [
+            '/css/Artigos/artigos.css',
+        ]
+    }) %> 
+<body>
+    <%-include('../Components/Header/headerComponent',{
+        navigator:{
+            label: ["Início", "Sobre Nós", "Artigos"],
+            routes:[`/inicio`,`/sobrenos`,`/artigos/page1`]
+        },
+        loginSigin:{
+            label: ["Login", "Cadastrar"],
+            routes: [`/usuarios/login`,`/usuarios/cadastro`]
+        }
+
+    }) %>  
+
+ 
+    <div class="content">
+        <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 20px; box-sizing: border-box;">
+            <div class="imageTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
+                <img src="/images/home/Icones/icone2 - capitalismo.svg" class="card-img-top" style="margin: 0 auto;; width: 200px;" alt="...">
+            </div>
+            <div style="width: 80%;">
+                Da experiência comum dos criadores do Cash Book de encontrar pessoas com dificuldades financeiras e sem o mínimo controle sobre como usam seus rendimentos surgiu o propósito de oferecer um sistema que permitisse um controle simples da vida financeira.
+                Propondo-se a oferecer uma porta de entrada para o controle das finanças pessoais o Cash book se propõe a ajudar você a:
+                </ul>
+                    <li> Saber quanto gasta e com o que gasta</li>
+                    <li> Estabelecer metas financeiras</li>
+                    <li> Acompanhar o progresso</li>
+                    <li> Economizar e ter projeções de investimentos</li>
+                    <li> Obter informação de qualidade que ajudará você a conquistar seus objetivos através do nosso blog </li>
+                </ul>
+                <p>Tudo isso de graça, para que você tenha tranquilidade para se organizar. </p>
+            
+            </div>
+            <div>
+                <img src="/images/home/imagens/Logo.png"  style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
+            </div>
+            
+            <div style="padding-top: 3vmax; width: 80%; text-align: center;">             
+                seu parceiro na conquista do sucesso financeiro.    
+            </div>            
+        </div>
+    </div>
+    <%-include('../Components/footer') %>
+</body>
+</html>

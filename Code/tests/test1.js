@@ -47,5 +47,6 @@ const convertDateToLabel = (stringDate) =>{
 
 }
 
+//debug
 console.log(convertDateToLabel("2020-06"));
 
