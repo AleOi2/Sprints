@@ -2,7 +2,9 @@
 const { sideBarInput } = require("../model/sideBarInput");
 const { url } = require('../constants/constants')
 const { Category, Users } = require('../Sequelize/model')
-const pickSaldo =  (id) => {
+
+
+const pickSaldo = (id) => {
     return Users.findAll({
         where: {
             id: id
@@ -27,16 +29,18 @@ const homeController = async (req, res) =>{
         let category = await Category.findAll().then((result) =>{
 
             return result.map((element) =>{
-                return{
-                    category:element.dataValues.label,
-                    type:element.dataValues.type,
-                    categoryType:element.dataValues.category.replace('.png', ''),
+                if(element.dataValues.type === "D"){
+                    return{
+                        category:element.dataValues.label,
+                        type:element.dataValues.type,
+                        categoryType:element.dataValues.category.replace('.png', ''),
+                    }
+
                 }
-            })       
+            }).filter((element) => element !== undefined)       
         })
 
-        res.render('dashboard/dashboard',
-        {
+        res.render('dashboard/dashboard',{
             sideElement:sideBarInput, 
             token: req.cookies.token, 
             user: req.cookies.user,

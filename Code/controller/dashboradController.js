@@ -24,12 +24,15 @@ const dashboardController = {
 
         let category = await Category.findAll().then((result) => {
             return result.map((element) => {
-                return {
-                    category: element.dataValues.label,
-                    type: element.dataValues.type,
-                    categoryType: element.dataValues.category.replace('.png', ''),
+                if(element.dataValues.type === "D"){
+                    return {
+                        category: element.dataValues.label,
+                        type: element.dataValues.type,
+                        categoryType: element.dataValues.category.replace('.png', ''),
+                    }
+
                 }
-            })
+            }).filter((element) => element !== undefined)
         })
 
         res.render('dashboard/dashboard', {

@@ -98,11 +98,14 @@ const dashboardModel = {
         }
 
     },
-    getAllCategory: async (req, res) => {
+    getCategoryCosts: async (req, res) => {
         let category = await Category.findAll({})
+        console.log(category)
         category = category.map((categ) => {
-            return categ.dataValues.category.toUpperCase().replace('.PNG', '')
-        })
+            if(categ.dataValues.type === "D"){
+                return categ.dataValues.category.toUpperCase().replace('.PNG', '')
+            }
+        }).filter((element)=> element !== undefined)
         res.send(category);
     },
     
@@ -113,24 +116,38 @@ const dashboardModel = {
 
     editPredictedCategory: async (req, res) => {
         try {
-            console.log(req.body)
-            // let errors = validationResult(req).errors; 
-            // if(errors.length > 0 ){
-            //     // res.status(400).send({err: "Validatiion result"})
-            //     errors = parsedErrors(errors);
-            //     res.send('usuarios/cadastroUsuario',{
-            //         err: errors, 
-            //         fields:{name, surname, email, password}
-            //     })
+            let { valuePredict, users_id, category_id }  = req.body.prediction;
+            let errors = validationResult(req).errors; 
+            if(errors.length > 0 ){
+                // res.status(400).send({err: "Validatiion result"})
+                errors = parsedErrors(errors);
+                res.send('usuarios/cadastroUsuario',{
+                    err: errors, 
+                    fields:{name, surname, email, password}
+                })
+                let now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                PredictCategory.update({
+                    valuePredict: parseFloat(valuePredict),
+                    updatedAt:now
+    
+                }, {
+                    where: {
+                        users_id: users_id,
+                        category_id:category_id
+                    }
+                }).then((res) =>{
+                    return res
+                })
+            }else{
+                console.log("Erramos")
+                return res.status(422).send({msg: 'err'});
 
-            // }else{
-
-            // }
+            }
         } catch (error) {
-            return res.send('usuarios/cadastroUsuario');
+            return res.status(422).send({msg: 'err'});
         }
-        let predictedData = await predictPerCategory(safeAccess(req, ['cookies', 'user', 'id'], undefined));
-        res.send(predictedData);
+        // let predictedData = await predictPerCategory(safeAccess(req, ['cookies', 'user', 'id'], undefined));
+        // res.send(predictedData);
     }
 
 }
