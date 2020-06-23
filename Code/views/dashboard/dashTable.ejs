@@ -3,15 +3,22 @@
     <div id="card3"
         style="flex-basis: 600px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; ; min-width: 650px;width:67%; align-items: center;">
         <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-            <button
-                onclick="ReduceTable(sessionStorage.getItem(TableDate),TableDate, $('#TableDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), JSON.parse(sessionStorage.getItem(chartCosIn)), JSON.parse(sessionStorage.getItem(categType)), JSON.parse(sessionStorage.getItem(predData)))"
+            <button onclick="renderAllReduce(
+                    sessionStorage.getItem(TableDate),TableDate, 
+                    $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue',    
+                    $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs',
+                    $('#TableDate'), JSON.parse(sessionStorage.getItem(categType)), 
+                    JSON.parse(sessionStorage.getItem(predData))
+                    )"
                 style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%">
                 < </button> <div id='TableDate'
                     style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px">
         </div>
-        <button
-            onclick="AddTable(sessionStorage.getItem(TableDate),TableDate, $('#TableDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), JSON.parse(sessionStorage.getItem(chartCosIn)), JSON.parse(sessionStorage.getItem(categType)),JSON.parse(sessionStorage.getItem(predData)))"
-            style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> >
+        <button onclick="renderAllAdd(sessionStorage.getItem(TableDate),TableDate, 
+        $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue',
+        $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs',
+        $('#TableDate'), JSON.parse(sessionStorage.getItem(categType)), JSON.parse(sessionStorage.getItem(predData))
+        )" style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%"> >
         </button>
     </div>
     <div style=" width:90%;">
@@ -51,7 +58,8 @@
                             </div>
                         </div>
                     </td>
-                    <td> <button onclick="openModal(`<%= index %>`, JSON.parse(sessionStorage.getItem(categType)))"><i class="fas fa-edit"
+                    <td> <button onclick="openModal(`<%= index %>`, JSON.parse(sessionStorage.getItem(categType)))"><i
+                                class="fas fa-edit"
                                 style=" vertical-align: middle; text-align: center;font-size:1.5rem"></i></button></td>
                 </tr>
 
@@ -61,24 +69,34 @@
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle"> Quer Editar seu dados de previsão? </h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle"> Quer Editar seu dados de previsão?
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body" style="display: flex;justify-content: center; flex-direction:column">
-                                <div style="position:relative;display:flex; justify-content:center; overflow: hidden; height:300px; align-items: center; margin-bottom:20px"><img style = "vertical-align: midddle; height:40%;transform: scale(2)" src="/images/lancamento/<%= element.categoryType %>.png"/></div>
-                                <div style="display: flex; position:relative; justify-content: space-evenly; align-items: center;">
-                                    <h3 id = "validateError<%= index %>" style="color: red; display:none"> Valor inválido</h1>
-                                </div>                            
-                                <div style="display: flex; position:relative; justify-content: space-evenly; align-items: center;">
-                                    <label  for="newValue<%= index %>" style="font-size: larger ;text-align : center;"> <%=element.category.toUpperCase() %> </label>
-                                    <input id='newValue<%= index %>' style="font-size: larger" value=""/>
-                                </div>                            
+                            <div class="modal-body"
+                                style="display: flex;justify-content: center; flex-direction:column">
+                                <div
+                                    style="position:relative;display:flex; justify-content:center; overflow: hidden; height:300px; align-items: center; margin-bottom:20px">
+                                    <img style="vertical-align: midddle; height:40%;transform: scale(2)"
+                                        src="/images/lancamento/<%= element.categoryType %>.png" /></div>
+                                <div
+                                    style="display: flex; position:relative; justify-content: space-evenly; align-items: center;">
+                                    <h3 id="validateError<%= index %>" style="color: red; display:none"> Valor inválido
+                                        </h1>
+                                </div>
+                                <div
+                                    style="display: flex; position:relative; justify-content: space-evenly; align-items: center;">
+                                    <label for="newValue<%= index %>" style="font-size: larger ;text-align : center;">
+                                        <%=element.category.toUpperCase() %> </label>
+                                    <input id='newValue<%= index %>' style="font-size: larger" value="" />
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button type="button" class="btn btn-primary" onclick="sendNewPrediction(JSON.parse(sessionStorage.getItem(predData)), `<%= index %>`, $('#newValue<%= index %>'), `<%= element.categoryType.toUpperCase()%><%=2 %>`, $(`#validateError<%= index %>`), $(`#Modal<%= index %>`))">Salvar</button>
+                                <button type="button" class="btn btn-primary"
+                                    onclick="sendNewPrediction(JSON.parse(sessionStorage.getItem(predData)), `<%= index %>`, $('#newValue<%= index %>'), `<%= element.categoryType.toUpperCase()%><%=2 %>`, $(`#validateError<%= index %>`), $(`#Modal<%= index %>`))">Salvar</button>
                             </div>
                         </div>
                     </div>

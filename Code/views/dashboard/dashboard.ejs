@@ -71,10 +71,10 @@ let revenue = {
             })
         }
 
-        const sendNewPrediction = (predictionData, index, input, id, divErrorValidator, modal) =>{
+        const sendNewPrediction = (predictionData, index, input, id, divErrorValidator, modal) => {
             let imputData = input.val();
             imputData = imputData.trim().replace(/\,/img, '.')
-            if(parseFloat(imputData)){
+            if (parseFloat(imputData)) {
                 //changing in html page
                 $("#" + id).html(imputData);
                 // changing section 
@@ -99,13 +99,13 @@ let revenue = {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
                     },
-                    body:JSON.stringify({
+                    body: JSON.stringify({
                         prediction: newPredictionData[categId]
                     })
                 })
 
-                
-            }else{
+
+            } else {
                 divErrorValidator.css({
                     display: 'block'
                 })
@@ -218,14 +218,23 @@ let revenue = {
                     style="flex-basis: 600px;border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; min-width: 650px; width:40%">
                     <h1 style="font-weight: bold;padding: 20px"> Receitas </h1>
                     <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                        <button
-                            onclick="ReducePizza(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')"
+                        <button onclick="renderAllReduce(
+                            sessionStorage.getItem(TableDate),TableDate, 
+                            $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue',    
+                            $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs',
+                            $('#TableDate'), JSON.parse(sessionStorage.getItem(categType)), 
+                            JSON.parse(sessionStorage.getItem(predData))
+                            )"
                             style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%">
                             < </button> <div id='revenueDate'
                                 style="display:flex; justify-content: center; align-items: center; font-size: 25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px">
                     </div>
-                    <button
-                        onclick="AddPizza(sessionStorage.getItem(RevDate),RevDate, $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue')"
+                    <button onclick="renderAllAdd(sessionStorage.getItem(TableDate),TableDate, 
+                        $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue',
+                        $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs',
+                        $('#TableDate'), JSON.parse(sessionStorage.getItem(categType)), 
+                        JSON.parse(sessionStorage.getItem(predData))                        
+                        )"
                         style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%">
                         > </button>
                 </div>
@@ -236,14 +245,23 @@ let revenue = {
                 style="flex-basis: 600px; border: 1px solid black; display:flex;flex-direction: column; justify-content: center; padding: 20px; box-shadow: 5px 5px 5px rgba(0,0,0,0.5); border-radius: 10px; background-color: white; ; min-width: 650px;width:40%">
                 <h1 style="font-weight: bold;padding: 20px"> Despesas </h1>
                 <div style='align-self: center; margin-bottom: 20px; display:flex; align-items: center;'>
-                    <button
-                        onclick="ReducePizza(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')"
+                    <button onclick="renderAllReduce(
+                        sessionStorage.getItem(TableDate),TableDate, 
+                        $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue',    
+                        $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs',
+                        $('#TableDate'), JSON.parse(sessionStorage.getItem(categType)), 
+                        JSON.parse(sessionStorage.getItem(predData))
+                        )"
                         style="font-size: 50px;color: #9aa5ac;width:80px; height: 80px; align-self: center;  border-radius: 50%">
                         < </button> <div id='costsDate'
                             style="display:flex; justify-content: center; align-items: center; font-size:25px;color: #9aa5ac;border: 2px solid #9aa5ac; width:300px; height: 80px; align-self: center;  border-radius: 200px">
                 </div>
-                <button
-                    onclick="AddPizza(sessionStorage.getItem(CostDate),CostDate, $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs')"
+                <button onclick="renderAllAdd(sessionStorage.getItem(TableDate),TableDate, 
+                $('#revenueDate'), JSON.parse(sessionStorage.getItem(chartRevIn)), 'Revenue',
+                $('#costsDate'), JSON.parse(sessionStorage.getItem(chartCosIn)), 'Costs',
+                $('#TableDate'), JSON.parse(sessionStorage.getItem(categType)), 
+                JSON.parse(sessionStorage.getItem(predData))                        
+                )"
                     style="font-size: 50px;color: #9aa5ac; width:80px; height: 80px; align-self: center; border-radius: 50%">
                     > </button>
             </div>
@@ -260,21 +278,24 @@ let revenue = {
 
     </div>
     <% }else{ %>
-        <div style="position: relative;min-height: 100vh;background-color: #ebebec">
-            <%- include('../Components/SideMenu/sideMenu', sideElement )%>
-            <div id="rightContainer"style="position: relative;height: 100vh;">
-              <div id="divLancamento" style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
-                  <div class="container p-3 my-3 border " style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">
-                      <h2 style="color: grey;"><%= user.name %>, seja bem vindo(a)! </h2>
-                      <section class="p-5" style="display: flex;">
-                          <div>
-                              <p> Para iniciar é necessário preencher o saldo inicial, basta acessar a opção "PERFIL" no menu lateral esquerdo, ou se preferir, <a href="/perfil">clique aqui</a>.</p>
-                          </div>
-                      </section>                       
-                  </div>
-              </div>      
-              </div> 
-    <% } %>  
+    <div style="position: relative;min-height: 100vh;background-color: #ebebec">
+        <%- include('../Components/SideMenu/sideMenu', sideElement )%>
+        <div id="rightContainer" style="position: relative;height: 100vh;">
+            <div id="divLancamento"
+                style="display: flex; flex-direction: column; position: relative; width: 80%; margin-left: 250px; ">
+                <div class="container p-3 my-3 border "
+                    style="border:1px solid black; border-radius: 10px;overflow: auto;height: 90vh;">
+                    <h2 style="color: grey;"><%= user.name %>, seja bem vindo(a)! </h2>
+                    <section class="p-5" style="display: flex;">
+                        <div>
+                            <p> Para iniciar é necessário preencher o saldo inicial, basta acessar a opção "PERFIL" no
+                                menu lateral esquerdo, ou se preferir, <a href="/perfil">clique aqui</a>.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <% } %>
         <%-include('../Components/footer') %>
 
 </body>

@@ -49,7 +49,7 @@ function drawChart(entryData, title) {
 
     };
     var chart1 = new google.visualization.PieChart(document.getElementsByClassName('piechart')[(title ===
-    'Revenue') ? 0 : 1]);
+        'Revenue') ? 0 : 1]);
     chart1.draw(data, options);
 }
 
@@ -203,7 +203,7 @@ const AddPizza = (today, type, Div, chart, title) => {
     drawChart(chartInput.data, chartInput.title);
 }
 
-const ReduceDate = (today, Div, type) =>{
+const ReduceDate = (today, Div, type) => {
     // thisMonthYear = [2020, 1]
     let thisMonthYear = returnOnlyYearMonth(today)
     thisMonthYear = thisMonthYear.map((dateString, index) => {
@@ -265,9 +265,9 @@ function groupByDate2(arr) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Data parser for prediction input
-const predictionParser = (prediction) =>{
-    prediction = prediction.map((predict) =>{
-        return{
+const predictionParser = (prediction) => {
+    prediction = prediction.map((predict) => {
+        return {
             valuePredict: predict.valuePredict,
             category_id: predict.category_id,
             users_id: predict.users_id,
@@ -277,9 +277,9 @@ const predictionParser = (prediction) =>{
         }
     })
     let predictionParsed = {}
-    for (let element of prediction){
+    for (let element of prediction) {
         predictionParsed[element.category.toUpperCase().replace('.PNG', '')] = element
-    
+
     }
     return predictionParsed;
 }
@@ -313,22 +313,22 @@ function completeObjTable(revenueCost, pieRevenueCostData, date) {
     return pieRevenueCostData;
 }
 
-const AddTable = (today, type, Div, revenueData, costsData, categTypes, predictionData ) =>{
+const AddTable = (today, type, Div, revenueData, costsData, categTypes, predictionData) => {
     // change session storage date from date button
     AddDate(today, Div, type);
-    let merge = { data: {}, };    
+    let merge = { data: {}, };
     let mergeData = [...revenueData, ...costsData];
     // convert [{month_year,category_id,sum, User:{}, Categor:{}},{month_year,category_id,sum, User:{}, Categor:{}},...]
     // to {data:{Educação:200, Lazer: 9, ...}}
     let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
-    categTypes = categTypes.map((element) =>{
+    categTypes = categTypes.map((element) => {
         return element.toUpperCase().replace('.PNG', '')
     })
     completeTable(merged, categTypes, predictionData);
 }
 
 
-const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predictionData) =>{
+const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predictionData) => {
     // change session storage date from date button (table component)
     ReduceDate(today, Div, type);
     let merge = { data: {}, };
@@ -341,62 +341,160 @@ const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predi
 
 }
 
-const completeTable = (merged, categTypes, predictionData) =>{
-    let diff;
-    for(let element of categTypes ){
+const completeTable = (merged, categTypes, predictionData) => {
+    let diff; let real, predicition;
+    for (let element of categTypes) {
         $("#" + element + "1").html(predictionData[element].label.toUpperCase())
         $("#" + element + "2").html(predictionData[element].valuePredict)
-        $("#" + element + "3").html((merged.data[element])?merged.data[element]:0)
-        if(merged.data[element])diff = predictionData[element].valuePredict - merged.data[element]
+        $("#" + element + "3").html((merged.data[element]) ? merged.data[element] : 0)
+        if (merged.data[element]) diff = predictionData[element].valuePredict - merged.data[element]
         else diff = predictionData[element].valuePredict
         $("#" + element + "4").html(diff)
-        if(diff <= 0){
-            $("#" + element + "5").css({color:'red'});
-            // $("#" + element + "5").addClass("fas fa-thumbs-down  fa-2x");
-            $("#" + element + "5").attr('class', "fas fa-thumbs-down  fa-2x");
-        }else{
-            $("#" + element + "5").css({color:'green'});
-            // $("#" + element + "5").addClass("fas fa-thumbs-up fa-2x");
+
+        real = (merged.data[element]) ? merged.data[element] : 0;
+        prediction = parseFloat(predictionData[element].valuePredict);
+
+        if (real === 0 && prediction === 0) {
+            // print green
+            $("#" + element + "6").css({ width: "100%", borderRadius: '10px' });
+            $("#" + element + "7").css({ width: "0%", });
+
+            $("#" + element + "5").css({ color: 'green' });
             $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
-        }
-        if(predictionData[element].valuePredict === 0){
-            let greenWidth = 0;
-            let redWidth = 100;
-            $("#" + element + "6").css({width:greenWidth.toString() + "%"});
-            $("#" + element + "6").css({width:redWidth.toString() + "%"});
+        } else if (real > 0 && prediction == 0) {
+            // print red
+            $("#" + element + "6").css({ width: "0%" });
+            $("#" + element + "7").css({ width: "100%", borderRadius: '10px' });
 
-        }else{
-            let greenWidth = merged.data[element]/predictionData[element].valuePredict * 100;
-            let redWidth = 100 - merged.data[element]/predictionData[element].valuePredict * 100;
-            if(redWidth > 0){
-                $("#" + element + "6").css({width:greenWidth.toString() + "%"});
-                $("#" + element + "7").css({
-                    width:redWidth.toString() + "%",
-                    borderTopLeftRadius:'0px',
-                    borderBottomLeftRadius:'0px'
-                });
+            $("#" + element + "5").css({ color: 'red' });
+            $("#" + element + "5").attr('class', "fas fa-thumbs-down  fa-2x");
 
-            }else{
-                $("#" + element + "6").css({width:"0%"});
-                $("#" + element + "7").css({
-                    width:"100%",
-                    borderRadius:'10px'
+        } else if (real === 0 && prediction > 0) {
+            // print green
+            $("#" + element + "6").css({ width: "100%", borderRadius: '10px' });
+            $("#" + element + "7").css({ width: "0%", });
+
+            $("#" + element + "5").css({ color: 'green' });
+            $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
+        } else if (real > prediction) {
+            // print red
+            $("#" + element + "6").css({ width: "0%" });
+            $("#" + element + "7").css({ width: "100%", borderRadius: '10px' });
+
+            $("#" + element + "5").css({ color: 'red' });
+            $("#" + element + "5").attr('class', "fas fa-thumbs-down  fa-2x");
+
+        } else if (real > 0 && real <= predicition) {
+            let greenWidth = real / prediction * 100;
+            let redWidth = 100 - real / prediction * 100;
+            $("#" + element + "6").css({ width: greenWidth.toString() + "%" });
+            $("#" + element + "7").css({
+                width: redWidth.toString() + "%",
+                borderTopLeftRadius: '0px',
+                borderBottomLeftRadius: '0px'
             });
 
-            }
-
+            $("#" + element + "5").css({ color: 'green' });
+            $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
         }
+
+
+        // if (predictionData[element].valuePredict === 0) {
+        //     let greenWidth = 0;
+        //     let redWidth = 100;
+        //     $("#" + element + "6").css({ width: greenWidth.toString() + "%" });
+        //     $("#" + element + "6").css({ width: redWidth.toString() + "%" });
+
+        // } else {
+        //     let real = merged.data[element];
+        //     let prediction = predictionData[element].valuePredict;
+        //     let greenWidth, redWidth;
+        //     if (real === 0) {
+        //         // print green
+        //         $("#" + element + "6").css({ width: "100%", borderRadius: '10px' });
+        //         $("#" + element + "7").css({width: "0%",});
+
+        //     }else if (prediction === 0){
+        //         // print red
+        //         $("#" + element + "6").css({ width: "0%" });
+        //         $("#" + element + "7").css({
+        //             width: "100%",
+        //             borderRadius: '10px'
+        //         });
+
+        //     }else
+
+        //     let greenWidth = (prediction !== 0) ? real / prediction * 100 :;
+        //     let redWidth = 100 - real / prediction * 100;
+
+        //     if (real === 0) {
+        //         $("#" + element + "6").css({ width: "100%" });
+        //         $("#" + element + "7").css({
+        //             width: "0%",
+        //             borderRadius: '10px'
+        //         });
+        //     }
+
+        //     if (redWidth >= 0 && redWidth <= 100) {
+        //         $("#" + element + "6").css({ width: greenWidth.toString() + "%" });
+        //         $("#" + element + "7").css({
+        //             width: redWidth.toString() + "%",
+        //             borderTopLeftRadius: '0px',
+        //             borderBottomLeftRadius: '0px'
+        //         });
+
+        //     } else if (redWidth > 100) {
+        //         $("#" + element + "6").css({ width: "0%" });
+        //         $("#" + element + "7").css({
+        //             width: "100%",
+        //             borderTopLeftRadius: '0px',
+        //             borderBottomLeftRadius: '0px'
+        //         });
+        //     }
+        //     else if (redWidth < 0) {
+        //         $("#" + element + "6").css({ width: "0%" });
+        //         $("#" + element + "7").css({
+        //             width: "100%",
+        //             borderRadius: '10px'
+        //         });
+
+        //     }
+
+        // }
 
 
     }
 }
 
 // Open modal
-const openModal = (index, categType) =>{
+const openModal = (index, categType) => {
     $("#Modal" + index).appendTo("body").modal('show');
     $("#Modal" + index).modal('show');
     let prediction = $("#" + categType[index] + "2").html()
-    $("#newValue" + index).val(prediction);  
+    $("#newValue" + index).val(prediction);
 
+}
+
+// Merge All functions
+const renderAllReduce = (
+    today, type,
+    DivRevenue, chartRevenue, titleRevenue,
+    DivCost, chartCost, titleCost,
+    DivTable, categTypes, predictionData
+) => {
+    ReducePizza(today, type, DivRevenue, chartRevenue, titleRevenue);
+    ReducePizza(today, type, DivCost, chartCost, titleCost);
+    ReduceTable(today, type, DivTable, chartRevenue, chartCost, categTypes, predictionData);
+}
+
+const renderAllAdd = (
+    today, type,
+    DivRevenue, chartRevenue, titleRevenue,
+    DivCost, chartCost, titleCost,
+    DivTable, categTypes, predictionData
+) => {
+    AddPizza(today, type, DivRevenue, chartRevenue, titleRevenue);
+    AddPizza(today, type, DivCost, chartCost, titleCost);
+    AddTable(today, type, DivTable, chartRevenue, chartCost, categTypes, predictionData);
 }
 
