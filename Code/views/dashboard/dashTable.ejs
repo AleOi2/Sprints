@@ -96,7 +96,15 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                 <button type="button" class="btn btn-primary"
-                                    onclick="sendNewPrediction(JSON.parse(sessionStorage.getItem(predData)), `<%= index %>`, $('#newValue<%= index %>'), `<%= element.categoryType.toUpperCase()%><%=2 %>`, $(`#validateError<%= index %>`), $(`#Modal<%= index %>`))">Salvar</button>
+                                    onclick="sendNewPrediction(
+                                        JSON.parse(sessionStorage.getItem(predData)), 
+                                        `<%= index %>`, $('#newValue<%= index %>'), 
+                                        `<%= element.categoryType.toUpperCase()%><%=2 %>`, 
+                                        $(`#validateError<%= index %>`), $(`#Modal<%= index %>`),
+                                        JSON.parse(sessionStorage.getItem(chartCosIn)),                                         
+                                        JSON.parse(sessionStorage.getItem(categType)), 
+                                        sessionStorage.getItem(TableDate)                                       
+                                        )">Salvar</button>
                             </div>
                         </div>
                     </div>

@@ -345,10 +345,7 @@ const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predi
 
 const completeTable = (merged, categTypes, predictionData) => {
     let diff; let real, predicition;
-    console.log(predictionData)
     for (let element of categTypes) {
-        console.log("Todos preditos")
-        console.log(predictionData[element])
         $("#" + element + "1").html(predictionData[element].label.toUpperCase())
         $("#" + element + "2").html(predictionData[element].valuePredict)
         $("#" + element + "3").html((merged.data[element]) ? merged.data[element] : 0)
@@ -402,72 +399,6 @@ const completeTable = (merged, categTypes, predictionData) => {
             $("#" + element + "5").css({ color: 'green' });
             $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
         }
-
-
-        // if (predictionData[element].valuePredict === 0) {
-        //     let greenWidth = 0;
-        //     let redWidth = 100;
-        //     $("#" + element + "6").css({ width: greenWidth.toString() + "%" });
-        //     $("#" + element + "6").css({ width: redWidth.toString() + "%" });
-
-        // } else {
-        //     let real = merged.data[element];
-        //     let prediction = predictionData[element].valuePredict;
-        //     let greenWidth, redWidth;
-        //     if (real === 0) {
-        //         // print green
-        //         $("#" + element + "6").css({ width: "100%", borderRadius: '10px' });
-        //         $("#" + element + "7").css({width: "0%",});
-
-        //     }else if (prediction === 0){
-        //         // print red
-        //         $("#" + element + "6").css({ width: "0%" });
-        //         $("#" + element + "7").css({
-        //             width: "100%",
-        //             borderRadius: '10px'
-        //         });
-
-        //     }else
-
-        //     let greenWidth = (prediction !== 0) ? real / prediction * 100 :;
-        //     let redWidth = 100 - real / prediction * 100;
-
-        //     if (real === 0) {
-        //         $("#" + element + "6").css({ width: "100%" });
-        //         $("#" + element + "7").css({
-        //             width: "0%",
-        //             borderRadius: '10px'
-        //         });
-        //     }
-
-        //     if (redWidth >= 0 && redWidth <= 100) {
-        //         $("#" + element + "6").css({ width: greenWidth.toString() + "%" });
-        //         $("#" + element + "7").css({
-        //             width: redWidth.toString() + "%",
-        //             borderTopLeftRadius: '0px',
-        //             borderBottomLeftRadius: '0px'
-        //         });
-
-        //     } else if (redWidth > 100) {
-        //         $("#" + element + "6").css({ width: "0%" });
-        //         $("#" + element + "7").css({
-        //             width: "100%",
-        //             borderTopLeftRadius: '0px',
-        //             borderBottomLeftRadius: '0px'
-        //         });
-        //     }
-        //     else if (redWidth < 0) {
-        //         $("#" + element + "6").css({ width: "0%" });
-        //         $("#" + element + "7").css({
-        //             width: "100%",
-        //             borderRadius: '10px'
-        //         });
-
-        //     }
-
-        // }
-
-
     }
 }
 

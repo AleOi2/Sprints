@@ -118,13 +118,8 @@ const dashboardModel = {
         try {
             let { valuePredict, users_id, category_id }  = req.body.prediction;
             let errors = validationResult(req).errors; 
-            if(errors.length > 0 ){
-                // res.status(400).send({err: "Validatiion result"})
-                errors = parsedErrors(errors);
-                res.send('usuarios/cadastroUsuario',{
-                    err: errors, 
-                    fields:{name, surname, email, password}
-                })
+            console.log(errors)
+            if(errors.length === 0 ){
                 let now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 PredictCategory.update({
                     valuePredict: parseFloat(valuePredict),

@@ -9,12 +9,16 @@ router.post('/data', dashboardModel.getRevenueCostsData);
 router.post('/category', dashboardModel.getCategoryCosts);
 router.post('/prediction', dashboardModel.getPredictedCategory);
 router.post('/editprediction', body('prediction').custom((value, { req }) => {
-    if (safeAccess(req, ['body', 'password', 'prediction', 'valuePredict'], undefined) && typeof(parseFloat(req.body.password.prediction.valuePredict)) === 'NaN' ) {
-      throw new Error('A entrada deve ser um número válido');
+  console.log(req.body)
+  console.log(req.body.prediction)
+  console.log(safeAccess(req, ['body', 'prediction', 'valuePredict'], undefined))
+  console.log(typeof(parseFloat(req.body.prediction.valuePredict)) === 'NaN')
+    if (safeAccess(req, ['body', 'prediction', 'valuePredict'], undefined) && typeof(parseFloat(req.body.prediction.valuePredict)) !== 'NaN' ) {
+      // Indicates the success of this synchronous custom validator
+      return true;
     }  
-    // Indicates the success of this synchronous custom validator
-    return true;
-  }), dashboardModel.editPredictedCategory);
+    throw new Error('A entrada deve ser um número válido');
+    }), dashboardModel.editPredictedCategory);
 router.get('/', dashboardController.pizzaGraph);
 
 module.exports = router;

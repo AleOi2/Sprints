@@ -26,7 +26,6 @@ const lancamentoController = {
 
         let categorias4 = [];             
         categoriasReceita.forEach((dados) => {categorias4.push([dados.id,dados.category])});
-        console.log(categorias4) //debug
         
         let categorias = [];
         categorias.push(categorias3,categorias4);  
@@ -35,8 +34,6 @@ const lancamentoController = {
         // console.log("******************************")
         // console.log(categorias[1][0][1])
 
-          console.log("São categorias")
-        console.log(categorias)
 
         res.render('lancamento/lancamento',{ 
             'categorias' : categorias, 

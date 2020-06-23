@@ -71,7 +71,7 @@ let revenue = {
             })
         }
 
-        const sendNewPrediction = (predictionData, index, input, id, divErrorValidator, modal) => {
+        const sendNewPrediction = (predictionData, index, input, id, divErrorValidator, modal, costs, categTypes, today) => {
             let imputData = input.val();
             imputData = imputData.trim().replace(/\,/img, '.')
             if (parseFloat(imputData)) {
@@ -86,13 +86,27 @@ let revenue = {
                 divErrorValidator.css({
                     display: 'none'
                 });
+
+                console.log("noco2")
+                console.log(newPredictionData[categId])
+
+                // update table
+                let merge = {
+                    data: {},
+                };
+                //let mergeData = [...revenue, ...costs];
+                let mergeData = costs;
+                //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
+                let merged = completeObjTable(mergeData, merge, today, categTypes);
+                completeTable(merged, categTypes, newPredictionData);
+                console.log("Completando")
+
                 // Closing Modal
                 modal.modal('hide');
-                console.log("Verificando entraad")
-                console.log(newPredictionData)
+                console.log("noco2")
                 console.log(newPredictionData[categId])
                 //sending data to back-end
-                url = `<%=url%>dashboard/editprediction`;
+                url = `dashboard/editprediction`;
                 return fetch(url, {
                     method: 'post',
                     headers: {
@@ -161,8 +175,8 @@ let revenue = {
                             $('#TableDate').html(convertDateToLabel(today));
 
                             // Saving on session
-                            sessionStorage.setItem(RevDate, today);
-                            sessionStorage.setItem(CostDate, today);
+                            //sessionStorage.setItem(RevDate, today);
+                            //sessionStorage.setItem(CostDate, today);
                             sessionStorage.setItem(TableDate, today);
 
                             sessionStorage.setItem(chartRevIn, JSON.stringify(revenue));
@@ -176,6 +190,9 @@ let revenue = {
                             //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
                             let merged = completeObjTable(mergeData, merge, today, categs);
 
+                            console.log("Testes")
+                            console.log(merged)
+            
                             return merged;
                         }
 
