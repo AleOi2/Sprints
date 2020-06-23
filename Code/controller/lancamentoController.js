@@ -35,6 +35,9 @@ const lancamentoController = {
         // console.log("******************************")
         // console.log(categorias[1][0][1])
 
+          console.log("São categorias")
+        console.log(categorias)
+
         res.render('lancamento/lancamento',{ 
             'categorias' : categorias, 
             sideElement: sideBarInput,
@@ -52,6 +55,11 @@ const lancamentoController = {
         let category_id = categoryForm;
         let users_id = req.cookies.user.id;
         let month_year = pickYearMonth(date);
+        console.log("Tentando criar")
+        console.log(value)
+        console.log(categoryForm)
+        console.log(date)
+        console.log(description)
         Release.create({
             date,
             description,
