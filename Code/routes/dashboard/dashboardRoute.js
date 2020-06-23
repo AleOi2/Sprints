@@ -6,7 +6,7 @@ const { check, body } = require('express-validator');
 const { safeAccess } = require('../../utils/safeAcces');
 
 router.post('/data', dashboardModel.getRevenueCostsData);
-router.post('/category', dashboardModel.getAllCategory);
+router.post('/category', dashboardModel.getCategoryCosts);
 router.post('/prediction', dashboardModel.getPredictedCategory);
 router.post('/editprediction', body('prediction').custom((value, { req }) => {
     if (safeAccess(req, ['body', 'password', 'prediction', 'valuePredict'], undefined) && typeof(parseFloat(req.body.password.prediction.valuePredict)) === 'NaN' ) {

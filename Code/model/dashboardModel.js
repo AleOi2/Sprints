@@ -98,11 +98,14 @@ const dashboardModel = {
         }
 
     },
-    getAllCategory: async (req, res) => {
+    getCategoryCosts: async (req, res) => {
         let category = await Category.findAll({})
+        console.log(category)
         category = category.map((categ) => {
-            return categ.dataValues.category.toUpperCase().replace('.PNG', '')
-        })
+            if(categ.dataValues.type === "D"){
+                return categ.dataValues.category.toUpperCase().replace('.PNG', '')
+            }
+        }).filter((element)=> element !== undefined)
         res.send(category);
     },
     

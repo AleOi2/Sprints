@@ -171,7 +171,8 @@ let revenue = {
                             let merge = {
                                 data: {},
                             };
-                            let mergeData = [...revenue, ...costs];
+                            //let mergeData = [...revenue, ...costs];
+                            let mergeData = costs;
                             //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
                             let merged = completeObjTable(mergeData, merge, today, categs);
 

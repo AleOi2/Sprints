@@ -317,7 +317,8 @@ const AddTable = (today, type, Div, revenueData, costsData, categTypes, predicti
     // change session storage date from date button
     AddDate(today, Div, type);
     let merge = { data: {}, };
-    let mergeData = [...revenueData, ...costsData];
+    // let mergeData = [...revenueData, ...costsData];
+    let mergeData =  costsData;
     // convert [{month_year,category_id,sum, User:{}, Categor:{}},{month_year,category_id,sum, User:{}, Categor:{}},...]
     // to {data:{Educação:200, Lazer: 9, ...}}
     let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
@@ -332,7 +333,8 @@ const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predi
     // change session storage date from date button (table component)
     ReduceDate(today, Div, type);
     let merge = { data: {}, };
-    let mergeData = [...revenueData, ...costsData];
+    // let mergeData = [...revenueData, ...costsData];
+    let mergeData =  costsData;
     //Complete all revenue and costs data -> merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
     let merged = completeObjTable(mergeData, merge, sessionStorage.getItem(type), categTypes);
     //merged = {data:[[Educaçao:200], [Saúde:10], [Viagem:80]]}
@@ -343,7 +345,10 @@ const ReduceTable = (today, type, Div, revenueData, costsData, categTypes, predi
 
 const completeTable = (merged, categTypes, predictionData) => {
     let diff; let real, predicition;
+    console.log(predictionData)
     for (let element of categTypes) {
+        console.log("Todos preditos")
+        console.log(predictionData[element])
         $("#" + element + "1").html(predictionData[element].label.toUpperCase())
         $("#" + element + "2").html(predictionData[element].valuePredict)
         $("#" + element + "3").html((merged.data[element]) ? merged.data[element] : 0)
