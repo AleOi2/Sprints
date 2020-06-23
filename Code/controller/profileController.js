@@ -6,7 +6,7 @@ const profileController = {
     index: async (req, res) => {
         let userId = req.cookies.user.id;
         let user = await Users.findByPk(userId)
-        console.log(user)
+        //console.log(user)
 
 
 
@@ -23,7 +23,7 @@ const profileController = {
         let userId = req.cookies.user.id;
         let { saldo } = req.body;
         saldo = parseFloat(saldo).toFixed(2);
-        console.log(saldo)
+        //console.log(saldo)
 
 
             let altera = await Users.update({

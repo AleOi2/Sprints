@@ -26,7 +26,7 @@ const lancamentoController = {
 
         let categorias4 = [];             
         categoriasReceita.forEach((dados) => {categorias4.push([dados.id,dados.category])});
-        console.log(categorias4) //debug
+        //console.log(categorias4) //debug
         
         let categorias = [];
         categorias.push(categorias3,categorias4);  

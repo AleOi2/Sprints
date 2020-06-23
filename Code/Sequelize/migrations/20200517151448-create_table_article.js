@@ -14,10 +14,18 @@ module.exports = {
            type: Sequelize.DATE,
            allowNull: false
          },
+         imageHighLight: {
+          type: Sequelize.STRING,
+           allowNull: false
+         },         
          imageArticle: {
           type: Sequelize.STRING,
            allowNull: false
          },
+         titleArticle: {
+          type: Sequelize.TEXT,
+          allowNull: false
+        },         
          textArticle: {
            type: Sequelize.TEXT,
            allowNull: false
