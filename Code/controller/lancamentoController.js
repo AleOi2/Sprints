@@ -30,7 +30,7 @@ const lancamentoController = {
         let categorias = [];
         categorias.push(categorias3,categorias4);  
         // console.log("******************************")
-        // console.log(categorias[1])
+        // console.log(categoriaWs[1])
         // console.log("******************************")
         // console.log(categorias[1][0][1])
 
@@ -52,6 +52,10 @@ const lancamentoController = {
         let category_id = categoryForm;
         let users_id = req.cookies.user.id;
         let month_year = pickYearMonth(date);
+
+        value = value.toString().replace(',','.');
+        value = parseFloat(value);          
+
         console.log("Tentando criar")
         console.log(value)
         console.log(categoryForm)
