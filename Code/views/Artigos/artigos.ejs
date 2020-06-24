@@ -25,7 +25,7 @@
             type: "main",
             name:data[0].imageHighlight,
             title:data[0].titleArticle,
-            label:data[0].textArticle.substring(0,90)+"...",
+            label:data[0].textArticle.substring(0,data[0].textArticle.indexOf(".")+1)+"...",
             ref: "/artigos/view/"+data[0].id,
         };  
   
@@ -37,17 +37,17 @@
                 type: "card",
                 name:data[idx].imageHighlight,
                 title:data[idx].titleArticle,
-                label:data[idx].textArticle.substring(0,90)+"...",
+                label:data[idx].textArticle.substring(0,data[idx].textArticle.indexOf("."))+"...",
                 ref: "/artigos/view/"+data[idx].id,
               });
         };
       
     %>
 
-    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 20px; box-sizing: border-box;">
-        <div class="artigosTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
+    <div style="display: flex;flex-direction: column; justify-content: center; align-items: center; margin: 40px; box-sizing: border-box;">
+        <!-- <div class="artigosTitle" style="display: flex; justify-content: flex-start; width: 80%;margin: 1rem;">
             <h1 style="font-family: 'Noto Sans SC', sans-serif;">Artigos</h1>
-        </div>
+        </div> -->
         <div class="artigos mainCard" style="width: 100%; height: 500px; margin-bottom: 2rem;">
             <div style="width:100%; height:100%;box-sizing:border-box;position: relative;">
                 <div style="width:100%; height:100%; margin-bottom: 1rem;
@@ -55,15 +55,15 @@
                 background-position: top; position: relative;background-repeat:no-repeat; background-size:cover" class="artigosPrimeiroArtigo">
                 </div>
                 <div style="position: absolute; top: 60%; left: 10%; z-index: 1;">
-                    <h1 style="color: black;margin-left: 0rem; margin-right: 1.7rem; font-family: 'Noto Sans SC', sans-serif;font-size:1.4em;font-weight: bold;margin-right: 1rem;">
+                    <h1 style="color: black;margin-left: 0rem; margin-right: 3rem; margin-top: 1rem; font-family: 'Noto Sans SC', sans-serif;font-size:1.4em;font-weight: bold;">
                         <%=dummy.title  %> 
                     </h1>
-                    <h3 style="margin-left: 0rem; margin-right: 1.7rem; font-family: 'Noto Sans SC', sans-serif;font-size: 1.2em;font-weight: normal;margin-right: 1.7rem;">
+                    <h3 style="color:black; 0rem; margin-right: 3rem; font-family: 'Noto Sans SC', sans-serif;font-size: 1.2em; font-weight: 400;">
                         <%-dummy.label  %>                 
                     </h3>
-                    <a href=<%=dummy.ref%> style="color:red"> Ler mais > </a>
+                    <a href=<%=dummy.ref%> style="color:red; font-size: 1.2rem; font-weight: 600;"> Ler mais > </a>
                 </div>
-                <a href=<%=dummy.ref%> style="display:none; color:red"> Ler mais > </a>
+                <a href=<%=dummy.ref%> style="display:none; color:red"> Leia mais </a>
             </div>
         </div>
         <% console.log("view cards ----------------------------",cards) %>
@@ -76,10 +76,10 @@
                             background-position: 25% 75%; background-size:cover; background-repeat:no-repeat;">
                         </div>
                         <div style=" position:relative; height:30%;">
-                            <h1 style="margin-left: 2rem; margin-right: 1.7rem; font-family: 'Noto Sans SC', sans-serif; font-size:1.4em; font-weight: bold;"><%=element.title%></h1>
+                            <h1 style="margin-left: 2rem; margin-right: 1.7rem; margin-top: 1rem; font-family: 'Noto Sans SC', sans-serif; font-size:1.4em; font-weight: bold;"><%=element.title%></h1>
                             <h3 style="margin-left: 2rem; margin-right: 1.7rem; font-family: 'Noto Sans SC', sans-serif; font-size: 1.2em;"><%- element.label %></h3>
                         </div>
-                        <a href=<%=element.ref %> style="color: red;height:10%;margin-left: 2rem "> Leia mais > </a>
+                        <a href=<%=element.ref %> style="color: red;height:10%;margin-left: 2rem; font-weight:600;"> Leia mais > </a>
                     </div>
                 <% } %> 
             <%})%>
