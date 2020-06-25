@@ -382,7 +382,6 @@ const completeTable = (merged, categTypes, predictionData) => {
             $("#" + element + "5").css({ color: 'green' });
             $("#" + element + "5").attr('class', "fas fa-thumbs-up fa-2x");
         } else if (real > prediction) {
-            console.log(4)
             // print red
             $("#" + element + "6").css({ width: "0%" });
             $("#" + element + "7").css({ width: "100%", borderRadius: '10px' });
@@ -391,11 +390,14 @@ const completeTable = (merged, categTypes, predictionData) => {
             $("#" + element + "5").attr('class', "fas fa-thumbs-down  fa-2x");
 
         } else if (real > 0 && real <= prediction) {
-            console.log(5)
             let greenWidth = real / prediction * 100;
             let redWidth = 100 - real / prediction * 100;
             console.log("Devemos estar aqui")
-            $("#" + element + "6").css({ width: greenWidth.toString() + "%" });
+            $("#" + element + "6").css({ 
+                width: greenWidth.toString() + "%" ,
+                borderTopRightRadius: '0px',
+                borderBottomRightRadius: '0px'
+            });
             $("#" + element + "7").css({
                 width: redWidth.toString() + "%",
                 borderTopLeftRadius: '0px',
