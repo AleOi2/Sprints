@@ -56,20 +56,22 @@ const lancamentoController = {
         value = value.toString().replace(',','.');
         value = parseFloat(value);          
 
-        console.log("Tentando criar")
-        console.log(value)
-        console.log(categoryForm)
-        console.log(date)
-        console.log(description)
-        Release.create({
-            date,
-            description,
-            value,      
-            users_id,
-            category_id,
-            month_year           
-        });
-        //console.log("realizado"); //debug
+        if ( categoryForm != "" || date != "" || description != "" ||value != "" ) {
+
+            Release.create({
+                date,
+                description,
+                value,      
+                users_id,
+                category_id,
+                month_year           
+            });
+            console.log("realizado"); //debug
+
+        }else{
+            console.log("erro ao criar lançamento, os campos não podem estar vazios")
+        }
+        
         return res.redirect("/lancamento",);
     }, 
 
@@ -124,15 +126,21 @@ const lancamentoController = {
         releaseEdit.value = parseFloat(releaseEdit.value);  
 
         // Função para alteraros dados no banco
+        if(releaseEdit.value != "" || releaseEdit.date != "" || releaseEdit.description != ""){
             await Release.update({
-            value: releaseEdit.value,
-            date: releaseEdit.date,
-            description: releaseEdit.description,
-        },{
-            where: {
-                id: id,
-            }
-        });
+                value: releaseEdit.value,
+                date: releaseEdit.date,
+                description: releaseEdit.description,
+            },{
+                where: {
+                    id: id,
+                }
+            });
+            console.log("Alteração realizada com sucesso");
+        }else{
+            console.log("Erro ao realizar alteraçao, os campos não podem estar vazios");
+        }
+           
 
         return res.redirect("/lancamento/listar");    
 
